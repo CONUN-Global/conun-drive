@@ -1,12 +1,19 @@
 import { app, BrowserWindow } from "electron";
+import fs from "fs";
+import IPFS from "ipfs-core";
+import Protector from "libp2p/src/pnet";
 import isDev from "electron-is-dev";
 import serve from "electron-serve";
 
 const loadURL = serve({ directory: "dist/parcel-build" });
 
+let node;
+
+const BOOTSTRAP_ADDRESSS =
+  "/ip4/15.164.229.6/tcp/4001/ipfs/12D3KooWNubmXubMPzPY9B69HLAEpoRBS41MchdGCa9SgJtd5LnT";
+
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
-  // eslint-disable-line global-require
   app.quit();
 }
 
@@ -19,6 +26,30 @@ const createWindow = async (): Promise<void> => {
       nodeIntegration: true,
     },
   });
+
+  try {
+    node = await IPFS.create({
+      libp2p: {
+        modules: {
+          connProtector: new Protector(
+            fs.readFileSync(__dirname + "/assets/swarm.key")
+          ),
+        },
+      },
+      // @ts-expect-error
+      config: {
+        Bootstrap: [BOOTSTRAP_ADDRESSS],
+      },
+    });
+
+    const version = await node.version();
+    const id = await node.id();
+
+    console.log(version);
+    console.log(id);
+  } catch (err) {
+    console.log(`err`, err);
+  }
 
   if (isDev) {
     await mainWindow.loadURL("http://localhost:1234");

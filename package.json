@@ -79,9 +79,14 @@
     "electron-is-dev": "^2.0.0",
     "electron-serve": "^1.1.0",
     "electron-squirrel-startup": "^1.0.0",
+    "ipfs-core": "^0.5.4",
+    "it-all": "^1.0.5",
+    "jimp": "^0.16.1",
+    "libp2p": "^0.30.12",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-query": "^3.13.6",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "uint8arrays": "^2.1.4"
   }
 }
