@@ -8,10 +8,10 @@
     "start": "parcel src/index.html --out-dir parcel-dist",
     "build": "parcel build src/index.html --out-dir dist/parcel-build --public-url ./",
     "dev": "concurrently -k \"yarn start\" \"yarn:electron\"",
-    "electron": "wait-on tcp:1234 && tsc && electron-forge start",
-    "package": "yarn build && tsc && electron-forge package",
-    "make": "yarn build && tsc && electron-forge make",
-    "publish": "yarn build && electron-forge publish",
+    "copy-assets": "copyfiles -f \"electron/assets/**/*\" \"dist/assets\"",
+    "electron": "wait-on tcp:1234 && tsc && yarn copy-assets && electron .",
+    "make": "yarn build && tsc && yarn copy-assets && electron-builder",
+    "release": "yarn build && electron-builder --publish=always",
     "lint": "eslint --ext .ts ."
   },
   "keywords": [],
@@ -20,38 +20,41 @@
     "email": "ivanms1@gmail.com"
   },
   "license": "MIT",
-  "config": {
-    "forge": {
-      "packagerConfig": {},
-      "makers": [
+  "build": {
+    "files": [
+      "dist/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "output": "./out"
+    },
+    "appId": "conun.app",
+    "mac": {
+      "category": "public.app-category.productivity"
+    },
+    "win": {
+      "target": [
         {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "electron_react_typescript_template"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
+          "target": "nsis"
         }
       ]
+    },
+    "linux": {
+      "category": "Utility",
+      "target": "deb"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": false,
+      "createDesktopShortcut": true,
+      "deleteAppDataOnUninstall": true
     }
   },
   "devDependencies": {
     "@babel/core": "^7.13.8",
     "@babel/preset-env": "^7.13.9",
     "@babel/preset-react": "^7.12.13",
-    "@electron-forge/cli": "^6.0.0-beta.54",
-    "@electron-forge/maker-deb": "^6.0.0-beta.54",
-    "@electron-forge/maker-rpm": "^6.0.0-beta.54",
-    "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
-    "@electron-forge/maker-zip": "^6.0.0-beta.54",
     "@parcel/transformer-typescript-tsc": "^2.0.0-alpha.3",
     "@types/react": "^17.0.2",
     "@types/react-dom": "^17.0.1",
@@ -59,7 +62,9 @@
     "@typescript-eslint/parser": "^2.18.0",
     "autoprefixer": "9.8.6",
     "concurrently": "^6.0.0",
+    "copyfiles": "^2.4.1",
     "electron": "^12.0.1",
+    "electron-builder": "^22.10.5",
     "eslint": "^7.6.0",
     "eslint-plugin-import": "^2.20.0",
     "eslint-plugin-react": "^7.22.0",
