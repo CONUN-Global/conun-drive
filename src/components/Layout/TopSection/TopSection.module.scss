@@ -1,0 +1,74 @@
+.TopSection {
+  display: flex;
+  justify-content: space-between;
+  .UserAndSearchBar {
+    display: flex;
+
+    & .UserPicture {
+      height: 45px;
+      width: 45px;
+      border-radius: 50%;
+      margin-right: 60px;
+    }
+
+    & .SearchBarContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 21px;
+
+      & .SearchBar {
+        border-radius: 30px;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
+        height: 45px;
+        width: 665px;
+        border: none;
+        margin-bottom: 10px;
+      }
+
+      & .SaveButton {
+        background-color: #fff;
+        border-radius: 10px;
+        max-width: 85px;
+        color: var(--dark-grey);
+        font-size: 10px;
+        padding: 3px 15px;
+      }
+    }
+  }
+
+  & .ActionsBar {
+    display: flex;
+
+    & :not(:last-child) {
+      margin-right: 7px;
+    }
+
+    & .ActionButtonAdd {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      width: 32px;
+      padding: 2px 3px;
+
+      & .Icon {
+        height: 15px;
+        fill: #a6a6a6;
+      }
+    }
+
+    & .ActionButton {
+      display: flex;
+      align-items: center;
+      border-radius: 4px;
+
+      width: fit-content;
+
+      & .Icon {
+        height: 18px;
+        fill: #a6a6a6;
+      }
+    }
+  }
+}

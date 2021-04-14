@@ -5,12 +5,11 @@ import styles from "./Home.module.scss";
 function Home() {
   return (
     <div className={styles.Home}>
-      <input type="text" />
-      <div>
-        <div>
+      <div className={styles.TrendingAndInterests}>
+        <div className={styles.Trending}>
           <span>Trending</span>
         </div>
-        <div>
+        <div className={styles.Interests}>
           <span>My Interests</span>
         </div>
       </div>

@@ -19,6 +19,16 @@
     color: var(--secondary-color-font);
   }
 
+  &.grey {
+    background-color: var(--bg);
+    border: 0.5px solid var(--grey-button-color);
+    color: var(--grey-button-color);
+    box-shadow: inset 0px -4px 4px rgba(0, 0, 0, 0.05),
+      inset 0px 4px 4px #ffffff;
+    height: 32px;
+    padding: 15px 12px;
+  }
+
   &.round {
     border-radius: 20px;
   }
