@@ -1,0 +1,16 @@
+.PopularSection {
+  & > :not(:last-child) {
+    margin-bottom: 25px;
+  }
+
+  & .Section {
+    & .Title {
+      font-size: 16px;
+
+      & > span {
+        color: var(--emerald);
+        text-transform: capitalize;
+      }
+    }
+  }
+}

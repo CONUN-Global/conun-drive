@@ -22,6 +22,7 @@ const createWindow = async (): Promise<void> => {
   const mainWindow = new BrowserWindow({
     height: 720,
     width: 1280,
+    title: "Conun Drive",
     webPreferences: {
       nodeIntegration: true,
     },
@@ -41,12 +42,6 @@ const createWindow = async (): Promise<void> => {
         Bootstrap: [BOOTSTRAP_ADDRESSS],
       },
     });
-
-    const version = await node.version();
-    const id = await node.id();
-
-    console.log(version);
-    console.log(id);
   } catch (err) {
     console.log(`err`, err);
   }

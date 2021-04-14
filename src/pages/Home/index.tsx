@@ -1,5 +1,7 @@
 import React from "react";
 
+import PopularSection from "./PopularSection";
+
 import styles from "./Home.module.scss";
 
 function Home() {
@@ -7,12 +9,13 @@ function Home() {
     <div className={styles.Home}>
       <div className={styles.TrendingAndInterests}>
         <div className={styles.Trending}>
-          <span>Trending</span>
+          <span className={styles.Title}>Trending</span>
         </div>
         <div className={styles.Interests}>
-          <span>My Interests</span>
+          <span className={styles.Title}>My Interests</span>
         </div>
       </div>
+      <PopularSection />
     </div>
   );
 }
