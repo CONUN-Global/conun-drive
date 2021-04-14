@@ -1,0 +1,38 @@
+.Background {
+  width: 740px;
+  height: 609px;
+  background-color: var(--bg);
+  background-color: #ccc;
+  border-radius: 5px;
+}
+
+.Layout {
+  width: 100%;
+  height: 100%;
+
+  display: grid;
+
+  grid-template-columns: 3fr 8fr 5fr;
+  // I need the actual values here
+
+  & .Cell {
+    margin: 10px;
+  }
+}
+
+.Cell {
+  align-items: center;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  // justify-content: center;
+}
+
+.AddImage{
+  background-color: blanchedalmond;
+  border-radius: 5px;
+  height:46px;
+  margin:5px;
+  text-align: center;
+  width:82px;
+}
