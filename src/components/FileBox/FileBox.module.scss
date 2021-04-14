@@ -1,17 +1,22 @@
 .FileBox {
+  display: flex;
+  flex-direction: column;
   background-color: #fff;
   height: 219px;
   width: 189px;
+  border-radius: 3px;
 
   & .FileImage {
     height: 106px;
     width: 189px;
+    border-radius: 3px 3px 0 0;
   }
 
   & .InfoSection {
     display: flex;
     flex-direction: column;
     padding: 6px 15px;
+    width: calc(100% - 30px);
 
     & .Top {
       display: flex;
@@ -31,6 +36,7 @@
 
     & .FileName {
       font-size: 14px;
+      width: fit-content;
     }
   }
 }

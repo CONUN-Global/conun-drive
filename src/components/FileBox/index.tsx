@@ -1,4 +1,7 @@
 import React from "react";
+import { useQuery } from "react-query";
+
+import Button from "../Button";
 
 import { FileProps } from "../../types";
 
@@ -6,18 +9,33 @@ import Heart from "../../assets/icons/heart.svg";
 
 import styles from "./FileBox.module.scss";
 
+const { api } = window;
+
 export interface FileBoxProps {
   file: FileProps;
 }
 
 function FileBox({ file }: FileBoxProps) {
+  const { data } = useQuery(
+    ["get-preview", file?.info?.thumbnail],
+    async () => {
+      const data = await api.getFilePreview(file?.info?.thumbnail);
+
+      const preview = new Blob([data.preview.buffer]);
+      return URL.createObjectURL(preview);
+    },
+    {
+      enabled: !!file?.info?.thumbnail,
+    }
+  );
+
   return (
-    <div className={styles.FileBox}>
-      <img
-        className={styles.FileImage}
-        src="https://source.unsplash.com/random/189x106"
-        alt={file.name}
-      />
+    <Button
+      className={styles.FileBox}
+      noStyle
+      onClick={() => console.log("kjhalsdfasdjklhasdfkjljjads")}
+    >
+      <img className={styles.FileImage} src={data} alt={file.name} />
       <div className={styles.InfoSection}>
         <div className={styles.Top}>
           <p className={styles.Likes}>
@@ -28,7 +46,7 @@ function FileBox({ file }: FileBoxProps) {
         </div>
         <p className={styles.FileName}>{file.name}</p>
       </div>
-    </div>
+    </Button>
   );
 }
 

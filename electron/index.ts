@@ -1,13 +1,16 @@
 import { app, BrowserWindow } from "electron";
 import fs from "fs";
+import path from "path";
 import IPFS from "ipfs-core";
 import Protector from "libp2p/src/pnet";
 import isDev from "electron-is-dev";
 import serve from "electron-serve";
 
+import "./ipcMain";
+
 const loadURL = serve({ directory: "dist/parcel-build" });
 
-let node;
+export let node;
 
 const BOOTSTRAP_ADDRESSS =
   "/ip4/15.164.229.6/tcp/4001/ipfs/12D3KooWNubmXubMPzPY9B69HLAEpoRBS41MchdGCa9SgJtd5LnT";
@@ -24,7 +27,8 @@ const createWindow = async (): Promise<void> => {
     width: 1280,
     title: "Conun Drive",
     webPreferences: {
-      nodeIntegration: true,
+      nodeIntegration: false,
+      preload: path.resolve(__dirname, "preload.js"),
     },
   });
 

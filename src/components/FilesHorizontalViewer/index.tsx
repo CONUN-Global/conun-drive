@@ -1,7 +1,10 @@
 import React from "react";
 import { useQuery } from "react-query";
-import instance from "../../axios/instance";
+import ScrollContainer from "react-indiana-drag-scroll";
+
 import FileBox from "../FileBox";
+
+import instance from "../../axios/instance";
 
 import styles from "./FilesHorizontalViewer.module.scss";
 
@@ -19,11 +22,11 @@ function FilesHorizontalViewer({ category }: FilesHorizontalViewerProps) {
   });
 
   return (
-    <div className={styles.FilesContainer}>
+    <ScrollContainer className={styles.FilesContainer}>
       {data?.data?.map((file) => (
         <FileBox key={file.id} file={file} />
       ))}
-    </div>
+    </ScrollContainer>
   );
 }
 
