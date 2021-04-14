@@ -1,8 +1,8 @@
 {
-  "name": "electron-react-typescript-template",
-  "productName": "electron-react-typescript-template",
+  "name": "conun-drive",
+  "productName": "Conun Drive",
   "version": "1.0.0",
-  "description": "Electron React boilerplate",
+  "description": "Conun Driver App",
   "main": "dist/index.js",
   "scripts": {
     "start": "parcel src/index.html --out-dir parcel-dist",
@@ -41,7 +41,7 @@
     },
     "linux": {
       "category": "Utility",
-      "target": "deb"
+      "target": "AppImage"
     },
     "nsis": {
       "oneClick": false,
@@ -76,6 +76,7 @@
   },
   "dependencies": {
     "@types/react-router-dom": "^5.1.7",
+    "classnames": "^2.3.1",
     "electron-is-dev": "^2.0.0",
     "electron-serve": "^1.1.0",
     "electron-squirrel-startup": "^1.0.0",
