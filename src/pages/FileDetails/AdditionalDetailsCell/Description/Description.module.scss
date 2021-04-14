@@ -1,0 +1,44 @@
+.ItemDescription {
+  box-sizing: border-box;
+  width: 100%;
+  position:relative;
+  padding-top: 15px;
+}
+
+
+.BoxTitle {
+  font-size: 12pt;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.DescriptionText {
+  color: var(--grey-button-color);
+  font-size: 10pt;
+  height: 150px;
+  overflow-y: scroll;
+  width:142px;
+
+}
+.DescriptionText:after {
+  content:'';
+  width:100%;
+  height:100px;
+  position:absolute;
+  left:0;
+  bottom:0;
+  background:linear-gradient(transparent, #e1e1e1);
+}
+
+.Cover {
+  position:relative;
+  content: " ";
+  bottom:0px;
+  background:linear-gradient(transparent, #e1e1e1);
+  width:118px;
+  height: 50px;
+}
+
+.Show {
+  cursor: pointer;
+}

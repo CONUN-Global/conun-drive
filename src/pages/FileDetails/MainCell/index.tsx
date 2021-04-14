@@ -1,5 +1,6 @@
 import React from "react";
 
+import Button from "../../../components/Button";
 import LikeBar from "./LikeBar";
 import FileProperties from "./FileProperties";
 
@@ -13,7 +14,7 @@ function MainCell() {
       <div className={style.ItemTitle}>File Title</div>
       <FileProperties />
       <div className={style.PurchaseControls}>
-        <span>Purchase Button</span>
+        <Button>Purchase</Button>
       </div>
     </div>
   );

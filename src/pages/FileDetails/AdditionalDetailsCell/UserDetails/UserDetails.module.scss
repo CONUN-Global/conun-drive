@@ -1,0 +1,53 @@
+.UserDetails {
+  align-items: center;
+  border-bottom: 1px solid var(--grey-button-color);
+  box-sizing: border-box;
+  display: flex;
+  height:50px;
+  padding:5px;
+  width: 100%;
+}
+
+.CopyBtn {
+  border:1px solid black;
+  height:8px;
+  margin-left:5px;
+  width:8px;
+}
+
+.FollowBtn {
+
+  background-color: var(--grey-button-color);
+  border-radius: 20px;
+  box-sizing: border-box;
+  color:white;
+  font-size: 7pt;
+  height:11px;
+  padding:3px;
+  width:27px;
+}
+.IDBits {
+  display:flex;
+  align-items: center;
+  height:100%;
+}
+
+.IDHash {
+  font-size: 8pt;;
+}
+
+.ProfilePic {
+  background-color: cadetblue;
+  border-radius: 50%;
+  height:30px;
+  width:30px;
+  
+}
+
+.Text {
+  align-self: flex-start;
+  align-items: center;
+  width:140px;
+  margin:10px 0 0 10px;
+  display:flex;
+}
