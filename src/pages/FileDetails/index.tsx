@@ -1,4 +1,7 @@
 import React from "react";
+
+import MainCell from "./MainCell";
+
 import style from "./FileDetails.module.scss";
 
 function FileDetails() {
@@ -8,24 +11,9 @@ function FileDetails() {
         {/* Side Column */}
         <div className={style.Cell}>
           <div className={style.AddImage}>extra</div>
-          <div className={style.AddImage}>extra</div>
-          <div className={style.AddImage}>extra</div>
         </div>
         {/* Main Column */}
-        <div className={style.Cell}>
-          <div className={style.MainImage}>main image</div>
-          <div className={style.LikeBar}>Uploaded Today</div>
-          <div className={style.ItemTitle}>File Title</div>
-          <div className={style.FileProperties}>
-            <span className={style.key}>ZIP File Contents</span>
-            <span className={style.value}>some kb</span>
-            <span className={style.key}>Download Speed</span>
-            <span className={style.value}>Some kb/s</span>
-          </div>
-          <div className={style.PurchaseControls}>
-            <span>Purchase Button</span>
-          </div>
-        </div>
+        <MainCell />
         {/* Additional Details Column */}
         <div className={style.Cell}>
           {/* User Details */}

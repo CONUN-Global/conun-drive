@@ -1,0 +1,28 @@
+.Cell {
+  align-items: center;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  margin:10px;
+
+}
+
+.ItemTitle {
+  box-sizing: border-box;
+  font-size: 14pt;
+  font-weight: 600;
+  padding:5px;
+  width:100%;
+}
+
+.MainImage {
+  background-color: blueviolet;
+  border:1px solid black;
+  border-radius: 10px;
+  box-sizing: border-box;
+  width:356px;
+  height:200px;
+
+  margin:5px;
+
+}
