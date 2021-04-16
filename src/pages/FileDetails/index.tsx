@@ -3,16 +3,14 @@ import React from "react";
 import MainCell from "./MainCell";
 import AdditionalDetailsCell from "./AdditionalDetailsCell";
 
-import style from "./FileDetails.module.scss";
+import styles from "./FileDetails.module.scss";
 
 function FileDetails() {
   return (
-    <div className={style.Background}>
-      <div className={style.Layout}>
+    <div className={styles.Background}>
+      <div className={styles.Layout}>
         {/* Side Column */}
-        <div className={style.Cell}>
-          <div className={style.AddImage}>extra</div>
-        </div>
+        {/* <div className={styles.Cell}>{"<-"}</div> */}
         {/* Main Column */}
         <MainCell />
         {/* Additional Details Column */}

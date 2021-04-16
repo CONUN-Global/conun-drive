@@ -1,14 +1,14 @@
 import React from "react";
 
-import style from "./FileProperties.module.scss";
+import styles from "./FileProperties.module.scss";
 
 function FileProperties() {
   return (
-    <div className={style.FileProperties}>
-      <span className={style.Key}>ZIP File Contents</span>
-      <span className={style.Value}>175 kb</span>
-      <span className={style.Key}>Download Speed</span>
-      <span className={style.Value}>10 kb/s</span>
+    <div className={styles.FileProperties}>
+      <span className={styles.Key}>ZIP File Contents</span>
+      <span className={styles.Value}>175 kb</span>
+      <span className={styles.Key}>Download Speed</span>
+      <span className={styles.Value}>10 kb/s</span>
     </div>
   );
 }
