@@ -34,9 +34,11 @@ function FileBox({ file }: FileBoxProps) {
         <div className={styles.Top}>
           <p className={styles.Likes}>
             <Heart className={styles.Heart} />
-            389
+            {file?.content_stats?.likes_cnt}
           </p>
-          <p className={styles.Downloads}>12563 Downloads</p>
+          <p className={styles.Downloads}>
+            {file?.content_stats?.downloads_cnt} Downloads
+          </p>
         </div>
         <p className={styles.FileName}>{file.name}</p>
       </div>
