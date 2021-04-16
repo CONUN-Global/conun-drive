@@ -1,11 +1,11 @@
 import React from "react";
 
 import UserDetails from "./UserDetails";
-
-import styles from "./AdditionalDetailsCell.module.scss";
 import Description from "./Description";
 import TagsBox from "./TagsBox";
 import InsightsBox from "./InsightsBox";
+
+import styles from "./AdditionalDetailsCell.module.scss";
 
 function AdditionalDetailsCell() {
   return (
@@ -13,11 +13,7 @@ function AdditionalDetailsCell() {
       <UserDetails />
       <Description />
       <TagsBox />
-      {/* Insights */}
       <InsightsBox />
-      {/* Extra */}
-
-      {/* End */}
     </div>
   );
 }
