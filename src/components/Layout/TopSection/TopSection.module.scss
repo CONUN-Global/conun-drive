@@ -54,7 +54,7 @@
 
       & .Icon {
         height: 15px;
-        fill: #a6a6a6;
+        fill: var(--grey-button-color);
       }
     }
 
@@ -67,7 +67,7 @@
 
       & .Icon {
         height: 18px;
-        fill: #a6a6a6;
+        fill: var(--grey-button-color);
       }
     }
   }
