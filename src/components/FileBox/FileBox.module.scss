@@ -2,9 +2,11 @@
   display: flex;
   flex-direction: column;
   background-color: #fff;
-  height: 219px;
+  height: 154px;
   width: 189px;
   border-radius: 3px;
+  text-decoration: none;
+  color: #000;
 
   & .FileImage {
     height: 106px;

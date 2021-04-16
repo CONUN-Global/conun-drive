@@ -1,8 +1,6 @@
 import React from "react";
 import { useQuery } from "react-query";
-
-import Button from "../Button";
-
+import { Link } from "react-router-dom";
 import { FileProps } from "../../types";
 
 import Heart from "../../assets/icons/heart.svg";
@@ -30,11 +28,7 @@ function FileBox({ file }: FileBoxProps) {
   );
 
   return (
-    <Button
-      className={styles.FileBox}
-      noStyle
-      onClick={() => console.log("kjhalsdfasdjklhasdfkjljjads")}
-    >
+    <Link to={`file/${file?.id}`} className={styles.FileBox}>
       <img className={styles.FileImage} src={data} alt={file.name} />
       <div className={styles.InfoSection}>
         <div className={styles.Top}>
@@ -46,7 +40,7 @@ function FileBox({ file }: FileBoxProps) {
         </div>
         <p className={styles.FileName}>{file.name}</p>
       </div>
-    </Button>
+    </Link>
   );
 }
 
