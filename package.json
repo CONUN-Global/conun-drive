@@ -87,6 +87,7 @@
     "libp2p": "^0.30.12",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-indiana-drag-scroll": "^2.0.1",
     "react-query": "^3.13.6",
     "react-router-dom": "^5.2.0",
     "uint8arrays": "^2.1.4"
