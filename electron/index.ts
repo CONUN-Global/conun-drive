@@ -32,6 +32,8 @@ const createWindow = async (): Promise<void> => {
     },
   });
 
+  mainWindow.removeMenu();
+
   try {
     node = await IPFS.create({
       libp2p: {

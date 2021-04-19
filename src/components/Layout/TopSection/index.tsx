@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import Button from "../../Button";
 
@@ -24,9 +25,9 @@ function TopSection() {
         </div>
       </div>
       <div className={styles.ActionsBar}>
-        <Button className={styles.ActionButtonAdd} variant="grey">
+        <Link className={styles.ActionButtonAdd} to="/file-upload">
           <AddIcon className={styles.Icon} />
-        </Button>
+        </Link>
         <Button className={styles.ActionButton} variant="grey">
           <span className={styles.OnlineCircle} /> 44.000 Peers Online
         </Button>

@@ -1,6 +1,5 @@
 .Layout {
   background-color: var(--bg);
   padding: 16px 30px;
-  min-height: calc(100vh - 32px);
-  min-width: calc(100vw - 60px);
+  height: calc(100vh - 32px);
 }

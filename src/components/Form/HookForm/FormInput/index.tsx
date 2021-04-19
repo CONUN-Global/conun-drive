@@ -1,0 +1,60 @@
+import React, { InputHTMLAttributes } from "react";
+import classNames from "classnames";
+import { FieldError } from "react-hook-form";
+
+import styles from "./FormInput.module.scss";
+
+import inputStyles from "../../Input/Input.module.scss";
+
+interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
+  register: any;
+  name: string;
+  round?: boolean;
+  label?: string;
+  error?: FieldError | undefined;
+  wrapperStyles?: string;
+}
+
+function FormInput({
+  id,
+  type = "text",
+  name,
+  label,
+  error,
+  register,
+  className,
+  wrapperStyles,
+  round,
+  ...props
+}: FormInputProps) {
+  return (
+    <div
+      className={classNames(
+        inputStyles.InputWrapper,
+        wrapperStyles,
+        {
+          [styles.hasError]: !!error?.message,
+        },
+        {
+          [inputStyles.round]: round,
+        }
+      )}
+    >
+      {!!label && (
+        <label htmlFor={id} className={inputStyles.Label}>
+          {label}
+        </label>
+      )}
+      <input
+        id={id}
+        type={type}
+        className={classNames(inputStyles.Input, className)}
+        {...register(name)}
+        {...props}
+      />
+      {error?.message && <span className={styles.Error}>{error.message}</span>}
+    </div>
+  );
+}
+
+export default FormInput;
