@@ -19,7 +19,7 @@ function AdditionalDetailsCell({ file }: DetailsProps) {
         avatar={file?.user.avatar}
       />
       <Description descriptionHash={file?.info.description} />
-      <TagsBox />
+      <TagsBox tags={file?.tags} />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 export interface FileProps {
   id: number;
   name: string;
+  tags: Array<string>;
   info: {
     cid: string;
     description: string;
