@@ -6,6 +6,7 @@ import instance from "../../../axios/instance";
 import customStyles from "../styles";
 
 interface TagsSelectProps {
+  value: unknown[];
   onChange: (values: any) => void;
   isMulti?: boolean;
   formatCreateLabel?: (value: string) => string;

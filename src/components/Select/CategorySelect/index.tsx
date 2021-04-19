@@ -1,12 +1,17 @@
 import React from "react";
 import { useQuery } from "react-query";
-import Select from "react-select";
+import Select, { OptionTypeBase } from "react-select";
 
 import instance from "../../../axios/instance";
 
 import customStyles from "../styles";
 
-function CategorySelect() {
+interface CategorySelectProps {
+  value: any;
+  onChange: () => void;
+}
+
+function CategorySelect({ ...props }: CategorySelectProps) {
   const { data } = useQuery("get-all-categories", async () => {
     const { data } = await instance.get("/cate/get_all");
     return data;
@@ -20,6 +25,7 @@ function CategorySelect() {
       }
       placeholder=""
       styles={customStyles}
+      {...props}
     />
   );
 }

@@ -6,7 +6,12 @@ import instance from "../../../axios/instance";
 
 import customStyles from "../styles";
 
-function TypeSelect() {
+interface TypeSelectProps {
+  value: any;
+  onChange: () => void;
+}
+
+function TypeSelect({ ...props }: TypeSelectProps) {
   const { data } = useQuery("get-all-types", async () => {
     const { data } = await instance.get("/content_type/get_all");
     return data;
@@ -20,6 +25,7 @@ function TypeSelect() {
       }
       placeholder=""
       styles={customStyles}
+      {...props}
     />
   );
 }

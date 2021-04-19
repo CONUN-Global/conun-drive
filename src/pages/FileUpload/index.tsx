@@ -1,5 +1,5 @@
 import React from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
 import FormInput from "../../components/Form/HookForm/FormInput";
 import Dropzone from "../../components/Dropzone";
@@ -11,10 +11,12 @@ import Button from "../../components/Button";
 
 import styles from "./FileUpload.module.scss";
 
+const { api } = window;
+
 interface UploadFormData {
   title: string;
-  file: File;
-  thumbnail: File;
+  file: any;
+  thumbnail: any;
   description: string;
   tags: string[];
   category: string;
@@ -25,13 +27,22 @@ function FileUpload() {
   const {
     register,
     control,
+    handleSubmit,
     formState: { errors },
   } = useForm<UploadFormData>();
+
+  const onSubmit: SubmitHandler<UploadFormData> = async (data) => {
+    const res = await api.uploadFile({
+      description: data.description,
+      filePath: data.file.path,
+      previewPath: data.thumbnail.path,
+    });
+  };
 
   return (
     <div className={styles.FileUpload}>
       <p className={styles.Title}>Upload New Content</p>
-      <form className={styles.Form}>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.Form}>
         <div className={styles.InputsBox}>
           <div className={styles.UploadSection}>
             <div className={styles.AddFileInput}>
@@ -42,7 +53,7 @@ function FileUpload() {
                 render={({ field: { onChange } }) => (
                   <Dropzone
                     className={styles.DropzoneFile}
-                    onDrop={(file) => onChange(file)}
+                    onDrop={(files) => onChange(files[0])}
                     label="Drop your file"
                   />
                 )}
@@ -56,7 +67,7 @@ function FileUpload() {
                 render={({ field: { onChange } }) => (
                   <Dropzone
                     className={styles.DropzoneThumbnail}
-                    onDrop={(file) => onChange(file)}
+                    onDrop={(files) => onChange(files[0])}
                     label="Drop your thumbnail"
                     withPreview
                   />
@@ -79,20 +90,39 @@ function FileUpload() {
             />
             <div className={styles.SelectContainer}>
               <p className={styles.InputLabel}>5. Add Tags</p>
-              <TagsSelect
-                onChange={(values) => console.log(values)}
-                isMulti
-                formatCreateLabel={(value) => `Add new ${value} tag`}
-                placeholder=""
+              <Controller
+                name="tags"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <TagsSelect
+                    value={value}
+                    onChange={onChange}
+                    isMulti
+                    formatCreateLabel={(value) => `Add new ${value} tag`}
+                    placeholder=""
+                  />
+                )}
               />
             </div>
             <div className={styles.SelectContainer}>
               <p className={styles.InputLabel}>6. Select Category</p>
-              <CategorySelect />
+              <Controller
+                name="category"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <CategorySelect value={value} onChange={onChange} />
+                )}
+              />
             </div>
             <div className={styles.SelectContainer}>
               <p className={styles.InputLabel}>6. Select Type</p>
-              <TypeSelect />
+              <Controller
+                name="type"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <TypeSelect value={value} onChange={onChange} />
+                )}
+              />
             </div>
           </div>
         </div>
