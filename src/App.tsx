@@ -11,7 +11,7 @@ import styles from "./App.module.scss";
 function App() {
   return (
     <Switch>
-      <Route path="/file/:hash">
+      <Route path="/file/:id">
         <FileDetails />
       </Route>
       <Route path="/file-upload">
