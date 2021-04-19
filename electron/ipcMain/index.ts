@@ -20,6 +20,22 @@ ipcMain.handle("get-file-preview", async (_, hash) => {
   }
 });
 
+ipcMain.handle("get-file-description", async (_, hash) => {
+  try {
+    const description = concat(await all(node.cat(hash)));
+
+    return {
+      success: true,
+      description,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: String(error),
+    };
+  }
+});
+
 ipcMain.handle("download-file", async (_, hash) => {
   try {
     // eslint-disable-next-line
