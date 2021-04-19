@@ -32,7 +32,10 @@ function MainCell({ file }: MainCellProps) {
       <div className={styles.MainImage}>
         <img className={styles.MainImage} src={data}></img>
       </div>
-      <LikeBar />
+      <LikeBar
+        downloads={file?.content_stats.downloads_cnt}
+        likes={file?.content_stats.likes_cnt}
+      />
       <div className={styles.ItemTitle}>{file?.name}</div>
       <FileProperties />
       <div className={styles.PurchaseControls}>

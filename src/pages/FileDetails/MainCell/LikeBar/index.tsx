@@ -16,11 +16,11 @@ function LikeControls({ likes }: { likes: number }) {
   );
 }
 
-function LikeBar() {
+function LikeBar({ downloads, likes }: { downloads: number; likes: number }) {
   return (
     <div className={styles.LikeBar}>
-      <div className={styles.Uploaded}>1,298 Total Downloads</div>
-      <LikeControls likes={873} />
+      <div className={styles.Uploaded}>{downloads} Total Downloads</div>
+      <LikeControls likes={likes} />
     </div>
   );
 }
