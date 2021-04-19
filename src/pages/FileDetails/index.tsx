@@ -43,7 +43,7 @@ function FileDetails() {
       <div className={styles.Layout}>
         <MainCell file={data?.data} />
         {/* Additional Details Column */}
-        <AdditionalDetailsCell />
+        <AdditionalDetailsCell file={data?.data} />
       </div>
     </div>
   );

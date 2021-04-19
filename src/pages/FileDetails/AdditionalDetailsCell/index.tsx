@@ -5,11 +5,19 @@ import Description from "./Description";
 import TagsBox from "./TagsBox";
 
 import styles from "./AdditionalDetailsCell.module.scss";
+import { FileProps } from "../../../types";
 
-function AdditionalDetailsCell() {
+interface DetailsProps {
+  file: FileProps;
+}
+
+function AdditionalDetailsCell({ file }: DetailsProps) {
   return (
     <div className={styles.Cell}>
-      <UserDetails />
+      <UserDetails
+        walletAddress={file?.user.wallet_id}
+        avatar={file?.user.avatar}
+      />
       <Description />
       <TagsBox />
     </div>

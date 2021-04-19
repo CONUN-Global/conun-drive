@@ -33,17 +33,18 @@
   justify-content: space-between;
   height: 100%;
   font-size: 14px;
-  width:100%;
-
+  width: 100%;
 }
 
 .IDHash {
-  font-weight:300;
+  font-weight: 300;
+  width: 20ch;
+  overflow: hidden;
 }
 
 .Label {
-  font-weight:500;
-  margin-right:10px;
+  font-weight: 500;
+  margin-right: 10px;
 }
 
 .ProfilePic {

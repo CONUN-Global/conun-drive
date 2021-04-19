@@ -17,4 +17,9 @@ export interface FileProps {
     downloads_cnt: 0;
     rate: number;
   };
+
+  user: {
+    avatar: string;
+    wallet_id: string;
+  };
 }
