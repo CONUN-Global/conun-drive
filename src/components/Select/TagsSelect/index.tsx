@@ -1,27 +1,9 @@
 import React from "react";
+import { useMutation } from "react-query";
 
 import AsyncCreatableSelect from "react-select/async-creatable";
+import instance from "../../../axios/instance";
 import customStyles from "../styles";
-
-const colourOptions = [
-  { label: "red", value: "red" },
-  { label: "blue", value: "blue" },
-  { label: "yellow", value: "yellow" },
-  { label: "purple", value: "purple" },
-];
-
-const filterColors = (inputValue: string) => {
-  return colourOptions.filter((i) =>
-    i.label.toLowerCase().includes(inputValue.toLowerCase())
-  );
-};
-
-const promiseOptions = (inputValue) =>
-  new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(filterColors(inputValue));
-    }, 1000);
-  });
 
 interface TagsSelectProps {
   onChange: (values: any) => void;
@@ -31,6 +13,25 @@ interface TagsSelectProps {
 }
 
 function TagsSelect({ ...props }: TagsSelectProps) {
+  const { mutateAsync: search } = useMutation(async (inputValue) => {
+    const { data } = await instance.get(
+      `/search/tag/autocomplete?tag=${inputValue}`
+    );
+    return data;
+  });
+
+  const promiseOptions = (inputValue) =>
+    new Promise((resolve) => {
+      setTimeout(async () => {
+        let data;
+        if (inputValue) {
+          data = await search(inputValue);
+        }
+        console.log(`data`, data);
+        resolve(data?.data?.map((tag) => ({ value: tag, label: tag })) ?? []);
+      }, 1000);
+    });
+
   return (
     <AsyncCreatableSelect
       cacheOptions
