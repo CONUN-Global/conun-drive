@@ -2,13 +2,20 @@ import React from "react";
 
 import styles from "./FileProperties.module.scss";
 
-function FileProperties() {
+type FilePropProps = {
+  fileExt: string;
+  fileSize: string | number;
+  created: string;
+};
+
+function FileProperties({ fileExt, fileSize, created }: FilePropProps) {
   return (
     <div className={styles.FileProperties}>
-      <span className={styles.Property}>ZIP File Contents 175 kb</span>
-      <span className={styles.Property}>Download Speed 10 kb/s</span>
-      <span className={styles.Property}>Uploaded May 24, 2021</span>
-      <span className={styles.Property}>Updated July 15, 2021</span>
+      <span className={styles.Property}>File Type: {fileExt}</span>
+      <span className={styles.Property}>File Size: {fileSize} kb</span>
+      <span className={styles.Property}>
+        Uploaded: {new Date(created).toLocaleString()}
+      </span>
     </div>
   );
 }

@@ -37,7 +37,11 @@ function MainCell({ file }: MainCellProps) {
         likes={file?.content_stats.likes_cnt}
       />
       <div className={styles.ItemTitle}>{file?.name}</div>
-      <FileProperties />
+      <FileProperties
+        fileExt={file?.info.ext}
+        fileSize={file?.info.size}
+        created={file?.info.created_at}
+      />
       <div className={styles.PurchaseControls}>
         <Button className={styles.PurchaseButton} type="button">
           Download

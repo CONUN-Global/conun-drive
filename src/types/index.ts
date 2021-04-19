@@ -9,6 +9,7 @@ export interface FileProps {
     public_hash: string;
     size: string;
     thumbnail: string;
+    created_at: string;
   };
 
   content_stats: {
