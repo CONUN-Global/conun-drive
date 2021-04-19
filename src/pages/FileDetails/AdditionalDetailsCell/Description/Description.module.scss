@@ -2,8 +2,7 @@
   box-sizing: border-box;
   width: 100%;
   position: relative;
-  padding: 15px 0;
-  border-bottom: 1px solid var(--grey-button-color);
+  margin: 22px;
 }
 
 .BoxTitle {
@@ -13,31 +12,21 @@
 }
 
 .DescriptionText {
+  padding:0 0 20px 0 ;
   color: var(--grey-button-color);
-  font-size: 10pt;
-  height: 130px;
-  overflow-y: scroll;
+  font-size: 14px;
+  line-height: 18px;
+  max-height: 300px;
+  overflow-y: auto;
   width: 265px;
 }
-.DescriptionText:after {
-  content: "";
-  width: 100%;
-  height: 100px;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  background: linear-gradient(transparent, #e1e1e1);
-}
+// .DescriptionText:after {
+//   content: "";
+//   width: 100%;
+//   height: 100px;
+//   position: absolute;
+//   left: 0;
+//   bottom: 0;
+//   background: linear-gradient(transparent,white);
+// }
 
-.Cover {
-  position: relative;
-  content: " ";
-  bottom: 0px;
-  background: linear-gradient(transparent, #e1e1e1);
-  width: 118px;
-  height: 50px;
-}
-
-.Show {
-  cursor: pointer;
-}

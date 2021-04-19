@@ -11,10 +11,14 @@ function MainCell() {
     <div className={styles.Cell}>
       <div className={styles.MainImage}>main image</div>
       <LikeBar />
-      <div className={styles.ItemTitle}>File Title</div>
+      <div className={styles.ItemTitle}>
+        Abstract Original Art - Red, Yellow, blue 24x14
+      </div>
       <FileProperties />
       <div className={styles.PurchaseControls}>
-        <Button>Purchase</Button>
+        <Button className={styles.PurchaseButton} type="button">
+          Download
+        </Button>
       </div>
     </div>
   );

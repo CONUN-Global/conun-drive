@@ -1,11 +1,8 @@
 .FileProperties {
   color: var(--grey-button-color);
-  display:grid;
-  grid-template-columns:100px 1fr;
-  font-size:9pt;
-  width:100%;
-  
-  & span {
-    margin:5px;
-  }
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  margin-top: 10px;
+  width: 100%;
 }

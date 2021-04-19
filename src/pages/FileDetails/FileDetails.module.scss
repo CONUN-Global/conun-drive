@@ -1,33 +1,33 @@
 .Background {
   background-color: var(--bg);
-  background-color: #e1e1e1;
+  background-color: white;
   border-radius: 5px;
+  box-sizing: border-box;
   display: flex;
-  height: 600px;
+  height: 596px;
   justify-content: center;
   padding: 43px;
+  position:relative;
   width: 740px;
 }
 
+.BackButton {
+  position:absolute;
+  top:21px;
+  left:21px;
+}
+
+.Icon {
+  width:13px;
+  height:11px;
+  fill:var(--grey-button-color);
+}
+
 .Layout {
-  height: 500px;
+  height: 596px;
   display: grid;
-  gap: 0 24px;
-  grid-template-columns: 392px 265px;
+  gap: 0 38px;
+  grid-template-columns: 348px 265px;
   // I need the actual values here
 }
 
-.Cell {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  // justify-content: center;
-}
-
-.AddImage {
-  background-color: blanchedalmond;
-  border-radius: 5px;
-  height: 46px;
-  text-align: center;
-  width: 100%;
-}

@@ -1,7 +1,8 @@
 .TagsBox {
-  border-bottom: 1px solid var(--grey-button-color);
+  border-top: 1px solid #E9EBEF;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   padding: 15px 0;
   width: 100%;
 }

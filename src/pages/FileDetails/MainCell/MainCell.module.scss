@@ -7,9 +7,8 @@
 
 .ItemTitle {
   box-sizing: border-box;
-  font-size: 14pt;
+  font-size:20px;
   font-weight: 600;
-  padding: 5px;
   width: 100%;
 }
 
@@ -18,10 +17,9 @@
   border: 1px solid black;
   border-radius: 10px;
   box-sizing: border-box;
-  width: 100%;
   height: 200px;
+  width: 100%;
 
-  // margin:5px;
 }
 
 .PurchaseControls {
@@ -30,8 +28,8 @@
   height: 100px;
   justify-content: center;
   width: 100%;
+}
 
-  & button {
-    width: 100px;
-  }
+.PurchaseButton {
+  width: 86px;
 }
