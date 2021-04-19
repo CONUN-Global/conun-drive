@@ -27,7 +27,6 @@ function TagsSelect({ ...props }: TagsSelectProps) {
         if (inputValue) {
           data = await search(inputValue);
         }
-        console.log(`data`, data);
         resolve(data?.data?.map((tag) => ({ value: tag, label: tag })) ?? []);
       }, 1000);
     });
