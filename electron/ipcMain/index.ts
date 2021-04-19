@@ -22,7 +22,7 @@ ipcMain.handle("get-file-preview", async (_, hash) => {
 
 ipcMain.handle("get-file-description", async (_, hash) => {
   try {
-    const description = concat(await all(node.cat(hash)));
+    const description = concat(await all(node.cat(hash, { timeout: 5000 })));
 
     return {
       success: true,

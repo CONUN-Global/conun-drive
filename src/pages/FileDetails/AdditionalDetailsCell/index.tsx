@@ -18,7 +18,7 @@ function AdditionalDetailsCell({ file }: DetailsProps) {
         walletAddress={file?.user.wallet_id}
         avatar={file?.user.avatar}
       />
-      <Description />
+      <Description descriptionHash={file?.info.description} />
       <TagsBox />
     </div>
   );

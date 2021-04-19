@@ -42,7 +42,6 @@ function FileDetails() {
       <BackButton />
       <div className={styles.Layout}>
         <MainCell file={data?.data} />
-        {/* Additional Details Column */}
         <AdditionalDetailsCell file={data?.data} />
       </div>
     </div>
