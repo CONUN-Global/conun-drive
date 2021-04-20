@@ -27,9 +27,9 @@ function BackButton() {
 }
 
 function UserDetails() {
-  const authorID = "67";
+  const authorID = "17";
 
-  const { data } = useQuery(["files", authorID], async () => {
+  const { data: uploadsData } = useQuery(["uploads", authorID], async () => {
     const formData = new FormData();
     formData.append("author", authorID);
     formData.append("order_by", "rate");
@@ -38,15 +38,26 @@ function UserDetails() {
     return data.data;
   });
 
-  console.log("USER DEETS: ", data);
+  const { data: downloadsData, error } = useQuery(
+    ["downloads", authorID],
+    async () => {
+      console.log("/content/downloaded-by/" + authorID + "?limit=" + LIMIT);
+      const { data } = await instance.get(
+        `/content/downloaded-by/${authorID}?limit=${LIMIT}`
+      );
+      return data.data;
+    }
+  );
+
+  console.log(error);
 
   return (
     <div className={styles.Background}>
       <BackButton />
       <div className={styles.Layout}>
         <UserInfo />
-        <FileCase title={"My Uploads"} data={data} />
-        <FileCase title={"My Downloads"} />
+        <FileCase title={"My Uploads"} data={uploadsData} />
+        <FileCase title={"My Downloads"} data={downloadsData} />
       </div>
     </div>
   );
