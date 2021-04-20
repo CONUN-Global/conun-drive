@@ -10,7 +10,7 @@ import CategorySelect from "../../components/Select/CategorySelect";
 import TypeSelect from "../../components/Select/TypeSelect";
 import Button from "../../components/Button";
 
-import getFileExtension from "../../components/helpers/getFileExtension";
+import getFileExtension from "../../helpers/getFileExtension";
 
 import styles from "./FileUpload.module.scss";
 
