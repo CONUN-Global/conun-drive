@@ -36,7 +36,6 @@ function FileDetails() {
     { enabled: !!id }
   );
 
-  console.log(`data`, data);
   return (
     <div className={styles.Background}>
       <BackButton />
