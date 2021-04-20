@@ -29,7 +29,7 @@ function TagsSelect({ ...props }: TagsSelectProps) {
           data = await search(inputValue);
         }
         resolve(data?.data?.map((tag) => ({ value: tag, label: tag })) ?? []);
-      }, 1000);
+      }, 100);
     });
 
   return (

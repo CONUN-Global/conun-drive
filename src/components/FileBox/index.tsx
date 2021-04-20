@@ -19,11 +19,12 @@ function FileBox({ file }: FileBoxProps) {
     async () => {
       const data = await api.getFilePreview(file?.info?.thumbnail);
 
-      const preview = new Blob([data.preview.buffer]);
+      const preview = new Blob([data?.preview?.buffer]);
       return URL.createObjectURL(preview);
     },
     {
       enabled: !!file?.info?.thumbnail,
+      refetchOnMount: true,
     }
   );
 

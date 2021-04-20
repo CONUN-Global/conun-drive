@@ -1,6 +1,6 @@
 .InputWrapper {
   display: inline-block;
-
+  position: relative;
   width: 100%;
 
   &.round {
@@ -9,9 +9,8 @@
 
   & .Input {
     background: var(--bg);
-    border: none;
     box-sizing: border-box;
-
+    border: none;
     padding: 3px 10px;
     display: block;
     line-height: 1.5em;

@@ -6,7 +6,6 @@ import styles from "./FormTextArea.module.scss";
 
 interface FormInputProps extends InputHTMLAttributes<HTMLTextAreaElement> {
   register: any;
-  name: string;
   round?: boolean;
   label?: string;
   error?: FieldError | undefined;
@@ -16,7 +15,6 @@ interface FormInputProps extends InputHTMLAttributes<HTMLTextAreaElement> {
 function FormTextArea({
   id,
   type = "text",
-  name,
   label,
   error,
   register,
@@ -30,9 +28,7 @@ function FormTextArea({
       className={classNames(
         styles.InputWrapper,
         wrapperStyles,
-        {
-          [styles.hasError]: !!error?.message,
-        },
+
         {
           [styles.round]: round,
         }
@@ -47,7 +43,7 @@ function FormTextArea({
         id={id}
         type={type}
         className={classNames(styles.Input, className)}
-        {...register(name)}
+        {...register}
         {...props}
       />
       {error?.message && <span className={styles.Error}>{error.message}</span>}

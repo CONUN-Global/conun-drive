@@ -8,7 +8,6 @@ import inputStyles from "../../Input/Input.module.scss";
 
 interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
   register: any;
-  name: string;
   round?: boolean;
   label?: string;
   error?: FieldError | undefined;
@@ -18,7 +17,6 @@ interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
 function FormInput({
   id,
   type = "text",
-  name,
   label,
   error,
   register,
@@ -32,9 +30,7 @@ function FormInput({
       className={classNames(
         inputStyles.InputWrapper,
         wrapperStyles,
-        {
-          [styles.hasError]: !!error?.message,
-        },
+
         {
           [inputStyles.round]: round,
         }
@@ -49,7 +45,7 @@ function FormInput({
         id={id}
         type={type}
         className={classNames(inputStyles.Input, className)}
-        {...register(name)}
+        {...register}
         {...props}
       />
       {error?.message && <span className={styles.Error}>{error.message}</span>}

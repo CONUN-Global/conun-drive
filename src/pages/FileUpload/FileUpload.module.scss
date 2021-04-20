@@ -24,6 +24,11 @@
 
         & .AddFileInput {
           margin-bottom: 21px;
+          position: relative;
+        }
+
+        & .AddThumbnailInput {
+          position: relative;
         }
       }
 
@@ -62,4 +67,24 @@
 .InputLabel {
   font-size: 14px;
   margin-bottom: 8px;
+}
+
+.SelectContainer {
+  position: relative;
+}
+
+.Error {
+  position: absolute;
+  color: var(--ui-red);
+  font-size: 11px;
+  bottom: -15px;
+  right: 0;
+}
+
+.FileError {
+  position: absolute;
+  color: var(--ui-red);
+  font-size: 11px;
+  bottom: -15px;
+  left: 0;
 }

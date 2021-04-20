@@ -5,6 +5,7 @@ import { useDropzone } from "react-dropzone";
 import styles from "./Dropzone.module.scss";
 
 interface DropzoneProps {
+  currentFile?: any;
   onDrop: (file: any) => void;
   className?: string;
   label?: string;
@@ -15,32 +16,31 @@ function Dropzone({
   onDrop,
   className,
   label = "Drop your file ",
+  currentFile,
   withPreview,
 }: DropzoneProps) {
-  const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
+  const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     multiple: false,
   });
 
-  const acceptedFile = acceptedFiles?.[0] ?? null;
-
   return (
     <div
       className={classNames(styles.Container, className, {
-        [styles.hasFile]: !!acceptedFile?.name,
+        [styles.hasFile]: !!currentFile?.name,
       })}
       {...getRootProps()}
     >
       <input {...getInputProps()} />
-      {acceptedFile?.name ? (
+      {currentFile?.name ? (
         withPreview ? (
           <img
-            src={URL.createObjectURL(acceptedFile)}
+            src={URL.createObjectURL(currentFile)}
             className={styles.Preview}
-            alt={acceptedFile?.name}
+            alt={currentFile?.name}
           />
         ) : (
-          <span className={styles.Label}>{acceptedFile?.name}</span>
+          <span className={styles.Label}>{currentFile?.name}</span>
         )
       ) : (
         <span className={styles.Label}>{label}</span>
