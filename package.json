@@ -58,6 +58,7 @@
     "@types/classnames": "^2.2.11",
     "@types/react": "^17.0.2",
     "@types/react-dom": "^17.0.1",
+    "@types/react-select": "^4.0.15",
     "@typescript-eslint/eslint-plugin": "^2.18.0",
     "@typescript-eslint/parser": "^2.18.0",
     "autoprefixer": "9.8.6",
@@ -78,6 +79,7 @@
     "@svgr/parcel-plugin-svgr": "^5.5.0",
     "@types/react-router-dom": "^5.1.7",
     "classnames": "^2.3.1",
+    "electron-fetch": "^1.7.3",
     "electron-is-dev": "^2.0.0",
     "electron-serve": "^1.1.0",
     "electron-squirrel-startup": "^1.0.0",
@@ -85,11 +87,14 @@
     "it-all": "^1.0.5",
     "jimp": "^0.16.1",
     "libp2p": "^0.30.12",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "react": "^16.8.0 || ^17.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0",
+    "react-dropzone": "^11.3.2",
+    "react-hook-form": "^7.2.1",
     "react-indiana-drag-scroll": "^2.0.1",
     "react-query": "^3.13.6",
     "react-router-dom": "^5.2.0",
+    "react-select": "^4.3.0",
     "uint8arrays": "^2.1.4"
   }
 }

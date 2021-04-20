@@ -6,4 +6,8 @@ contextBridge.exposeInMainWorld("api", {
   getFileDescription: (hash: string) =>
     ipcRenderer.invoke("get-file-description", hash),
   downloadFile: (hash: string) => ipcRenderer.invoke("download-file", hash),
+  uploadFile: (info: any) => ipcRenderer.invoke("upload-file", info),
+  listenToFileRegister: (fn: any) => {
+    ipcRenderer.on("is-registering-file", (e, ...args) => fn(...args));
+  },
 });

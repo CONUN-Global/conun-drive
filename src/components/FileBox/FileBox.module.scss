@@ -29,10 +29,14 @@
 
       & .Likes {
         display: flex;
+
         & .Heart {
           width: 7px;
           margin-right: 3px;
         }
+      }
+
+      & .Downloads {
       }
     }
 

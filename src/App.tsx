@@ -6,8 +6,6 @@ import FileUpload from "./pages/FileUpload";
 import Home from "./pages/Home";
 import UserDetails from "./pages/UserDetails";
 
-import styles from "./App.module.scss";
-
 function App() {
   return (
     <Switch>
