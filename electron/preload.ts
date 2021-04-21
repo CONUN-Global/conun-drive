@@ -7,6 +7,9 @@ contextBridge.exposeInMainWorld("api", {
     ipcRenderer.invoke("get-file-description", hash),
   downloadFile: (hash: string) => ipcRenderer.invoke("download-file", hash),
   uploadFile: (info: any) => ipcRenderer.invoke("upload-file", info),
+  likeContent: (args: any) => ipcRenderer.invoke("like-content", args),
+  getCurrentUser: (walletAddress: string) =>
+    ipcRenderer.invoke("get-current-user", walletAddress),
   listenToFileRegister: (fn: any) => {
     ipcRenderer.on("is-registering-file", (e, ...args) => fn(...args));
   },

@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
-import { FileProps } from "../../types";
 
-import Heart from "../../assets/icons/heart.svg";
+import Button from "../Button";
+
+import HeartFull from "../../assets/icons/heart-full.svg";
+import HeartEmpty from "../../assets/icons/heart-empty.svg";
+import Tooltip from "../Tooltip";
+
+import useLikeContent from "../../hooks/useLikeContent";
+import useCurrentUser from "../../hooks/useCurrentUser";
+
+import { FileProps } from "../../types";
 
 import styles from "./FileBox.module.scss";
 
@@ -14,6 +22,15 @@ export interface FileBoxProps {
 }
 
 function FileBox({ file }: FileBoxProps) {
+  const [localLikeStatus, setLocalLikeStatus] = useState(file?.is_liked);
+  const [localLikeCount, setLocalLikeCount] = useState(
+    file?.content_stats.likes_cnt
+  );
+
+  const { likeContent } = useLikeContent();
+
+  const { currentUser } = useCurrentUser();
+
   const { data } = useQuery(
     ["get-preview", file?.info?.thumbnail],
     async () => {
@@ -28,22 +45,51 @@ function FileBox({ file }: FileBoxProps) {
     }
   );
 
+  const handleLike = async () => {
+    await likeContent({
+      userId: currentUser?.id,
+      contentId: file?.id,
+      publicHash: file?.info?.public_hash,
+    });
+
+    setLocalLikeStatus(true);
+    setLocalLikeCount((prev) => prev + 1);
+  };
+
   return (
-    <Link to={`file/${file?.id}`} className={styles.FileBox}>
-      <img className={styles.FileImage} src={data} alt={file.name} />
+    <div className={styles.FileBox}>
+      <Link to={`file/${file?.id}`} className={styles.Link}>
+        <img className={styles.FileImage} src={data} alt={file.name} />
+      </Link>
       <div className={styles.InfoSection}>
         <div className={styles.Top}>
           <p className={styles.Likes}>
-            <Heart className={styles.Heart} />
-            {file?.content_stats?.likes_cnt}
+            {localLikeStatus ? (
+              <HeartFull className={styles.Heart} />
+            ) : (
+              <Tooltip id="like">
+                <Button
+                  noStyle
+                  type="button"
+                  onClick={handleLike}
+                  data-for="like"
+                  data-tip="Liking is permanent."
+                >
+                  <HeartEmpty className={styles.Heart} />
+                </Button>
+              </Tooltip>
+            )}
+            {localLikeCount}
           </p>
           <p className={styles.Downloads}>
             {file?.content_stats?.downloads_cnt} Downloads
           </p>
         </div>
-        <p className={styles.FileName}>{file.name}</p>
+        <Link to={`file/${file?.id}`} className={styles.Link}>
+          <p className={styles.FileName}>{file.name}</p>
+        </Link>
       </div>
-    </Link>
+    </div>
   );
 }
 

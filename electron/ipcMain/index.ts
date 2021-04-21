@@ -1,5 +1,6 @@
 import { ipcMain } from "electron";
 import fs from "fs";
+import fetch from "electron-fetch";
 import all from "it-all";
 import { concat } from "uint8arrays";
 
@@ -87,6 +88,41 @@ ipcMain.handle("upload-file", async (_, info) => {
     return {
       success: false,
       error: String(error),
+    };
+  }
+});
+
+ipcMain.handle("like-content", (_, args) => {
+  try {
+    process.send({
+      type: "like-content",
+      ccid: args?.publicHash,
+      user_id: args?.userId,
+      content_id: args?.contentId,
+    });
+  } catch (error) {
+    console.log(`error`, error);
+  }
+});
+
+ipcMain.handle("get-current-user", async (_, walletAddress) => {
+  try {
+    const res = await fetch("http://192.168.100.54:8000/api/user/auth", {
+      method: "POST",
+      body: JSON.stringify({ wallet_id: walletAddress }),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    const { data } = await res.json();
+
+    return {
+      success: true,
+      data,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      data: null,
     };
   }
 });
