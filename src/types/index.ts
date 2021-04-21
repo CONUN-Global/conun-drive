@@ -4,7 +4,7 @@ export interface FileProps {
   tags: string[];
   is_liked: boolean;
   info: {
-    cid: string;
+    content_hash: string;
     description: string;
     ext: string;
     file_name: string;

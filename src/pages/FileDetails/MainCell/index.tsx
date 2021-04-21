@@ -1,5 +1,7 @@
 import React from "react";
 
+import { saveAs } from "file-saver";
+
 import Button from "../../../components/Button";
 import LikeBar from "./LikeBar";
 import FileProperties from "./FileProperties";
@@ -8,6 +10,7 @@ import styles from "./MainCell.module.scss";
 import { FileProps } from "../../../types";
 import { useQuery } from "react-query";
 import trunc from "../../../helpers/trunc";
+import useDownloadFile from "../../../hooks/useDownloadFile";
 
 const { api } = window;
 interface MainCellProps {
@@ -15,6 +18,8 @@ interface MainCellProps {
 }
 
 function MainCell({ file }: MainCellProps) {
+  const { downloadFile, isLoading } = useDownloadFile();
+
   const { data } = useQuery(
     ["get-preview", file?.info?.thumbnail],
     async () => {
@@ -44,7 +49,17 @@ function MainCell({ file }: MainCellProps) {
         created={file?.info.created_at}
       />
       <div className={styles.PurchaseControls}>
-        <Button className={styles.PurchaseButton} type="button">
+        <Button
+          className={styles.PurchaseButton}
+          type="button"
+          loading={isLoading}
+          onClick={async () => {
+            const data: any = await downloadFile(file?.info.content_hash);
+            console.log(data);
+            const newFile = new Blob(data.file);
+            saveAs(newFile, file?.info.file_name);
+          }}
+        >
           Download
         </Button>
       </div>
