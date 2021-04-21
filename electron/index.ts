@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from "electron";
+import { app, BrowserWindow } from "electron";
 import fs from "fs";
 import path from "path";
 import IPFS from "ipfs-core";
@@ -33,6 +33,7 @@ const createWindow = async (): Promise<void> => {
     webPreferences: {
       nodeIntegration: false,
       preload: path.resolve(__dirname, "preload.js"),
+      webSecurity: false,
     },
   });
 
@@ -89,6 +90,7 @@ app.on("activate", () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 process.on("message", async (message) => {
+  console.log(`message`, message);
   if (message.type === "upload-success") {
     const descriptionHash = await node.add({
       content: message?.data?.description,
@@ -127,5 +129,9 @@ process.on("message", async (message) => {
     });
 
     mainWindow.webContents.send("is-registering-file", false);
+  }
+
+  if (message.type === "like-success") {
+    mainWindow.webContents.send("is-liking-file", false);
   }
 });
