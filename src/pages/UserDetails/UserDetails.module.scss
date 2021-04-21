@@ -1,31 +1,30 @@
-
 .Background {
   background-color: white;
   border-radius: 5px;
   box-sizing: border-box;
   display: flex;
-  height: 596px;
+  height: calc(596px - 60px);
   justify-content: center;
-  padding: 43px;
-  position:relative;
+  padding: 40px;
+  position: relative;
   width: 740px;
 }
 
 .BackButton {
-  position:absolute;
-  top:21px;
-  left:21px;
+  position: absolute;
+  top: 21px;
+  left: 21px;
 }
 
 .Icon {
-  width:13px;
-  height:11px;
-  fill:var(--grey-button-color);
+  width: 13px;
+  height: 11px;
+  fill: var(--grey-button-color);
 }
 
 .Layout {
-  height: 596px;
-  width:560px;
+  height: calc(596px - 60px);
+  width: 560px;
   display: flex;
   flex-direction: column;
   align-items: center;
