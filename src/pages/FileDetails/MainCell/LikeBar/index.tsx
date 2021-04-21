@@ -6,6 +6,7 @@ import styles from "./LikeBar.module.scss";
 import HeartIcon from "../../../../assets/icons/heart.svg";
 import useLikeContent from "../../../../hooks/useLikeContent";
 import useCurrentUser from "../../../../hooks/useCurrentUser";
+import Tooltip from "../../../../components/Tooltip";
 
 type LikeProps = {
   likes: number;
@@ -20,19 +21,23 @@ function LikeControls({ likes, publicHash, contentId }: LikeProps) {
 
   return (
     <div className={styles.Controls}>
-      <Button
-        noStyle
-        onClick={async () => {
-          const data = await likeContent({
-            userId: currentUser?.id,
-            contentId: contentId,
-            publicHash: publicHash,
-          });
-        }}
-      >
-        <HeartIcon className={styles.Icon} />
+      <Tooltip id="heart">
+        <Button
+          data-for="heart"
+          data-tip="Liking is permanent."
+          noStyle
+          onClick={async () => {
+            const data = await likeContent({
+              userId: currentUser?.id,
+              contentId: contentId,
+              publicHash: publicHash,
+            });
+          }}
+        >
+          <HeartIcon className={styles.Icon} />
+        </Button>
         <span className={styles.LikeNumber}>{likes}</span>
-      </Button>
+      </Tooltip>
     </div>
   );
 }
