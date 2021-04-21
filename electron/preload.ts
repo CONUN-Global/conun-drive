@@ -10,7 +10,4 @@ contextBridge.exposeInMainWorld("api", {
   listenToFileRegister: (fn: any) => {
     ipcRenderer.on("is-registering-file", (e, ...args) => fn(...args));
   },
-  listenToFileLike: (fn: any) => {
-    ipcRenderer.on("like-success", (e, ...args) => fn(...args));
-  },
 });

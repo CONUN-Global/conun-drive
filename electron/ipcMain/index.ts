@@ -46,7 +46,6 @@ ipcMain.handle("upload-file", async (_, info) => {
 });
 
 ipcMain.handle("like-content", (_, args) => {
-  mainWindow.webContents.send("is-liking-file", true);
   try {
     process.send({
       type: "like-content",
