@@ -1,22 +1,10 @@
 import React from "react";
-import { useQuery } from "react-query";
+import useGetDescription from "../../../../hooks/useGetDescription";
 
 import styles from "./Description.module.scss";
 
-const { api } = window;
-
 function Description({ descriptionHash }: { descriptionHash: string }) {
-  const { data } = useQuery(
-    ["get-description", descriptionHash],
-    async () => {
-      const data = await api.getFileDescription(descriptionHash);
-      const description = new TextDecoder("utf-8").decode(data?.description);
-      return description;
-    },
-    {
-      enabled: !!descriptionHash,
-    }
-  );
+  const { data } = useGetDescription(descriptionHash);
 
   return (
     <div className={styles.ItemDescription}>

@@ -16,6 +16,12 @@
   height: 18px;
   width: 15px;
 }
+.CopyIcon:hover {
+  filter: opacity(50%);
+}
+.CopyIcon:active {
+  filter: opacity(100%);
+}
 
 .FollowBtn {
   background-color: var(--grey-button-color);
@@ -38,8 +44,10 @@
 
 .IDHash {
   font-weight: 300;
-  width: 20ch;
+  width: 100%;
   overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .Label {
@@ -56,7 +64,6 @@
 .Text {
   align-self: flex-start;
   align-items: center;
-  width: 200px;
   margin: 10px 0 0 10px;
   display: flex;
 }

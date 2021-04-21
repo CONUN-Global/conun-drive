@@ -7,6 +7,7 @@ import FileProperties from "./FileProperties";
 import styles from "./MainCell.module.scss";
 import { FileProps } from "../../../types";
 import { useQuery } from "react-query";
+import trunc from "../../../helpers/trunc";
 
 const { api } = window;
 interface MainCellProps {
@@ -36,7 +37,7 @@ function MainCell({ file }: MainCellProps) {
         downloads={file?.content_stats.downloads_cnt}
         likes={file?.content_stats.likes_cnt}
       />
-      <div className={styles.ItemTitle}>{file?.name}</div>
+      <div className={styles.ItemTitle}>{file && trunc(file.name, 55)}</div>
       <FileProperties
         fileExt={file?.info.ext}
         fileSize={file?.info.size}
