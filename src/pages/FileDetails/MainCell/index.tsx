@@ -1,16 +1,18 @@
 import React from "react";
 
+import { useQuery } from "react-query";
 import { saveAs } from "file-saver";
 
 import Button from "../../../components/Button";
 import LikeBar from "./LikeBar";
 import FileProperties from "./FileProperties";
 
-import styles from "./MainCell.module.scss";
-import { FileProps } from "../../../types";
-import { useQuery } from "react-query";
-import trunc from "../../../helpers/trunc";
 import useDownloadFile from "../../../hooks/useDownloadFile";
+
+import { FileProps } from "../../../types";
+\import trunc from "../../../helpers/trunc";
+
+import styles from "./MainCell.module.scss";
 
 const { api } = window;
 interface MainCellProps {
@@ -41,6 +43,8 @@ function MainCell({ file }: MainCellProps) {
       <LikeBar
         downloads={file?.content_stats.downloads_cnt}
         likes={file?.content_stats.likes_cnt}
+        publicHash={file?.info.public_hash}
+        contentID={file?.id}
       />
       <div className={styles.ItemTitle}>{file && trunc(file.name, 55)}</div>
       <FileProperties
