@@ -7,6 +7,7 @@ import Button from "../../../components/Button";
 import LikeBar from "./LikeBar";
 import FileProperties from "./FileProperties";
 
+import useCurrentUser from "../../../hooks/useCurrentUser";
 import useDownloadFile from "../../../hooks/useDownloadFile";
 
 import { FileProps } from "../../../types";
@@ -14,12 +15,15 @@ import { FileProps } from "../../../types";
 
 import styles from "./MainCell.module.scss";
 
+
 const { api } = window;
 interface MainCellProps {
   file: FileProps;
 }
 
 function MainCell({ file }: MainCellProps) {
+
+  const { currentUser} = useCurrentUser()
   const { downloadFile, isLoading } = useDownloadFile();
 
   const { data } = useQuery(
@@ -44,7 +48,7 @@ function MainCell({ file }: MainCellProps) {
         downloads={file?.content_stats.downloads_cnt}
         likes={file?.content_stats.likes_cnt}
         publicHash={file?.info.public_hash}
-        contentID={file?.id}
+        contentId={file?.id}
       />
       <div className={styles.ItemTitle}>{file && trunc(file.name, 55)}</div>
       <FileProperties
@@ -58,8 +62,12 @@ function MainCell({ file }: MainCellProps) {
           type="button"
           loading={isLoading}
           onClick={async () => {
-            const data: any = await downloadFile(file?.info.content_hash);
-            console.log(data);
+            const data: any = await downloadFile({
+              hash: file?.info?.content_hash,
+              publicHash: file?.info?.public_hash,
+              userId: currentUser?.id,
+              contentId: file?.id
+            });
             const newFile = new Blob(data.file);
             saveAs(newFile, file?.info.file_name);
           }}

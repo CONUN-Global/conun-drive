@@ -1,12 +1,14 @@
 import React from "react";
 
 import Button from "../../../../components/Button";
+import Tooltip from "../../../../components/Tooltip";
 
-import styles from "./LikeBar.module.scss";
-import HeartIcon from "../../../../assets/icons/heart.svg";
 import useLikeContent from "../../../../hooks/useLikeContent";
 import useCurrentUser from "../../../../hooks/useCurrentUser";
-import Tooltip from "../../../../components/Tooltip";
+
+import HeartIcon from "../../../../assets/icons/heart.svg";
+
+import styles from "./LikeBar.module.scss";
 
 type LikeProps = {
   likes: number;
@@ -27,7 +29,7 @@ function LikeControls({ likes, publicHash, contentId }: LikeProps) {
           data-tip="Liking is permanent."
           noStyle
           onClick={async () => {
-            const data = await likeContent({
+            await likeContent({
               userId: currentUser?.id,
               contentId: contentId,
               publicHash: publicHash,

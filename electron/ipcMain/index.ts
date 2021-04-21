@@ -38,10 +38,10 @@ ipcMain.handle("get-file-description", async (_, hash) => {
   }
 });
 
-ipcMain.handle("download-file", async (_, hash) => {
+ipcMain.handle("download-file", async (_, args) => {
   try {
     // eslint-disable-next-line
-    for await (const file of node.get(hash)) {
+    for await (const file of node.get(args.hash)) {
       // eslint-disable-next-line
       if (!file.content) continue;
 
@@ -50,6 +50,17 @@ ipcMain.handle("download-file", async (_, hash) => {
       // eslint-disable-next-line
       for await (const chunk of file.content) {
         content.push(chunk);
+      }
+
+      try {
+        process.send({
+          type: "download-content",
+          ccid: args?.publicHash,
+          user_id: args?.userId,
+          content_id: args?.contentId,
+        });
+      } catch (error) {
+        //
       }
 
       return {
