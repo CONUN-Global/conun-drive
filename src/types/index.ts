@@ -1,6 +1,7 @@
 export interface FileProps {
   id: number;
   name: string;
+  is_liked: boolean;
   info: {
     cid: string;
     description: string;
@@ -10,7 +11,6 @@ export interface FileProps {
     size: string;
     thumbnail: string;
   };
-
   content_stats: {
     likes_cnt: number;
     downloads_cnt: 0;

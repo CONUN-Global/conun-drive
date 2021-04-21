@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from "electron";
+import { app, BrowserWindow } from "electron";
 import fs from "fs";
 import path from "path";
 import IPFS from "ipfs-core";
@@ -33,6 +33,7 @@ const createWindow = async (): Promise<void> => {
     webPreferences: {
       nodeIntegration: false,
       preload: path.resolve(__dirname, "preload.js"),
+      webSecurity: false,
     },
   });
 

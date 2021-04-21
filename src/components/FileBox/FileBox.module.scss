@@ -26,13 +26,16 @@
       color: var(--grey-button-color);
       font-size: 10px;
       margin-bottom: 6px;
+      font-size: 14px;
 
       & .Likes {
         display: flex;
+        align-items: center;
 
         & .Heart {
-          width: 7px;
+          height: 12px;
           margin-right: 3px;
+          z-index: 1000;
         }
       }
 
@@ -45,4 +48,9 @@
       width: fit-content;
     }
   }
+}
+
+.Link {
+  text-decoration: none;
+  color: currentColor;
 }
