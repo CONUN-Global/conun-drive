@@ -4,8 +4,8 @@ import UserDetails from "./UserDetails";
 import Description from "./Description";
 import TagsBox from "./TagsBox";
 
-import styles from "./AdditionalDetailsCell.module.scss";
 import { FileProps } from "../../../types";
+import styles from "./AdditionalDetailsCell.module.scss";
 
 interface DetailsProps {
   file: FileProps;

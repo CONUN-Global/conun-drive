@@ -1,22 +1,20 @@
 import React from "react";
-
-import { useQuery } from "react-query";
 import { saveAs } from "file-saver";
 
 import Button from "../../../components/Button";
 import LikeBar from "./LikeBar";
 import FileProperties from "./FileProperties";
 
+import useGetImage from "../../../hooks/useGetImage";
 import useCurrentUser from "../../../hooks/useCurrentUser";
 import useDownloadFile from "../../../hooks/useDownloadFile";
 
-import { FileProps } from "../../../types";
 import trunc from "../../../helpers/trunc";
 
-import styles from "./MainCell.module.scss";
-import useGetImage from "../../../hooks/useGetImage";
+import { FileProps } from "../../../types";
 
-const { api } = window;
+import styles from "./MainCell.module.scss";
+
 interface MainCellProps {
   file: FileProps;
 }

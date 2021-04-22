@@ -2,7 +2,6 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  // margin: 10px;
 }
 
 .ItemTitle {
@@ -19,14 +18,14 @@
   width: 100%;
 }
 
+.PurchaseButton {
+  width: 86px;
+}
+
 .PurchaseControls {
   align-items: center;
   display: flex;
   height: 100px;
   justify-content: center;
   width: 100%;
-}
-
-.PurchaseButton {
-  width: 86px;
 }
