@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import Button from "../../Button";
+import SearchBar from "./SearchBar";
 
 import AddIcon from "../../../assets/icons/add.svg";
 import SaveSearchIcon from "../../../assets/icons/save-search.svg";
@@ -17,12 +18,7 @@ function TopSection() {
           src="https://i.pravatar.cc/300"
           alt="user profile"
         />
-        <div className={styles.SearchBarContainer}>
-          <input className={styles.SearchBar} type="text" />
-          <Button noStyle className={styles.SaveButton}>
-            Save Search
-          </Button>
-        </div>
+        <SearchBar />
       </div>
       <div className={styles.ActionsBar}>
         <Link className={styles.ActionButtonAdd} to="/file-upload">

@@ -63,7 +63,7 @@ function FileBox({ file }: FileBoxProps) {
       </Link>
       <div className={styles.InfoSection}>
         <div className={styles.Top}>
-          <p className={styles.Likes}>
+          <div className={styles.Likes}>
             {localLikeStatus ? (
               <HeartFull className={styles.Heart} />
             ) : (
@@ -80,7 +80,7 @@ function FileBox({ file }: FileBoxProps) {
               </Tooltip>
             )}
             {localLikeCount}
-          </p>
+          </div>
           <p className={styles.Downloads}>
             {file?.content_stats?.downloads_cnt} Downloads
           </p>
