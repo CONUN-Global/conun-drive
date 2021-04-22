@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import Button from "../../components/Button";
 
@@ -26,7 +26,7 @@ function BackButton() {
 }
 
 function UserDetails() {
-  const authorID = "17";
+  const { id: authorID } = useParams<{ id: string }>();
 
   const { data: uploadsData } = useMyUploads({ authorID, LIMIT });
   const { data: downloadsData } = useMyDownloads({ authorID, LIMIT });

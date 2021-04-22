@@ -15,7 +15,7 @@ function App() {
       <Route path="/file-upload">
         <FileUpload />
       </Route>
-      <Route path="/user-details">
+      <Route path="/user-details/:id">
         <UserDetails />
       </Route>
       <Route path="/" exact>
