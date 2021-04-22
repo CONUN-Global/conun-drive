@@ -1,56 +1,69 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Button from "../../../../components/Button";
-
-import styles from "./LikeBar.module.scss";
-import HeartIcon from "../../../../assets/icons/heart.svg";
-import useLikeContent from "../../../../hooks/useLikeContent";
-import useCurrentUser from "../../../../hooks/useCurrentUser";
 import Tooltip from "../../../../components/Tooltip";
 
-type LikeProps = {
-  likes: number;
-  downloads?: number;
-  publicHash: string;
-  contentId: number;
-};
+import useLikeContent from "../../../../hooks/useLikeContent";
+import useCurrentUser from "../../../../hooks/useCurrentUser";
 
-function LikeControls({ likes, publicHash, contentId }: LikeProps) {
+import HeartFull from "../../../../assets/icons/heart-full.svg";
+import HeartEmpty from "../../../../assets/icons/heart-empty.svg";
+import styles from "./LikeBar.module.scss";
+import { FileProps } from "../../../../types";
+
+interface LikeProps {
+  file: FileProps;
+}
+
+function LikeControls({ file }: LikeProps) {
+  const [localLikeStatus, setLocalLikeStatus] = useState(file?.is_liked);
+  const [localLikeCount, setLocalLikeCount] = useState(
+    file?.content_stats.likes_cnt || 0
+  );
+
   const { currentUser } = useCurrentUser();
   const { likeContent } = useLikeContent();
 
+  const handleLike = async () => {
+    await likeContent({
+      userId: currentUser?.id,
+      contentId: file?.id,
+      publicHash: file?.info?.public_hash,
+    });
+
+    setLocalLikeStatus(true);
+    setLocalLikeCount((prev) => prev + 1);
+  };
+
   return (
     <div className={styles.Controls}>
-      <Tooltip id="heart">
-        <Button
-          data-for="heart"
-          data-tip="Liking is permanent."
-          noStyle
-          onClick={async () => {
-            const data = await likeContent({
-              userId: currentUser?.id,
-              contentId: contentId,
-              publicHash: publicHash,
-            });
-          }}
-        >
-          <HeartIcon className={styles.Icon} />
-        </Button>
-        <span className={styles.LikeNumber}>{likes}</span>
-      </Tooltip>
+      {localLikeStatus ? (
+        <HeartFull className={styles.Icon} />
+      ) : (
+        <Tooltip id="like">
+          <Button
+            noStyle
+            type="button"
+            onClick={handleLike}
+            data-for="like"
+            data-tip="Liking is permanent."
+          >
+            <HeartEmpty className={styles.Icon} />
+          </Button>
+        </Tooltip>
+      )}
+      <span className={styles.LikeNumber}>{localLikeCount}</span>
     </div>
   );
 }
 
-function LikeBar({ downloads, likes, publicHash, contentId }: LikeProps) {
+function LikeBar({ file }: LikeProps) {
   return (
     <div className={styles.LikeBar}>
-      <div className={styles.Uploaded}>{downloads} Total Downloads</div>
-      <LikeControls
-        likes={likes}
-        publicHash={publicHash}
-        contentId={contentId}
-      />
+      <div className={styles.Uploaded}>
+        {file?.content_stats.downloads_cnt} Total Downloads
+      </div>
+      <LikeControls file={file} />
     </div>
   );
 }

@@ -5,11 +5,13 @@ import Button from "../../../../components/Button";
 import styles from "./UserDetails.module.scss";
 import CopyIcon from "../../../../assets/icons/copy.svg";
 import NoAvatar from "../../../../assets/icons/no-avatar.svg";
+import useGetImage from "../../../../hooks/useGetImage";
 
 function Avatar({ avatar }: { avatar: string }) {
+  const { data: avatarImgSrc } = useGetImage(avatar);
+
   if (avatar) {
-    // return <img src={avatar} className={styles.Avatar} />;
-    return <NoAvatar className={styles.Avatar} />;
+    return <img src={avatarImgSrc} className={styles.Avatar} />;
   } else {
     return <NoAvatar className={styles.Avatar} />;
   }

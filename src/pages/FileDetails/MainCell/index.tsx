@@ -13,6 +13,7 @@ import { FileProps } from "../../../types";
 \import trunc from "../../../helpers/trunc";
 
 import styles from "./MainCell.module.scss";
+import useGetImage from "../../../hooks/useGetImage";
 
 const { api } = window;
 interface MainCellProps {
@@ -22,29 +23,15 @@ interface MainCellProps {
 function MainCell({ file }: MainCellProps) {
   const { downloadFile, isLoading } = useDownloadFile();
 
-  const { data } = useQuery(
-    ["get-preview", file?.info?.thumbnail],
-    async () => {
-      const data = await api.getFilePreview(file?.info?.thumbnail);
+  const { data:thumbImgSrc } = useGetImage(file?.info?.thumbnail)
 
-      const preview = new Blob([data.preview.buffer]);
-      return URL.createObjectURL(preview);
-    },
-    {
-      enabled: !!file?.info?.thumbnail,
-    }
-  );
-
-  return (
+    return (
     <div className={styles.Cell}>
       <div className={styles.MainImage}>
-        <img className={styles.MainImage} src={data}></img>
+        <img className={styles.MainImage} src={thumbImgSrc}></img>
       </div>
       <LikeBar
-        downloads={file?.content_stats.downloads_cnt}
-        likes={file?.content_stats.likes_cnt}
-        publicHash={file?.info.public_hash}
-        contentID={file?.id}
+        file={file}
       />
       <div className={styles.ItemTitle}>{file && trunc(file.name, 55)}</div>
       <FileProperties
