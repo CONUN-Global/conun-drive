@@ -8,6 +8,8 @@ import Protector from "libp2p/src/pnet";
 import isDev from "electron-is-dev";
 import serve from "electron-serve";
 
+import { DRIVE_SERVER } from "./const";
+
 import "./ipcMain";
 
 const loadURL = serve({ directory: "dist/parcel-build" });
@@ -121,7 +123,7 @@ process.on("message", async (message) => {
     };
 
     // upload to server
-    await fetch("http://192.168.100.54:8000/api/content/create", {
+    await fetch(`${DRIVE_SERVER}/content/create`, {
       method: "POST",
       body: JSON.stringify(body),
       headers: { "Content-Type": "application/json" },

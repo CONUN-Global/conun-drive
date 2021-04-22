@@ -14,6 +14,7 @@ import useCurrentUser from "../../hooks/useCurrentUser";
 import { FileProps } from "../../types";
 
 import styles from "./FileBox.module.scss";
+import useGetImage from "../../hooks/useGetImage";
 
 const { api } = window;
 
@@ -31,19 +32,7 @@ function FileBox({ file }: FileBoxProps) {
 
   const { currentUser } = useCurrentUser();
 
-  const { data } = useQuery(
-    ["get-preview", file?.info?.thumbnail],
-    async () => {
-      const data = await api.getFilePreview(file?.info?.thumbnail);
-
-      const preview = new Blob([data?.preview?.buffer]);
-      return URL.createObjectURL(preview);
-    },
-    {
-      enabled: !!file?.info?.thumbnail,
-      refetchOnMount: true,
-    }
-  );
+  const { data } = useGetImage(file?.info?.thumbnail);
 
   const handleLike = async () => {
     await likeContent({

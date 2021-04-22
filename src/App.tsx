@@ -9,7 +9,7 @@ import UserDetails from "./pages/UserDetails";
 function App() {
   return (
     <Switch>
-      <Route path="/file/:hash">
+      <Route path="/file/:id">
         <FileDetails />
       </Route>
       <Route path="/file-upload">
