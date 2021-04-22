@@ -22,6 +22,64 @@ ipcMain.handle("get-file-preview", async (_, hash) => {
   }
 });
 
+ipcMain.handle("get-file-description", async (_, hash) => {
+  try {
+    const description = concat(await all(node.cat(hash, { timeout: 5000 })));
+
+    return {
+      success: true,
+      description,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: String(error),
+    };
+  }
+});
+
+ipcMain.handle("download-file", async (_, args) => {
+  try {
+    // eslint-disable-next-line
+    for await (const file of node.get(args.hash)) {
+      // eslint-disable-next-line
+      if (!file.content) continue;
+
+      const content = [];
+
+      // eslint-disable-next-line
+      for await (const chunk of file.content) {
+        content.push(chunk);
+      }
+
+      try {
+        process.send({
+          type: "download-content",
+          ccid: args?.publicHash,
+          user_id: args?.userId,
+          content_id: args?.contentId,
+        });
+      } catch (error) {
+        //
+      }
+
+      return {
+        success: true,
+        file: content,
+      };
+    }
+
+    return {
+      success: false,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: String(error),
+    };
+  }
+});
+
 ipcMain.handle("upload-file", async (_, info) => {
   try {
     mainWindow.webContents.send("is-registering-file", true);

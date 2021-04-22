@@ -1,0 +1,31 @@
+.Cell {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.ItemTitle {
+  box-sizing: border-box;
+  font-size: 20px;
+  font-weight: 600;
+  width: 100%;
+}
+
+.MainImage {
+  border-radius: 10px;
+  box-sizing: border-box;
+  height: auto;
+  width: 100%;
+}
+
+.PurchaseButton {
+  width: 86px;
+}
+
+.PurchaseControls {
+  align-items: center;
+  display: flex;
+  height: 100px;
+  justify-content: center;
+  width: 100%;
+}

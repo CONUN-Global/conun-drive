@@ -6,6 +6,9 @@ import { serverUrl } from "../const";
 
 const instance = axios.create({
   baseURL: serverUrl,
+  headers: {
+    ["current-user"]: "67",
+  },
 });
 
 instance.interceptors.request.use(
