@@ -2,7 +2,7 @@ import React from "react";
 
 import styles from "./TagsBox.module.scss";
 
-function TagsBox({ tags }: { tags: Array<string> }) {
+function TagsBox({ tags }: { tags: string[] }) {
   return (
     <div className={styles.TagsBox}>
       {tags && tags.length > 0 ? (
