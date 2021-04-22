@@ -12,9 +12,11 @@ interface DetailsProps {
 }
 
 function AdditionalDetailsCell({ file }: DetailsProps) {
+  console.log(file);
   return (
     <div className={styles.Cell}>
       <UserDetails
+        userID={file?.user.id}
         walletAddress={file?.user.wallet_id}
         avatar={file?.user.avatar}
       />

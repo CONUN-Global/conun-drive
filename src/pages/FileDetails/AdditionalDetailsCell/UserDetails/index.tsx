@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import Button from "../../../../components/Button";
 
@@ -19,15 +20,21 @@ function Avatar({ avatar }: { avatar: string }) {
 }
 
 function UserDetails({
+  userID,
   walletAddress,
   avatar,
 }: {
+  userID: number;
   walletAddress: string;
   avatar: string;
 }) {
   return (
     <div className={styles.UserDetails}>
-      <Avatar avatar={avatar} />
+      <Link
+        to={`/user-details?user=${userID}&walletHash=${walletAddress}&avatar=${avatar}`}
+      >
+        <Avatar avatar={avatar} />
+      </Link>
       <div className={styles.Text}>
         <div className={styles.IDBits}>
           <div className={styles.Label}>ID</div>

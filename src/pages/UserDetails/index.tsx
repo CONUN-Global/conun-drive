@@ -1,17 +1,22 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import Button from "../../components/Button";
+import ProfileText from "./ProfileText";
+import ProfilePicture from "./ProfilePicture";
 
 import FileCase from "./FileCase";
 
 import styles from "./UserDetails.module.scss";
 import BackIcon from "../../assets/icons/back.svg";
-import UserInfo from "./UserInfo";
-import useMyUploads from "../../hooks/useMyUploads";
-import useMyDownloads from "../../hooks/useMyDownloads";
+import useGetUploads from "../../hooks/useGetUploads";
+import useGetDownloads from "../../hooks/useGetDownloads";
 
 const LIMIT = "3";
+
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 
 function BackButton() {
   return (
@@ -26,16 +31,26 @@ function BackButton() {
 }
 
 function UserDetails() {
-  const { id: authorID } = useParams<{ id: string }>();
+  const query = useQuery();
 
-  const { data: uploadsData } = useMyUploads({ authorID, LIMIT });
-  const { data: downloadsData } = useMyDownloads({ authorID, LIMIT });
+  console.log(useLocation());
+
+  const authorID = query.get("user");
+  const walletHash = query.get("walletHash");
+  const avatar = query.get("avatar");
+
+  const { data: uploadsData } = useGetUploads({ authorID, limit: LIMIT });
+  const { data: downloadsData } = useGetDownloads({ authorID, limit: LIMIT });
+  console.log("With user ", authorID, " get data ", uploadsData);
 
   return (
     <div className={styles.Background}>
       <BackButton />
       <div className={styles.Layout}>
-        <UserInfo />
+        <div className={styles.UserInfo}>
+          <ProfilePicture avatar={avatar} />
+          <ProfileText authorID={authorID} walletHash={walletHash} />
+        </div>
         <FileCase title={"My Uploads"} data={uploadsData} />
         <FileCase title={"My Downloads"} data={downloadsData} />
       </div>

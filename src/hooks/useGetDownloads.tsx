@@ -1,11 +1,11 @@
 import { useQuery } from "react-query";
 import instance from "../axios/instance";
 
-function useMyDownloads({ authorID, LIMIT }) {
+function useGetDownloads({ authorID, limit }) {
   const { data, isLoading } = useQuery(["downloads", authorID], async () => {
-    console.log("/content/downloaded-by/" + authorID + "?limit=" + LIMIT);
+    console.log("/content/downloaded-by/" + authorID + "?limit=" + limit);
     const { data } = await instance.get(
-      `/content/downloaded-by/${authorID}?limit=${LIMIT}`
+      `/content/downloaded-by/${authorID}?limit=${limit}`
     );
     return data.data;
   });
@@ -13,4 +13,4 @@ function useMyDownloads({ authorID, LIMIT }) {
   return { data, isLoading };
 }
 
-export default useMyDownloads;
+export default useGetDownloads;

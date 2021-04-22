@@ -18,7 +18,9 @@ function TopSection() {
   return (
     <div className={styles.TopSection}>
       <div className={styles.UserAndSearchBar}>
-        <Link to={`/user-details/${currentUser?.id}`}>
+        <Link
+          to={`/user-details?user=${currentUser?.id}&walletHash=${currentUser?.wallet_id}&avatar=${currentUser?.avatar}`}
+        >
           {avatarImgSrc ? (
             <img
               className={styles.UserPicture}
