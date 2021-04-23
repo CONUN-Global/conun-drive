@@ -8,7 +8,7 @@ function useGetUploads({ authorID, limit }) {
     formData.append("order_by", "rate");
     formData.append("limit", limit);
     const { data } = await instance.post("/content/get-contents-by", formData);
-    return data.data;
+    return data.data.data;
   });
   return { data, isLoading };
 }

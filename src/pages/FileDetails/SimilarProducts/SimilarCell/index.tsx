@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import trunc from "../../../../helpers/trunc";
 
 import useGetImage from "../../../../hooks/useGetImage";
 
@@ -18,7 +19,7 @@ function SimilarCell({ file }: SimProps) {
     <Link to={`/file/${file.id}`}>
       <div className={styles.SimilarCell}>
         <img src={thumbImgSrc} className={styles.Thumbnail} />
-        <div className={styles.Text}>{file.name}</div>
+        <div className={styles.Text}>{trunc(file.name, 70)}</div>
       </div>
     </Link>
   );

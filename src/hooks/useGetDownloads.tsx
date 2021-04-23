@@ -6,7 +6,7 @@ function useGetDownloads({ authorID, limit }) {
     const { data } = await instance.get(
       `/content/downloaded-by/${authorID}?limit=${limit}`
     );
-    return data.data;
+    return data.data.data;
   });
 
   return { data, isLoading };
