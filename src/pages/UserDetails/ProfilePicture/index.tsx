@@ -53,33 +53,51 @@ function ProPic({
   );
 }
 
-function ProfilePicture({ avatar }: { avatar: string }) {
+function ProfilePicture({
+  avatar,
+  isSelf,
+}: {
+  avatar: string;
+  isSelf: boolean;
+}) {
   const inputRef = useRef(null);
 
   const { data: avatarImgSrc } = useGetImage(avatar);
 
-  const [msgShow, setMsgShow] = useState<boolean>(false);
+  const [msgShow, setMsgShow] = useState<boolean>(true);
   function handleEditPic() {
     inputRef.current.click();
   }
 
-  return (
-    <div className={styles.PicBox}>
-      <ProPic
-        avatarImgSrc={avatarImgSrc}
-        handleEditPic={handleEditPic}
-        setMsgShow={setMsgShow}
-      >
-        <span
-          className={styles.EditMsg}
-          style={{ visibility: msgShow ? "visible" : "hidden" }}
+  if (isSelf === true) {
+    return (
+      <div className={styles.MyPicBox}>
+        <ProPic
+          avatarImgSrc={avatarImgSrc}
+          handleEditPic={handleEditPic}
+          setMsgShow={setMsgShow}
         >
-          Change Profile Pic
-        </span>
-      </ProPic>
-      <input type="file" ref={inputRef} style={{ display: "none" }} />
-    </div>
-  );
+          <span
+            className={styles.EditMessage}
+            style={{ visibility: msgShow ? "visible" : "hidden" }}
+          >
+            Edit
+          </span>
+        </ProPic>
+        <input type="file" ref={inputRef} style={{ display: "none" }} />
+      </div>
+    );
+  } else {
+    return (
+      <div className={styles.PicBox}>
+        {avatarImgSrc && avatarImgSrc !== "" ? (
+          <img className={styles.ProPic} src={avatarImgSrc} />
+        ) : (
+          <NoAvatar className={styles.ProPic} />
+        )}
+      </div>
+    );
+  }
 }
 
 export default ProfilePicture;
