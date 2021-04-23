@@ -8,6 +8,8 @@
   --grey-button-color: #a6a6a6;
   --emerald: #59c284;
   --ui-red: #d61b1b;
+
+  --popper-index: 9999;
 }
 
 * {

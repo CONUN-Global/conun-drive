@@ -5,6 +5,7 @@ import FileDetails from "./pages/FileDetails";
 import FileUpload from "./pages/FileUpload";
 import Home from "./pages/Home";
 import UserDetails from "./pages/UserDetails";
+import Search from "./pages/Search";
 
 function App() {
   return (
@@ -17,6 +18,9 @@ function App() {
       </Route>
       <Route path="/user-details">
         <UserDetails />
+      </Route>
+      <Route path="/search">
+        <Search />
       </Route>
       <Route path="/" exact>
         <Home />

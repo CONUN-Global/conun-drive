@@ -1,14 +1,14 @@
 import React from "react";
 import { useQuery } from "react-query";
 
-import FilesHorizontalViewer from "../../../components/FilesHorizontalViewer";
+import Category from "./Category";
 
 import instance from "../../../axios/instance";
 
 import styles from "./PopularSection.module.scss";
 
 function PopularSection() {
-  const { data, error } = useQuery("get-all-categories", async () => {
+  const { data } = useQuery("get-all-categories", async () => {
     const { data } = await instance.get("/cate/get_all");
 
     return data;
@@ -21,7 +21,7 @@ function PopularSection() {
           <p className={styles.Title}>
             Popular in <span>{category?.name}</span>
           </p>
-          <FilesHorizontalViewer category={category.id} />
+          <Category categoryId={category.id} />
         </div>
       ))}
     </div>

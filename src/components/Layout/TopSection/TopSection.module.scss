@@ -1,8 +1,11 @@
 .TopSection {
   display: flex;
   justify-content: space-between;
+
   .UserAndSearchBar {
     display: flex;
+    width: 100%;
+    margin-right: 20px;
 
     & .UserPicture {
       height: 45px;
@@ -10,35 +13,11 @@
       border-radius: 50%;
       margin-right: 60px;
     }
-
-    & .SearchBarContainer {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 21px;
-
-      & .SearchBar {
-        border-radius: 30px;
-        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
-        height: 45px;
-        width: 665px;
-        border: none;
-        margin-bottom: 10px;
-      }
-
-      & .SaveButton {
-        background-color: #fff;
-        border-radius: 10px;
-        max-width: 85px;
-        color: var(--dark-grey);
-        font-size: 10px;
-        padding: 3px 15px;
-      }
-    }
   }
 
   & .ActionsBar {
     display: flex;
+    min-width: 220px;
 
     & :not(:last-child) {
       margin-right: 7px;
