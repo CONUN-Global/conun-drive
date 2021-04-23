@@ -4,12 +4,15 @@ import { Link } from "react-router-dom";
 import Button from "../../Button";
 import SearchBar from "./SearchBar";
 
+import { useAppContext } from "../../AppContext";
+
 import AddIcon from "../../../assets/icons/add.svg";
 import SaveSearchIcon from "../../../assets/icons/save-search.svg";
 
 import styles from "./TopSection.module.scss";
 
 function TopSection() {
+  const { handleSavedSearchBar, isSavedSearchOpen } = useAppContext();
   return (
     <div className={styles.TopSection}>
       <div className={styles.UserAndSearchBar}>
@@ -27,7 +30,11 @@ function TopSection() {
         <Button className={styles.ActionButton} variant="grey">
           <span className={styles.OnlineCircle} /> 44.000 Peers Online
         </Button>
-        <Button className={styles.ActionButton} variant="grey">
+        <Button
+          className={styles.ActionButton}
+          onClick={() => handleSavedSearchBar(!isSavedSearchOpen)}
+          variant="grey"
+        >
           <SaveSearchIcon className={styles.Icon} />
         </Button>
       </div>
