@@ -4,7 +4,7 @@ import classNames from "classnames";
 import styles from "./Checkbox.module.scss";
 
 interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label?: string;
+  label?: React.ReactNode;
 }
 
 function Checkbox({ id, label, className, ...props }: CheckboxProps) {
