@@ -1,0 +1,27 @@
+.SimilarCell {
+  // background-color: plum;
+
+  display: grid;
+  gap:5px;
+  grid-template-columns: 116px 1fr;
+  height:65px;
+  width:100%;
+
+  & .Thumbnail {
+    border-radius: 5px;
+    height: 65px;
+    width: 116px;
+
+  }
+
+  & .Text {
+    font-size: 12px;
+  }
+
+  
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}

@@ -18,8 +18,6 @@ function ProPic({
   handleEditPic,
   setMsgShow,
 }: ProPicProps) {
-  console.log(avatarImgSrc);
-
   if (avatarImgSrc && avatarImgSrc !== "") {
     return (
       <div

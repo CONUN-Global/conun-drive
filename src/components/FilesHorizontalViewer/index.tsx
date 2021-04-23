@@ -18,7 +18,7 @@ function FilesHorizontalViewer({ category }: FilesHorizontalViewerProps) {
     formData.append("category_id", category);
     formData.append("order_by", "rate");
     const { data } = await instance.post("/content/get-contents-by", formData);
-    return data;
+    return data.data;
   });
 
   return (

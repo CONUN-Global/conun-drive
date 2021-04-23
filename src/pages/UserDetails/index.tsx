@@ -32,16 +32,12 @@ function BackButton() {
 
 function UserDetails() {
   const query = useQuery();
-
-  console.log(useLocation());
-
   const authorID = query.get("user");
   const walletHash = query.get("walletHash");
   const avatar = query.get("avatar");
 
   const { data: uploadsData } = useGetUploads({ authorID, limit: LIMIT });
   const { data: downloadsData } = useGetDownloads({ authorID, limit: LIMIT });
-  console.log("With user ", authorID, " get data ", uploadsData);
 
   return (
     <div className={styles.Background}>

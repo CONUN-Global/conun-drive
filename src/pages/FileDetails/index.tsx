@@ -10,6 +10,7 @@ import useGetFile from "../../hooks/useGetFile";
 import BackIcon from "../../assets/icons/left-arrow.svg";
 
 import styles from "./FileDetails.module.scss";
+import SimilarProducts from "./SimilarProducts";
 
 function BackButton() {
   return (
@@ -34,6 +35,7 @@ function FileDetails() {
       <div className={styles.Layout}>
         <MainCell file={data?.data} />
         <AdditionalDetailsCell file={data?.data} />
+        <SimilarProducts file={data?.data} />
       </div>
     </div>
   );
