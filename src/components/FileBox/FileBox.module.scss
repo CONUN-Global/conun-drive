@@ -2,22 +2,27 @@
   display: flex;
   flex-direction: column;
   background-color: #fff;
-  height: 154px;
-  width: 189px;
+  height: 164px;
+  width: 223px;
   border-radius: 3px;
   text-decoration: none;
   color: #000;
 
-  & .FileImage {
-    height: 106px;
-    width: 189px;
-    border-radius: 3px 3px 0 0;
+  & .Link {
+    height: 105px;
+    width: 223px;
+    & .FileImage {
+      height: 100%;
+      width: 100%;
+      border-radius: 3px 3px 0 0;
+    }
   }
 
   & .InfoSection {
     display: flex;
     flex-direction: column;
     padding: 6px 15px;
+    height: calc(60px - 13px);
     width: calc(100% - 30px);
 
     & .Top {
@@ -30,22 +35,37 @@
 
       & .Likes {
         display: flex;
+        font-size: 16px;
         align-items: center;
 
         & .Heart {
-          height: 12px;
+          height: 13px;
           margin-right: 3px;
-          z-index: 1000;
         }
       }
 
       & .Downloads {
+        font-size: 15px;
+
+        & .Flame {
+          height: 12px;
+          margin-right: 10px;
+        }
+
+        & .DownloadIcon {
+          height: 12px;
+          margin-right: 3px;
+          fill: #5ed3be;
+        }
       }
     }
 
     & .FileName {
       font-size: 14px;
-      width: fit-content;
+      max-width: 185px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
   }
 }

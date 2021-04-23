@@ -4,6 +4,17 @@
   border-radius: 5px;
   padding: 40px 40px 0 40px;
   height: calc(596px - 40px);
+  position: relative;
+
+  & .BackButton {
+    top: 25px;
+    left: 20px;
+    position: absolute;
+
+    & .Icon {
+      width: 12px;
+    }
+  }
 
   & .Title {
     font-size: 20px;

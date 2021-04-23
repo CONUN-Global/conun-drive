@@ -1,20 +1,23 @@
 import React, { useState } from "react";
-import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 
 import Button from "../Button";
-
-import HeartFull from "../../assets/icons/heart-full.svg";
-import HeartEmpty from "../../assets/icons/heart-empty.svg";
 import Tooltip from "../Tooltip";
 
 import useLikeContent from "../../hooks/useLikeContent";
 import useCurrentUser from "../../hooks/useCurrentUser";
+import useGetImage from "../../hooks/useGetImage";
+
+import isHot from "../../helpers/isHot";
+
+import HeartFull from "../../assets/icons/heart-full.svg";
+import HeartEmpty from "../../assets/icons/heart-empty.svg";
+import DownloadIcon from "../../assets/icons/download.svg";
+import Flame from "../../assets/icons/flame.svg";
 
 import { FileProps } from "../../types";
 
 import styles from "./FileBox.module.scss";
-import useGetImage from "../../hooks/useGetImage";
 
 const { api } = window;
 
@@ -71,7 +74,11 @@ function FileBox({ file }: FileBoxProps) {
             {localLikeCount}
           </div>
           <p className={styles.Downloads}>
-            {file?.content_stats?.downloads_cnt} Downloads
+            {isHot(file?.content_stats?.rate ?? 0) && (
+              <Flame className={styles.Flame} />
+            )}
+            <DownloadIcon className={styles.DownloadIcon} />
+            {file?.content_stats?.downloads_cnt}
           </p>
         </div>
         <Link to={`file/${file?.id}`} className={styles.Link}>

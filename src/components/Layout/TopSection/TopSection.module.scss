@@ -1,8 +1,11 @@
 .TopSection {
   display: flex;
   justify-content: space-between;
+
   .UserAndSearchBar {
     display: flex;
+    width: 100%;
+    margin-right: 20px;
 
     & .UserPicture {
       height: 45px;
@@ -14,6 +17,7 @@
 
   & .ActionsBar {
     display: flex;
+    min-width: 220px;
 
     & :not(:last-child) {
       margin-right: 7px;
