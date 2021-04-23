@@ -1,10 +1,12 @@
 import { Placement } from "@popperjs/core";
 import React, { useState, useRef } from "react";
 import { usePopper } from "react-popper";
-import Button from "../Button";
+
 import OutsideClickHandler from "../OutsideClickHandler";
 
 import customStyles from "./Popper.module.scss";
+
+const POPPER_INDEX = 10000;
 
 interface PopperProps {
   children: React.ReactNode;
@@ -42,8 +44,16 @@ function Popper({
       >
         {manager}
       </button>
-      <div ref={popperRef} style={styles.popper} {...attributes.popper}>
-        {isVisible && <div style={styles.offset}>{children}</div>}
+      <div
+        ref={popperRef}
+        style={{ ...styles.popper, zIndex: POPPER_INDEX }}
+        {...attributes.popper}
+      >
+        {isVisible && (
+          <div style={styles.offset} className={customStyles.Poppper}>
+            {children}
+          </div>
+        )}
       </div>
     </OutsideClickHandler>
   );
