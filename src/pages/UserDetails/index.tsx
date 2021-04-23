@@ -11,8 +11,9 @@ import styles from "./UserDetails.module.scss";
 import BackIcon from "../../assets/icons/back.svg";
 import useGetUploads from "../../hooks/useGetUploads";
 import useGetDownloads from "../../hooks/useGetDownloads";
+import FilesHorizontalViewer from "../../components/FilesHorizontalViewer";
 
-const LIMIT = "3";
+const LIMIT = "10";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -46,8 +47,21 @@ function UserDetails() {
           <ProfilePicture avatar={avatar} />
           <ProfileText authorID={authorID} walletHash={walletHash} />
         </div>
-        <FileCase title={"My Uploads"} data={uploadsData?.data} />
-        <FileCase title={"My Downloads"} data={downloadsData?.data} />
+        <div className={styles.FileBox}>
+          <div className={styles.Header}>
+            <span className={styles.Title}>My Uploads</span>
+            <span className={styles.SeeMore}>SEE MORE</span>
+          </div>
+          <FilesHorizontalViewer files={uploadsData?.data} />
+        </div>
+
+        <div className={styles.FileBox}>
+          <div className={styles.Header}>
+            <span className={styles.Title}>My Downloads</span>
+            <span className={styles.SeeMore}>SEE MORE</span>
+          </div>
+          <FilesHorizontalViewer files={downloadsData?.data} />
+        </div>
       </div>
     </div>
   );
