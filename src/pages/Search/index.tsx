@@ -4,6 +4,7 @@ import { useLocation } from "react-router";
 import { Waypoint } from "react-waypoint";
 
 import FileBox from "../../components/FileBox";
+import Spinner from "../Spinner";
 
 import useUrlQuery from "../../hooks/useUrlQuery";
 
@@ -22,7 +23,7 @@ function Search() {
   const page = useRef(Number(query.get("page")));
   const total = useRef(0);
 
-  const { data: files, fetchNextPage, isLoading, remove } = useInfiniteQuery(
+  const { data: files, fetchNextPage, remove, isLoading } = useInfiniteQuery(
     ["search", query.get("keyword"), query.get("filter")],
     async ({ pageParam = page.current }) => {
       const { data } = await instance.get(
@@ -65,8 +66,12 @@ function Search() {
           </React.Fragment>
         ))}
       </div>
+      {isLoading && <Spinner />}
+      {!isLoading && !files?.pages?.[0]?.data && (
+        <p className={styles.NoResults}>No results</p>
+      )}
       {!isLoading && (
-        <Waypoint bottomOffset="-50%" onEnter={() => fetchNextPage()} />
+        <Waypoint bottomOffset="-20%" onEnter={() => fetchNextPage()} />
       )}
     </div>
   );
