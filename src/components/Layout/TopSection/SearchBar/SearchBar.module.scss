@@ -16,6 +16,7 @@
       position: absolute;
       left: 15px;
       top: 12px;
+      fill: #64c2d1;
     }
 
     & .SearchBar {
@@ -37,24 +38,13 @@
       right: 20px;
     }
 
-    & .SaveButton {
-      background-color: #fff;
-      border-radius: 10px;
-      max-width: 85px;
-      color: var(--dark-grey);
-      font-size: 10px;
-      padding: 3px 15px;
-    }
-
     .FiltersPopper {
       background-color: #fff;
       padding: 20px 35px;
       display: flex;
       flex-direction: column;
       border-radius: 3px;
-      box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.14),
-        0 2px 1px -1px rgba(0, 0, 0, 0.12), 0 1px 3px 0 rgba(0, 0, 0, 0.2);
-      min-width: 150px;
+      box-shadow: var(--box-shadow-1);
 
       & .Title {
         margin-bottom: 12px;
@@ -72,6 +62,15 @@
         margin: 0 auto;
       }
     }
+  }
+
+  & .SaveButton {
+    background-color: #fff;
+    border-radius: 10px;
+    max-width: 85px;
+    color: var(--dark-grey);
+    font-size: 10px;
+    padding: 3px 15px;
   }
 }
 
