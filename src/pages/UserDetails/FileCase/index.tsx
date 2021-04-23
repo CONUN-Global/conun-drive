@@ -9,6 +9,7 @@ import { FileProps } from "../../../types";
 import { isHot } from "../../../functions";
 
 import styles from "./FileCase.module.scss";
+import { Link } from "react-router-dom";
 
 const { api } = window;
 
@@ -63,7 +64,9 @@ function Cell({ data }: CellProps) {
         </div>
       </div>
 
-      <Thumbnail thumbHash={data.info.thumbnail} />
+      <Link to={`/file/${data.id}`}>
+        <Thumbnail thumbHash={data.info.thumbnail} />
+      </Link>
 
       <div className={styles.CellTitleBar}>
         <span className={styles.Title}>{data.name}</span>
