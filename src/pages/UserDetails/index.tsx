@@ -32,17 +32,12 @@ function BackButton() {
 
 function UserDetails() {
   const query = useQuery();
-
-  console.log(useLocation());
-
   const authorID = query.get("user");
   const walletHash = query.get("walletHash");
   const avatar = query.get("avatar");
 
   const { data: uploadsData } = useGetUploads({ authorID, limit: LIMIT });
   const { data: downloadsData } = useGetDownloads({ authorID, limit: LIMIT });
-  console.log("With user ", authorID, " get data ", uploadsData);
-
   return (
     <div className={styles.Background}>
       <BackButton />
@@ -51,8 +46,8 @@ function UserDetails() {
           <ProfilePicture avatar={avatar} />
           <ProfileText authorID={authorID} walletHash={walletHash} />
         </div>
-        <FileCase title={"My Uploads"} data={uploadsData} />
-        <FileCase title={"My Downloads"} data={downloadsData} />
+        <FileCase title={"My Uploads"} data={uploadsData?.data} />
+        <FileCase title={"My Downloads"} data={downloadsData?.data} />
       </div>
     </div>
   );
