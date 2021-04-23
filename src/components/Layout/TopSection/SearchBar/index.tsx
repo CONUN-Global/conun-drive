@@ -62,6 +62,7 @@ function SearchBar() {
       });
     }
   };
+
   return (
     <div className={styles.SearchBarContainer}>
       <form onSubmit={handleSubmit(handleSearch)} className={styles.Form}>

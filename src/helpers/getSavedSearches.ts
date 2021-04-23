@@ -8,8 +8,8 @@ function getSavedSearches() {
   return null;
 }
 
-export function setSavedSearches(token: any) {
-  return localStorage.setItem(SAVED_SEARCHES, JSON.stringify(token));
+export function setSavedSearches(searches: any[]) {
+  return localStorage.setItem(SAVED_SEARCHES, JSON.stringify(searches));
 }
 
 export default getSavedSearches;

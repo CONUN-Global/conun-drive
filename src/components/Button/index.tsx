@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 import classNames from "classnames";
 
 import styles from "./Button.module.scss";
@@ -23,24 +24,26 @@ function Button({
 }: ButtonProps) {
   if (noStyle) {
     return (
-      <button
+      <motion.button
+        whileTap={{ y: "1px" }}
         className={classNames(styles.NoStyleButton, className)}
         {...props}
       >
         {children}
-      </button>
+      </motion.button>
     );
   }
 
   return (
-    <button
+    <motion.button
+      whileTap={{ y: "1px" }}
       className={classNames(styles.Button, className, styles[variant], {
         [styles.round]: round,
       })}
       {...props}
     >
       {loading ? <span>loading...</span> : children}
-    </button>
+    </motion.button>
   );
 }
 
