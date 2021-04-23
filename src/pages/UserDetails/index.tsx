@@ -4,14 +4,14 @@ import { Link, useLocation } from "react-router-dom";
 import Button from "../../components/Button";
 import ProfileText from "./ProfileText";
 import ProfilePicture from "./ProfilePicture";
+import FilesHorizontalViewer from "../../components/FilesHorizontalViewer";
 
-import FileCase from "./FileCase";
-
-import styles from "./UserDetails.module.scss";
-import BackIcon from "../../assets/icons/back.svg";
 import useGetUploads from "../../hooks/useGetUploads";
 import useGetDownloads from "../../hooks/useGetDownloads";
-import FilesHorizontalViewer from "../../components/FilesHorizontalViewer";
+
+import BackIcon from "../../assets/icons/back.svg";
+
+import styles from "./UserDetails.module.scss";
 
 const LIMIT = "10";
 
