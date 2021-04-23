@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useMutation } from "react-query";
+import { useHistory } from "react-router";
 
 import FormInput from "../../components/Form/HookForm/FormInput";
 import Dropzone from "../../components/Dropzone";
@@ -11,6 +12,8 @@ import TypeSelect from "../../components/Select/TypeSelect";
 import Button from "../../components/Button";
 
 import getFileExtension from "../../helpers/getFileExtension";
+
+import LeftArrow from "../../assets/icons/left-arrow.svg";
 
 import styles from "./FileUpload.module.scss";
 
@@ -38,6 +41,8 @@ interface UploadFormData {
 
 function FileUpload() {
   const [isRegistering, setIsRegistering] = useState(false);
+
+  const history = useHistory();
 
   const { mutateAsync: uploadFile, isLoading } = useMutation((data: any) =>
     api.uploadFile({
@@ -77,6 +82,13 @@ function FileUpload() {
 
   return (
     <div className={styles.FileUpload}>
+      <Button
+        noStyle
+        onClick={() => history.goBack()}
+        className={styles.BackButton}
+      >
+        <LeftArrow className={styles.Icon} />
+      </Button>
       <p className={styles.Title}>Upload New Content</p>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.Form}>
         <div className={styles.InputsBox}>

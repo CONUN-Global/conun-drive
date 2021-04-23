@@ -8,7 +8,7 @@ import instance from "../../../axios/instance";
 import styles from "./PopularSection.module.scss";
 
 function PopularSection() {
-  const { data, error } = useQuery("get-all-categories", async () => {
+  const { data } = useQuery("get-all-categories", async () => {
     const { data } = await instance.get("/cate/get_all");
 
     return data;

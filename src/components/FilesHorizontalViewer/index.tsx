@@ -23,7 +23,7 @@ function FilesHorizontalViewer({ category }: FilesHorizontalViewerProps) {
 
   return (
     <ScrollContainer className={styles.FilesContainer}>
-      {data?.data?.map((file) => (
+      {data?.data?.data?.map((file) => (
         <FileBox key={file.id} file={file} />
       ))}
     </ScrollContainer>

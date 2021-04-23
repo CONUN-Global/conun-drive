@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 import AdditionalDetailsCell from "./AdditionalDetailsCell";
 import Button from "../../components/Button";
@@ -12,26 +12,21 @@ import BackIcon from "../../assets/icons/left-arrow.svg";
 import styles from "./FileDetails.module.scss";
 import SimilarProducts from "./SimilarProducts";
 
-function BackButton() {
-  return (
-    <div className={styles.BackButton}>
-      <Button noStyle>
-        <Link to="/">
-          <BackIcon className={styles.Icon} />
-        </Link>
-      </Button>
-    </div>
-  );
-}
-
 function FileDetails() {
   const { id } = useParams();
+  const history = useHistory();
 
   const { data } = useGetFile(id);
 
   return (
     <div className={styles.Background}>
-      <BackButton />
+      <Button
+        noStyle
+        onClick={() => history.goBack()}
+        className={styles.BackButton}
+      >
+        <BackIcon className={styles.Icon} />
+      </Button>
       <div className={styles.Layout}>
         <MainCell file={data?.data} />
         <AdditionalDetailsCell file={data?.data} />
