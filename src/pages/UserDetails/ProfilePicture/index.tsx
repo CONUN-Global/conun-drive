@@ -87,17 +87,16 @@ function ProfilePicture({
         <input type="file" ref={inputRef} style={{ display: "none" }} />
       </div>
     );
-  } else {
-    return (
-      <div className={styles.PicBox}>
-        {avatarImgSrc && avatarImgSrc !== "" ? (
-          <img className={styles.ProPic} src={avatarImgSrc} />
-        ) : (
-          <NoAvatar className={styles.ProPic} />
-        )}
-      </div>
-    );
   }
+  return (
+    <div className={styles.PicBox}>
+      {avatarImgSrc && avatarImgSrc !== "" ? (
+        <img className={styles.ProPic} src={avatarImgSrc} />
+      ) : (
+        <NoAvatar className={styles.ProPic} />
+      )}
+    </div>
+  );
 }
 
 export default ProfilePicture;

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 
 import Button from "../../components/Button";
 import ProfileText from "./ProfileText";
@@ -21,12 +21,11 @@ function useQuery() {
 }
 
 function BackButton() {
+  const history = useHistory();
   return (
     <div className={styles.BackButton}>
-      <Button noStyle>
-        <Link to="/">
-          <BackIcon className={styles.Icon} />
-        </Link>
+      <Button noStyle onClick={() => history.goBack()}>
+        <BackIcon className={styles.Icon} />
       </Button>
     </div>
   );
@@ -39,11 +38,10 @@ function UserDetails() {
   const avatar = query.get("avatar");
 
   const { currentUser } = useCurrentUser();
+  const isSelf = currentUser?.id.toString() === authorID.toString();
 
   const { data: uploadsData } = useGetUploads({ authorID, limit: LIMIT });
   const { data: downloadsData } = useGetDownloads({ authorID, limit: LIMIT });
-
-  const isSelf = currentUser?.id.toString() === authorID.toString();
 
   return (
     <div className={styles.Background}>
@@ -59,27 +57,26 @@ function UserDetails() {
               {isSelf ? "My Uploads" : "User's Uploads"}
             </span>
             <span className={styles.SeeMore}>
-              <Link to={`/user-files/${authorID}&purpose="uploads"`}>
-                SEE MORE
-              </Link>
+              <Link to={`/user-uploads/${authorID}`}>SEE MORE</Link>
             </span>
           </div>
           <FilesHorizontalViewer files={uploadsData?.data} />
         </div>
-
-        <div className={styles.FileBox}>
-          <div className={styles.Header}>
-            <span className={styles.Title}>
-              {isSelf ? "My Downloads" : "User's Downloads"}
-            </span>
-            <span className={styles.SeeMore}>
-              <Link to={`/user-files/${authorID}&purpose="downloads"`}>
-                SEE MORE
-              </Link>
-            </span>
+        {isSelf && (
+          <div className={styles.FileBox}>
+            <div className={styles.Header}>
+              <span className={styles.Title}>
+                {isSelf ? "My Downloads" : "User's Downloads"}
+              </span>
+              <span className={styles.SeeMore}>
+                {/* <Link to={`/user-files/${authorID}?purpose=downloads`}>
+                  SEE MORE
+                </Link> */}
+              </span>
+            </div>
+            <FilesHorizontalViewer files={downloadsData?.data} />
           </div>
-          <FilesHorizontalViewer files={downloadsData?.data} />
-        </div>
+        )}
       </div>
     </div>
   );
