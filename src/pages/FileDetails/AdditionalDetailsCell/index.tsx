@@ -15,6 +15,7 @@ function AdditionalDetailsCell({ file }: DetailsProps) {
   return (
     <div className={styles.Cell}>
       <UserDetails
+        userID={file?.user.id}
         walletAddress={file?.user.wallet_id}
         avatar={file?.user.avatar}
       />

@@ -6,21 +6,37 @@ import SearchBar from "./SearchBar";
 
 import { useAppContext } from "../../AppContext";
 
+import useCurrentUser from "../../../hooks/useCurrentUser";
+import useGetImage from "../../../hooks/useGetImage";
+
 import AddIcon from "../../../assets/icons/add.svg";
 import SaveSearchIcon from "../../../assets/icons/save-search.svg";
+import NoAvatar from "../../../assets/icons/no-avatar.svg";
 
 import styles from "./TopSection.module.scss";
 
 function TopSection() {
   const { handleSavedSearchBar, isSavedSearchOpen } = useAppContext();
+  const { currentUser } = useCurrentUser();
+  const { data: avatarImgSrc } = useGetImage(currentUser?.avatar);
+
   return (
     <div className={styles.TopSection}>
       <div className={styles.UserAndSearchBar}>
-        <img
+        <Link
           className={styles.UserPicture}
-          src="https://i.pravatar.cc/300"
-          alt="user profile"
-        />
+          to={`/user-details?user=${currentUser?.id}&walletHash=${currentUser?.wallet_id}&avatar=${currentUser?.avatar}`}
+        >
+          {avatarImgSrc ? (
+            <img
+              className={styles.Picture}
+              src={avatarImgSrc}
+              alt="user profile"
+            />
+          ) : (
+            <NoAvatar className={styles.Picture} />
+          )}
+        </Link>
         <SearchBar />
       </div>
       <div className={styles.ActionsBar}>

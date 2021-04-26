@@ -13,4 +13,5 @@ contextBridge.exposeInMainWorld("api", {
   listenToFileRegister: (fn: any) => {
     ipcRenderer.on("is-registering-file", (e, ...args) => fn(...args));
   },
+  uploadAvatar: (path: string) => ipcRenderer.invoke("upload-avatar", path),
 });

@@ -1,0 +1,41 @@
+.PicBox {
+  & .ProPic {
+    align-items: center;
+    border-radius: 50%;
+    display: flex;
+    height: 80px;
+    justify-content: center;
+    width: 80px;
+  }
+}
+
+.MyPicBox {
+  & .ProPic {
+    align-items: center;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    height: 80px;
+    justify-content: center;
+    width: 80px;
+
+    & .EditMessage {
+      text-align: center;
+      user-select: none;
+      background-color: aqua;
+      visibility: hidden;
+
+      &.show {
+        visibility: visible;
+      }
+    }
+  }
+
+  & .ProPic:hover {
+    filter: brightness(110%);
+  }
+
+  & .HiddenInput {
+    display: none;
+  }
+}

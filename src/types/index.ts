@@ -20,6 +20,7 @@ export interface FileProps {
   };
 
   user: {
+    id: number;
     avatar: string;
     wallet_id: string;
   };
