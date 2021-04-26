@@ -11,6 +11,9 @@ function useGetSimilar(contentID) {
         `/content/similar-contents/${contentID}`
       );
       return data.data.data;
+    },
+    {
+      enabled: !!contentID,
     }
   );
   return { data, isLoading };
