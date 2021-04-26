@@ -1,13 +1,11 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { useInfiniteQuery } from "react-query";
-import { useHistory, useLocation, useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { Waypoint } from "react-waypoint";
 
 import Button from "../../../components/Button";
 import Cell from "../Cell";
 import Spinner from "../../Spinner";
-
-import useUrlQuery from "../../../hooks/useUrlQuery";
 
 import instance from "../../../axios/instance";
 
@@ -30,22 +28,19 @@ function BackButton() {
 }
 
 function Uploads() {
-  const location = useLocation();
-  const query = useUrlQuery();
-
-  const page = useRef(Number(query.get("page")));
+  const page = useRef(1);
   const total = useRef(0);
 
   const { id: authorID } = useParams();
 
-  const { data: files, fetchNextPage, remove, isLoading } = useInfiniteQuery(
+  const { data: files, fetchNextPage, isLoading } = useInfiniteQuery(
     ["user_uploads", authorID],
     async ({ pageParam = page.current }) => {
       const formData = new FormData();
       formData.append("user_id", authorID);
       formData.append("order_by", "rate");
-      formData.append("limit", "10");
-      // formData.append("page", "");
+      formData.append("limit", String(PAGE_LIMIT));
+      formData.append("page", pageParam);
 
       const { data } = await instance.post(
         "/content/get-contents-by",
@@ -71,7 +66,6 @@ function Uploads() {
   return (
     <div className={styles.Background}>
       <BackButton />
-
       <div className={styles.Layout}>
         <div className={styles.Title}>Uploads</div>
         <div className={styles.ResultsTable}>
@@ -82,13 +76,12 @@ function Uploads() {
               ))}
             </React.Fragment>
           ))}
+          {!isLoading && (
+            <Waypoint bottomOffset="-20%" onEnter={() => fetchNextPage()} />
+          )}
         </div>
-
         {!isLoading && !files?.pages?.[0]?.data && (
           <div className={styles.NoResults}>No results</div>
-        )}
-        {!isLoading && (
-          <Waypoint bottomOffset="-20%" onEnter={() => fetchNextPage()} />
         )}
       </div>
       {isLoading && (

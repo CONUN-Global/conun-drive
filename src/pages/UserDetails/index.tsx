@@ -38,6 +38,7 @@ function UserDetails() {
   const avatar = query.get("avatar");
 
   const { currentUser } = useCurrentUser();
+
   const isSelf = currentUser?.id.toString() === authorID.toString();
 
   const { data: uploadsData } = useGetUploads({ authorID, limit: LIMIT });
