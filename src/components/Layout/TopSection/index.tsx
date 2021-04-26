@@ -12,6 +12,7 @@ import useGetImage from "../../../hooks/useGetImage";
 import AddIcon from "../../../assets/icons/add.svg";
 import SaveSearchIcon from "../../../assets/icons/save-search.svg";
 import NoAvatar from "../../../assets/icons/no-avatar.svg";
+import HomeIcon from "../../../assets/icons/home.svg";
 
 import styles from "./TopSection.module.scss";
 
@@ -40,12 +41,12 @@ function TopSection() {
         <SearchBar />
       </div>
       <div className={styles.ActionsBar}>
+        <Link className={styles.ActionButtonAdd} to="/">
+          <HomeIcon className={styles.Icon} />
+        </Link>
         <Link className={styles.ActionButtonAdd} to="/file-upload">
           <AddIcon className={styles.Icon} />
         </Link>
-        <Button className={styles.ActionButton} variant="grey">
-          <span className={styles.OnlineCircle} /> 44.000 Peers Online
-        </Button>
         <Button
           className={styles.ActionButton}
           onClick={() => handleSavedSearchBar(!isSavedSearchOpen)}

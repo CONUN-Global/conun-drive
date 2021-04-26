@@ -22,6 +22,7 @@
 
   & .ActionsBar {
     display: flex;
+    justify-content: flex-end;
     min-width: 220px;
 
     & :not(:last-child) {
