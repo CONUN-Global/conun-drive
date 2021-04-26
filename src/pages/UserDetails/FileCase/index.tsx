@@ -6,7 +6,7 @@ import FlameIcon from "../../../assets/icons/flame.svg";
 import LikeIcon from "../../../assets/icons/heart.svg";
 
 import { FileProps } from "../../../types";
-import { isHot } from "../../../functions";
+import isHot from "../../../helpers/isHot";
 
 import styles from "./FileCase.module.scss";
 import { Link } from "react-router-dom";
