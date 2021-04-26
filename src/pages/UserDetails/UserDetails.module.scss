@@ -18,22 +18,21 @@
 
 .FileBox {
   height: 210px;
-  margin-top:10px;
+  margin-top: 10px;
   width: 900px;
 
   & .Header {
-    display:flex;
+    display: flex;
     justify-content: space-between;
     padding: 10px;
 
-    & .Title{
+    & .Title {
       font-size: 18px;
     }
 
     & .SeeMore {
-      font-size:  12px;
+      font-size: 12px;
     }
-
   }
 }
 
@@ -48,7 +47,6 @@
 
   display: flex;
   flex-direction: column;
-
 }
 
 .UserInfo {
@@ -56,4 +54,9 @@
   gap: 27px;
   grid-template-columns: 103px 1fr;
   width: 100%;
+}
+
+.SeeMore a {
+  color: black;
+  text-decoration: none;
 }
