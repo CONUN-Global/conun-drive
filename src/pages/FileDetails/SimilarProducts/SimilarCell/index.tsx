@@ -1,8 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import trunc from "../../../../helpers/trunc";
 
 import useGetImage from "../../../../hooks/useGetImage";
+
+import trunc from "../../../../helpers/trunc";
 
 import { FileProps } from "../../../../types";
 
