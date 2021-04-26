@@ -14,6 +14,7 @@ import getSavedSearches from "../../../helpers/getSavedSearches";
 import GlassIcon from "../../../assets/icons/magnifying-glass.svg";
 import AddIcon from "../../../assets/icons/add.svg";
 import SaveSearchIcon from "../../../assets/icons/save-search.svg";
+import HomeIcon from "../../../assets/icons/home.svg";
 
 import styles from "./SavedSearchSidebar.module.scss";
 
@@ -36,6 +37,9 @@ function SavedSearchSidebar() {
         transition={{ duration: 0.4, ease: "easeInOut" }}
       >
         <div className={styles.ActionsBar}>
+          <Link className={styles.ActionButtonAdd} to="/">
+            <HomeIcon className={styles.Icon} />
+          </Link>
           <Link className={styles.ActionButtonAdd} to="/file-upload">
             <AddIcon className={styles.Icon} />
           </Link>
