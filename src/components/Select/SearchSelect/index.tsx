@@ -4,18 +4,27 @@ import AsyncCreatableSelect from "react-select/async-creatable";
 
 import instance from "../../../axios/instance";
 
-import customStyles from "../styles";
+import customStyles from "./styles";
 
-interface TagsSelectProps {
-  value: unknown[];
+interface SearchSelectProps {
+  isTagSearch?: boolean;
+  className: any;
   onChange: (values: any) => void;
-  isMulti?: boolean;
   formatCreateLabel?: (value: string) => string;
   placeholder?: string;
+  allowCreateWhileLoading: boolean;
+  createOptionPosition: string;
 }
 
-function TagsSelect({ ...props }: TagsSelectProps) {
+function SearchSelect({ isTagSearch, ...props }: SearchSelectProps) {
   const { mutateAsync: search } = useMutation(async (inputValue) => {
+    const { data } = await instance.get(
+      `/search/content/autocomplete?keyword=${inputValue}`
+    );
+    return data;
+  });
+
+  const { mutateAsync: searchTags } = useMutation(async (inputValue) => {
     const { data } = await instance.get(
       `/search/tag/autocomplete?tag=${inputValue}`
     );
@@ -27,7 +36,11 @@ function TagsSelect({ ...props }: TagsSelectProps) {
       setTimeout(async () => {
         let data;
         if (inputValue) {
-          data = await search(inputValue);
+          if (isTagSearch) {
+            data = await searchTags(inputValue);
+          } else {
+            data = await search(inputValue);
+          }
         }
         resolve(data?.data?.map((tag) => ({ value: tag, label: tag })) ?? []);
       }, 100);
@@ -37,17 +50,11 @@ function TagsSelect({ ...props }: TagsSelectProps) {
     <AsyncCreatableSelect
       cacheOptions
       defaultOptions
-      styles={{
-        ...customStyles,
-        control: (provided) => ({
-          ...customStyles.control(provided),
-          height: 64,
-        }),
-      }}
+      styles={customStyles}
       loadOptions={promiseOptions}
       {...props}
     />
   );
 }
 
-export default TagsSelect;
+export default SearchSelect;

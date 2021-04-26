@@ -14,10 +14,22 @@ import styles from "./SaveSearchModal.module.scss";
 interface SaveSearchModalProps {
   isOpen: boolean;
   onClose: () => void;
-  search: string;
+  search: {
+    keyword: string;
+    filter: string;
+  };
 }
 
 function SaveSearchModal({ isOpen, onClose, search }: SaveSearchModalProps) {
+  const defaultName = `${search?.keyword ?? ""} 
+    ${
+      search?.filter
+        ? `(filtered by ${
+            search?.filter !== "cid" ? search?.filter : "hashtags"
+          })`
+        : ""
+    }`;
+
   const {
     register,
     handleSubmit,
@@ -25,12 +37,12 @@ function SaveSearchModal({ isOpen, onClose, search }: SaveSearchModalProps) {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      title: "",
+      title: defaultName,
     },
   });
 
   useEffect(() => {
-    reset({ title: "" });
+    reset({ title: defaultName });
   }, [isOpen]);
 
   const currentSavedSearches = getSavedSearches() || [];
@@ -46,6 +58,7 @@ function SaveSearchModal({ isOpen, onClose, search }: SaveSearchModalProps) {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <form className={styles.Form} onSubmit={handleSubmit(handleSave)}>
+        <p className={styles.SearchDefaultName}>{defaultName}</p>
         <p className={styles.Title}>Name new saved search</p>
         <FormInput
           className={styles.Input}

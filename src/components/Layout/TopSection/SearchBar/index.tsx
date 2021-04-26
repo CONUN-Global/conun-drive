@@ -5,6 +5,8 @@ import { useHistory, useParams } from "react-router";
 import Button from "../../../Button";
 import Popper from "../../../Popper";
 import Checkbox from "../../../Form/Checkbox";
+import SaveSearchModal from "./SaveSearchModal";
+import SearchSelect from "../../../Select/SearchSelect";
 
 import Tag from "../../../../assets/icons/tag.svg";
 import Hashtag from "../../../../assets/icons/hashtag.svg";
@@ -14,7 +16,6 @@ import Settings from "../../../../assets/icons/settings.svg";
 import AllIcon from "../../../../assets/icons/all.svg";
 
 import styles from "./SearchBar.module.scss";
-import SaveSearchModal from "./SaveSearchModal";
 
 const filters = [
   { value: "", label: "All", icon: AllIcon },
@@ -38,12 +39,7 @@ function SearchBar() {
   const history = useHistory();
   const params = useParams<{ keyword: string }>();
 
-  const {
-    register,
-    control,
-    handleSubmit,
-    getValues,
-  } = useForm<SearchFormData>({
+  const { control, handleSubmit, getValues, watch } = useForm<SearchFormData>({
     defaultValues: { filterBy: params?.keyword ?? "" },
   });
 
@@ -63,16 +59,34 @@ function SearchBar() {
     }
   };
 
+  const watchedFilter = watch("filterBy", "all");
+
   return (
     <div className={styles.SearchBarContainer}>
       <form onSubmit={handleSubmit(handleSearch)} className={styles.Form}>
         <Glass className={styles.Glass} />
-        <input
-          className={styles.SearchBar}
-          type="text"
-          {...register("searchString", {
+        <Controller
+          name="searchString"
+          control={control}
+          render={({ field: { onChange } }) => (
+            <>
+              <SearchSelect
+                className={styles.SearchBar}
+                onChange={(value) => {
+                  onChange(value?.value);
+                  handleSearch(getValues());
+                }}
+                placeholder="Search..."
+                formatCreateLabel={(value) => value}
+                allowCreateWhileLoading
+                createOptionPosition="first"
+                isTagSearch={watchedFilter === "tags"}
+              />
+            </>
+          )}
+          rules={{
             required: true,
-          })}
+          }}
         />
         <Popper
           manager={<Settings className={styles.SettingsIcon} />}
@@ -120,13 +134,14 @@ function SearchBar() {
           </div>
         </Popper>
       </form>
+
       <Button
         type="button"
         onClick={handleModal}
         noStyle
         className={styles.SaveButton}
       >
-        Save Search
+        Save this search
       </Button>
       <SaveSearchModal
         isOpen={!!searchToSave}
