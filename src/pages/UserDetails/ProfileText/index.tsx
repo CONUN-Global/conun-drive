@@ -19,12 +19,8 @@ export default function ProfileText({
           <CopyIcon className={styles.CopyIcon} />
         </div>
       </div>
-      <div className={styles.About}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-        luctus urna ac sapien bibendum, ut tristique sapien cursus. Aenean
-        maximus est ac volutpat accumsan. Nulla sit amet metus erat. Mauris
-        pretium viverra lorem, ut ullamcorper tortor ornare eu.
-      </div>
+      {/* About Me text will go here when implemented */}
+      <div className={styles.About}></div>
     </div>
   );
 }
