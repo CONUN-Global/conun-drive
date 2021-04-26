@@ -10,7 +10,7 @@ function useGetSimilar(contentID) {
       const { data } = await instance.get(
         `/content/similar-contents/${contentID}`
       );
-      return data.data.data;
+      return data.data;
     },
     {
       enabled: !!contentID,

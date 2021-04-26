@@ -18,8 +18,8 @@ function SimilarProducts({ file }: SimProps) {
     <div className={styles.SimilarProducts}>
       <div className={styles.Title}>Similar Items</div>
       <div className={styles.VertFileBox}>
-        {similarData &&
-          similarData.map((d) => <SimilarCell key={d.id} file={d} />)}
+        {similarData?.data &&
+          similarData?.data.map((d) => <SimilarCell key={d.id} file={d} />)}
       </div>
     </div>
   );
