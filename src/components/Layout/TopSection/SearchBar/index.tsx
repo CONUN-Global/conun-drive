@@ -1,28 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router";
 
 import Button from "../../../Button";
 import Popper from "../../../Popper";
 import Checkbox from "../../../Form/Checkbox";
+import SaveSearchModal from "./SaveSearchModal";
+import SearchSelect from "../../../Select/SearchSelect";
 
 import Tag from "../../../../assets/icons/tag.svg";
 import Hashtag from "../../../../assets/icons/hashtag.svg";
 import Title from "../../../../assets/icons/title.svg";
 import Glass from "../../../../assets/icons/magnifying-glass.svg";
 import Settings from "../../../../assets/icons/settings.svg";
+import AllIcon from "../../../../assets/icons/all.svg";
 
 import styles from "./SearchBar.module.scss";
 
 const filters = [
-  { value: "", label: "All" },
+  { value: "", label: "All", icon: AllIcon },
   {
     value: "title",
     label: "Title",
-    Icon: Title,
+    icon: Title,
   },
-  { value: "tags", label: "Tags", Icon: Tag },
-  { value: "cid", label: "Hash ID", Icon: Hashtag },
+  { value: "tags", label: "Tags", icon: Tag },
+  { value: "cid", label: "Hash ID", icon: Hashtag },
 ];
 
 interface SearchFormData {
@@ -31,10 +34,12 @@ interface SearchFormData {
 }
 
 function SearchBar() {
+  const [searchToSave, setSearchToSave] = useState(null);
+
   const history = useHistory();
   const params = useParams<{ keyword: string }>();
 
-  const { register, control, handleSubmit } = useForm<SearchFormData>({
+  const { control, handleSubmit, getValues, watch } = useForm<SearchFormData>({
     defaultValues: { filterBy: params?.keyword ?? "" },
   });
 
@@ -43,16 +48,45 @@ function SearchBar() {
       `/search?keyword=${values.searchString}&filter=${values.filterBy}&page=1`
     );
   };
+
+  const handleModal = () => {
+    const values = getValues();
+    if (values.searchString) {
+      setSearchToSave({
+        keyword: values.searchString,
+        filter: values.filterBy,
+      });
+    }
+  };
+
+  const watchedFilter = watch("filterBy", "all");
+
   return (
     <div className={styles.SearchBarContainer}>
       <form onSubmit={handleSubmit(handleSearch)} className={styles.Form}>
         <Glass className={styles.Glass} />
-        <input
-          className={styles.SearchBar}
-          type="text"
-          {...register("searchString", {
+        <Controller
+          name="searchString"
+          control={control}
+          render={({ field: { onChange } }) => (
+            <>
+              <SearchSelect
+                className={styles.SearchBar}
+                onChange={(value) => {
+                  onChange(value?.value);
+                  handleSearch(getValues());
+                }}
+                placeholder="Search..."
+                formatCreateLabel={(value) => value}
+                allowCreateWhileLoading
+                createOptionPosition="first"
+                isTagSearch={watchedFilter === "tags"}
+              />
+            </>
+          )}
+          rules={{
             required: true,
-          })}
+          }}
         />
         <Popper
           manager={<Settings className={styles.SettingsIcon} />}
@@ -76,7 +110,7 @@ function SearchBar() {
                 render={({ field: { value, onChange } }) => (
                   <>
                     {filters.map((filter) => {
-                      const Icon = filter.Icon;
+                      const Icon = filter.icon;
                       return (
                         <Checkbox
                           key={filter.value}
@@ -100,9 +134,20 @@ function SearchBar() {
           </div>
         </Popper>
       </form>
-      <Button noStyle className={styles.SaveButton}>
-        Save Search
+
+      <Button
+        type="button"
+        onClick={handleModal}
+        noStyle
+        className={styles.SaveButton}
+      >
+        Save this search
       </Button>
+      <SaveSearchModal
+        isOpen={!!searchToSave}
+        search={searchToSave}
+        onClose={() => setSearchToSave(null)}
+      />
     </div>
   );
 }

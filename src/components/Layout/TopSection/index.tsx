@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import Button from "../../Button";
 import SearchBar from "./SearchBar";
 
+import { useAppContext } from "../../AppContext";
+
 import AddIcon from "../../../assets/icons/add.svg";
 import SaveSearchIcon from "../../../assets/icons/save-search.svg";
 import NoAvatar from "../../../assets/icons/no-avatar.svg";
@@ -15,6 +17,7 @@ import useGetImage from "../../../hooks/useGetImage";
 function TopSection() {
   const { currentUser } = useCurrentUser();
   const { data: avatarImgSrc } = useGetImage(currentUser?.avatar);
+  const { handleSavedSearchBar, isSavedSearchOpen } = useAppContext();
 
   return (
     <div className={styles.TopSection}>
@@ -41,7 +44,11 @@ function TopSection() {
         <Button className={styles.ActionButton} variant="grey">
           <span className={styles.OnlineCircle} /> 44.000 Peers Online
         </Button>
-        <Button className={styles.ActionButton} variant="grey">
+        <Button
+          className={styles.ActionButton}
+          onClick={() => handleSavedSearchBar(!isSavedSearchOpen)}
+          variant="grey"
+        >
           <SaveSearchIcon className={styles.Icon} />
         </Button>
       </div>

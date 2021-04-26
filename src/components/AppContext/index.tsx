@@ -1,9 +1,21 @@
-import React, { createContext, ReactNode, useContext, useMemo } from "react";
+import React, {
+  createContext,
+  ReactNode,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 
 import useCurrentUser from "../../hooks/useCurrentUser";
 
 type State = {
-  currentUser: any;
+  currentUser: {
+    id: string;
+    wallet_id: string;
+    avatar: string;
+  };
+  isSavedSearchOpen: boolean;
+  handleSavedSearchBar: (state: boolean) => void;
 };
 type AppProviderProps = { children: ReactNode };
 
@@ -11,12 +23,17 @@ const AppContext = createContext<State | undefined>(undefined);
 
 function AppProvider({ children }: AppProviderProps) {
   const { currentUser } = useCurrentUser();
+  const [isSavedSearchOpen, setIsSavedSearchOpen] = useState(false);
+
+  const handleSavedSearchBar = (state: boolean) => setIsSavedSearchOpen(state);
 
   const value = useMemo(
     () => ({
       currentUser,
+      isSavedSearchOpen,
+      handleSavedSearchBar,
     }),
-    [currentUser]
+    [currentUser, isSavedSearchOpen]
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
