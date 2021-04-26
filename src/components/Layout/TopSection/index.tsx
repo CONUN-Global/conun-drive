@@ -5,14 +5,14 @@ import Button from "../../Button";
 import SearchBar from "./SearchBar";
 
 import { useAppContext } from "../../AppContext";
+import useCurrentUser from "../../../hooks/useCurrentUser";
+import useGetImage from "../../../hooks/useGetImage";
 
 import AddIcon from "../../../assets/icons/add.svg";
 import SaveSearchIcon from "../../../assets/icons/save-search.svg";
 import NoAvatar from "../../../assets/icons/no-avatar.svg";
 
 import styles from "./TopSection.module.scss";
-import useCurrentUser from "../../../hooks/useCurrentUser";
-import useGetImage from "../../../hooks/useGetImage";
 
 function TopSection() {
   const { currentUser } = useCurrentUser();
