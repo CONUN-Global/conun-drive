@@ -23,10 +23,19 @@
       text-align: center;
       user-select: none;
       background-color: aqua;
+      visibility: hidden;
+
+      &.show {
+        visibility: visible;
+      }
     }
   }
 
   & .ProPic:hover {
     filter: brightness(110%);
+  }
+
+  & .HiddenInput {
+    display: none;
   }
 }
