@@ -51,7 +51,10 @@ function SavedSearchSidebar() {
         <p className={styles.Title}>Saved Searches</p>
         <div className={styles.SavedSearchesContainer}>
           {savedSearches.map((search) => (
-            <div key={search.search} className={styles.Search}>
+            <div
+              key={search.search.keyword + search.search.filter}
+              className={styles.Search}
+            >
               <p className={styles.SearchTitle}>
                 <GlassIcon className={styles.GlassIcon} />
                 {search.title}
