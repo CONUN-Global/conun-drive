@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router";
 
@@ -11,18 +11,20 @@ import Hashtag from "../../../../assets/icons/hashtag.svg";
 import Title from "../../../../assets/icons/title.svg";
 import Glass from "../../../../assets/icons/magnifying-glass.svg";
 import Settings from "../../../../assets/icons/settings.svg";
+import AllIcon from "../../../../assets/icons/all.svg";
 
 import styles from "./SearchBar.module.scss";
+import SaveSearchModal from "./SaveSearchModal";
 
 const filters = [
-  { value: "", label: "All" },
+  { value: "", label: "All", icon: AllIcon },
   {
     value: "title",
     label: "Title",
-    Icon: Title,
+    icon: Title,
   },
-  { value: "tags", label: "Tags", Icon: Tag },
-  { value: "cid", label: "Hash ID", Icon: Hashtag },
+  { value: "tags", label: "Tags", icon: Tag },
+  { value: "cid", label: "Hash ID", icon: Hashtag },
 ];
 
 interface SearchFormData {
@@ -31,10 +33,17 @@ interface SearchFormData {
 }
 
 function SearchBar() {
+  const [searchToSave, setSearchToSave] = useState(null);
+
   const history = useHistory();
   const params = useParams<{ keyword: string }>();
 
-  const { register, control, handleSubmit } = useForm<SearchFormData>({
+  const {
+    register,
+    control,
+    handleSubmit,
+    getValues,
+  } = useForm<SearchFormData>({
     defaultValues: { filterBy: params?.keyword ?? "" },
   });
 
@@ -43,6 +52,17 @@ function SearchBar() {
       `/search?keyword=${values.searchString}&filter=${values.filterBy}&page=1`
     );
   };
+
+  const handleModal = () => {
+    const values = getValues();
+    if (values.searchString) {
+      setSearchToSave({
+        keyword: values.searchString,
+        filter: values.filterBy,
+      });
+    }
+  };
+
   return (
     <div className={styles.SearchBarContainer}>
       <form onSubmit={handleSubmit(handleSearch)} className={styles.Form}>
@@ -76,7 +96,7 @@ function SearchBar() {
                 render={({ field: { value, onChange } }) => (
                   <>
                     {filters.map((filter) => {
-                      const Icon = filter.Icon;
+                      const Icon = filter.icon;
                       return (
                         <Checkbox
                           key={filter.value}
@@ -100,9 +120,19 @@ function SearchBar() {
           </div>
         </Popper>
       </form>
-      <Button noStyle className={styles.SaveButton}>
+      <Button
+        type="button"
+        onClick={handleModal}
+        noStyle
+        className={styles.SaveButton}
+      >
         Save Search
       </Button>
+      <SaveSearchModal
+        isOpen={!!searchToSave}
+        search={searchToSave}
+        onClose={() => setSearchToSave(null)}
+      />
     </div>
   );
 }

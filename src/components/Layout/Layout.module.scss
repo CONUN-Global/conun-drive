@@ -2,4 +2,6 @@
   background-color: var(--bg);
   padding: 16px 30px;
   height: calc(100vh - 32px);
+  position: relative;
+  overflow: hidden;
 }
