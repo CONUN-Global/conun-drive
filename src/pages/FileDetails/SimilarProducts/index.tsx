@@ -1,8 +1,10 @@
 import React from "react";
+
+import SimilarCell from "./SimilarCell";
+
 import useGetSimilar from "../../../hooks/useGetSimilar";
 
 import { FileProps } from "../../../types";
-import SimilarCell from "./SimilarCell";
 
 import styles from "./SimilarProducts.module.scss";
 
