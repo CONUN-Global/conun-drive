@@ -42,7 +42,10 @@ function UserDetails() {
   const isSelf = currentUser?.id.toString() === authorID.toString();
 
   const { data: uploadsData } = useGetUploads({ authorID, limit: LIMIT });
-  const { data: downloadsData } = useGetDownloads({ authorID, limit: LIMIT });
+  const { data: downloadsData } = useGetDownloads({
+    enabled: isSelf,
+    limit: LIMIT,
+  });
 
   return (
     <div className={styles.Background}>
@@ -66,13 +69,9 @@ function UserDetails() {
         {isSelf && (
           <div className={styles.FileBox}>
             <div className={styles.Header}>
-              <span className={styles.Title}>
-                {isSelf ? "My Downloads" : "User's Downloads"}
-              </span>
+              <span className={styles.Title}>My Downloads</span>
               <span className={styles.SeeMore}>
-                {/* <Link to={`/user-files/${authorID}?purpose=downloads`}>
-                  SEE MORE
-                </Link> */}
+                <Link to={`/user-downloads/`}>SEE MORE</Link>
               </span>
             </div>
             <FilesHorizontalViewer files={downloadsData?.data} />

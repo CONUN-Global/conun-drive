@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import UserDetails from "./pages/UserDetails";
 import Search from "./pages/Search";
 import Uploads from "./pages/UserFiles/Uploads";
+import Downloads from "./pages/UserFiles/Downloads";
 
 function App() {
   return (
@@ -22,6 +23,9 @@ function App() {
       </Route>
       <Route path="/user-uploads/:id">
         <Uploads />
+      </Route>
+      <Route path="/user-downloads/">
+        <Downloads />
       </Route>
       <Route path="/search">
         <Search />

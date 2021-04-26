@@ -1,14 +1,19 @@
 import { useQuery } from "react-query";
 import instance from "../axios/instance";
+import useCurrentUser from "./useCurrentUser";
 
-function useGetDownloads({ authorID, limit }) {
-  const { data, isLoading } = useQuery(["downloads", authorID], async () => {
-    const { data } = await instance.get(
-      `/content/downloaded-by/${authorID}?limit=${limit}`
-    );
-    return data.data;
-  });
-
+function useGetDownloads({ enabled, limit }) {
+  const { currentUser } = useCurrentUser();
+  const { data, isLoading } = useQuery(
+    ["downloads", currentUser?.id],
+    async () => {
+      const { data } = await instance.get(
+        `/content/downloaded-by?limit=${limit}`
+      );
+      return data.data;
+    },
+    { enabled, refetchOnMount: true }
+  );
   return { data, isLoading };
 }
 
