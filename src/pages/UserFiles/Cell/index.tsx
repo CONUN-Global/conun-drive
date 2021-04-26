@@ -6,10 +6,37 @@ import trunc from "../../../helpers/trunc";
 
 import { FileProps } from "../../../types";
 
+import HeartFullIcon from "../../../assets/icons/heart-full.svg";
+import HeartEmptyIcon from "../../../assets/icons/heart-empty.svg";
+import DownloadIcon from "../../../assets/icons/download.svg";
+
 import styles from "./Cell.module.scss";
 
 interface CellProps {
   file: FileProps;
+}
+
+interface ControlProps {
+  likes: number;
+  downloads: number;
+}
+
+function Controls({ likes, downloads }: ControlProps) {
+  return (
+    <div className={styles.Controls}>
+      <div className={styles.ControlGrid}>
+        <div className={styles.Count}>{likes.toLocaleString()}</div>
+        <div className={styles.LikeBtn}>
+          <HeartEmptyIcon className={styles.Icon} />
+        </div>
+
+        <div className={styles.Count}>{downloads.toLocaleString()}</div>
+        <div className={styles.DLBtn}>
+          <DownloadIcon className={styles.Icon} />
+        </div>
+      </div>
+    </div>
+  );
 }
 
 function Cell({ file }: CellProps) {
@@ -24,7 +51,10 @@ function Cell({ file }: CellProps) {
           {new Date(file.info.created_at).toLocaleDateString()}
         </span>
       </div>
-      <div className={styles.Controls}>Ctrl</div>
+      <Controls
+        likes={file.content_stats.likes_cnt}
+        downloads={file.content_stats.downloads_cnt}
+      />
     </div>
   );
 }
