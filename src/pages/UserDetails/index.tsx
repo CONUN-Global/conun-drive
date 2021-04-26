@@ -58,7 +58,7 @@ function UserDetails() {
         <div className={styles.FileBox}>
           <div className={styles.Header}>
             <span className={styles.Title}>
-              {isSelf ? "My Uploads" : "User's Uploads"}
+              {isSelf ? "My Uploads" : "This User's Uploads"}
             </span>
             <span className={styles.SeeMore}>
               <Link to={`/user-uploads/${authorID}`}>SEE MORE</Link>

@@ -5,7 +5,6 @@ import Button from "../../Button";
 import SearchBar from "./SearchBar";
 
 import { useAppContext } from "../../AppContext";
-
 import useCurrentUser from "../../../hooks/useCurrentUser";
 import useGetImage from "../../../hooks/useGetImage";
 

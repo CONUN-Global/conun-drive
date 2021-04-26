@@ -25,6 +25,6 @@
 .Layout {
   height: calc(596px - 40px);
   display: grid;
-  gap: 0 38px;
-  grid-template-columns: minmax(348px, 500px) minmax(265px, 500px);
+  gap: 0 42px;
+  grid-template-columns: 348px 273px 250px;
 }

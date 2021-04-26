@@ -22,14 +22,15 @@ interface MainCellProps {
 function MainCell({ file }: MainCellProps) {
   const { currentUser } = useCurrentUser();
   const { downloadFile, isLoading } = useDownloadFile();
-
-  const { data: thumbImgSrc } = useGetImage(file?.info?.thumbnail);
+  const { data: thumbImgSrc, error } = useGetImage(file?.info?.thumbnail);
 
   return (
     <div className={styles.Cell}>
-      <div className={styles.MainImage}>
-        <img className={styles.MainImage} src={thumbImgSrc}></img>
-      </div>
+      {thumbImgSrc ? (
+        <img className={styles.MainImage} src={thumbImgSrc} />
+      ) : (
+        <div className={styles.NoImage}>No peers available</div>
+      )}
       <LikeBar file={file} />
       <div className={styles.ItemTitle}>{file && trunc(file.name, 55)}</div>
       <FileProperties

@@ -4,6 +4,7 @@ import { useHistory, useParams } from "react-router-dom";
 import AdditionalDetailsCell from "./AdditionalDetailsCell";
 import Button from "../../components/Button";
 import MainCell from "./MainCell";
+import SimilarProducts from "./SimilarProducts";
 
 import useGetFile from "../../hooks/useGetFile";
 
@@ -29,6 +30,7 @@ function FileDetails() {
       <div className={styles.Layout}>
         <MainCell file={data?.data} />
         <AdditionalDetailsCell file={data?.data} />
+        <SimilarProducts file={data?.data} />
       </div>
     </div>
   );

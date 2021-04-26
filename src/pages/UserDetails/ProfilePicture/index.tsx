@@ -7,32 +7,32 @@ import useCurrentUser from "../../../hooks/useCurrentUser";
 
 import instance from "../../../axios/instance";
 
-import NoAvatar from "../..//../assets/icons/no-avatar.svg";
+import NoAvatar from "../../../assets/icons/no-avatar.svg";
 
 import styles from "./ProfilePicture.module.scss";
 
 const { api } = window;
 
 type ProPicProps = {
-  children: React.ReactNode;
   avatarImgSrc: string;
   handleEditPic: () => void;
+  msgShow: boolean;
   setMsgShow: (boolean) => void;
 };
 
 function ProPic({
-  children,
   avatarImgSrc,
   handleEditPic,
+  msgShow,
   setMsgShow,
 }: ProPicProps) {
   if (avatarImgSrc && avatarImgSrc !== "") {
     return (
-      <div
-        className={styles.ProPic}
-        style={{
-          backgroundImage: avatarImgSrc,
-        }}
+      <img
+        className={classNames(styles.ProPic, {
+          [styles.show]: msgShow,
+        })}
+        src={avatarImgSrc}
         onClick={() => handleEditPic()}
         onMouseEnter={() => {
           setMsgShow(true);
@@ -40,15 +40,15 @@ function ProPic({
         onMouseLeave={() => {
           setMsgShow(false);
         }}
-      >
-        {children}
-      </div>
+      />
     );
   }
 
   return (
     <NoAvatar
-      className={styles.ProPic}
+      className={classNames(styles.ProPic, {
+        [styles.show]: msgShow,
+      })}
       onClick={() => handleEditPic()}
       onMouseEnter={() => {
         setMsgShow(true);
@@ -56,9 +56,7 @@ function ProPic({
       onMouseLeave={() => {
         setMsgShow(false);
       }}
-    >
-      {children}
-    </NoAvatar>
+    />
   );
 }
 
@@ -72,7 +70,7 @@ function ProfilePicture({
   const { currentUser, refetch } = useCurrentUser();
   const { data: avatarImgSrc } = useGetImage(avatar);
 
-  const [msgShow, setMsgShow] = useState<boolean>(true);
+  const [msgShow, setMsgShow] = useState<boolean>(false);
 
   const { mutateAsync: uploadAvatar } = useMutation(async (hash: string) => {
     const formData = new FormData();
@@ -100,16 +98,9 @@ function ProfilePicture({
         <ProPic
           avatarImgSrc={avatarImgSrc}
           handleEditPic={handleEditPic}
+          msgShow={msgShow}
           setMsgShow={setMsgShow}
-        >
-          <span
-            className={classNames(styles.EditMessage, {
-              [styles.show]: msgShow,
-            })}
-          >
-            Edit
-          </span>
-        </ProPic>
+        />
         <input
           type="file"
           onChange={handleAvatarUpload}
@@ -117,6 +108,19 @@ function ProfilePicture({
           ref={inputRef}
           accept="image/x-png,image/gif,image/jpeg"
         />
+        <span
+          className={classNames(styles.EditMessage, {
+            [styles.show]: msgShow,
+          })}
+          onMouseEnter={() => {
+            setMsgShow(true);
+          }}
+          onMouseLeave={() => {
+            setMsgShow(false);
+          }}
+        >
+          edit
+        </span>
       </div>
     );
   }

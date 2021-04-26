@@ -40,8 +40,6 @@ function Downloads() {
       const { data } = await instance.get(
         `/content/downloaded-by?page=${pageParam}`
       );
-
-      console.log(data.data);
       total.current = data?.data?.total;
       page.current = page?.current + 1;
       return data.data;
