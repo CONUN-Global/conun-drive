@@ -11,7 +11,12 @@
       height: 45px;
       width: 45px;
       border-radius: 50%;
-      margin-right: 60px;
+      margin-right: 10px;
+      & .Picture {
+        height: 45px;
+        width: 45px;
+        border-radius: 50%;
+      }
     }
   }
 
