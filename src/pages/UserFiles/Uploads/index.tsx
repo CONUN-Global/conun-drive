@@ -46,8 +46,6 @@ function Uploads() {
         "/content/get-contents-by",
         formData
       );
-
-      console.log(data.data);
       total.current = data?.data?.total;
       page.current = page?.current + 1;
       return data.data;

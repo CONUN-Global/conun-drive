@@ -22,11 +22,8 @@ interface MainCellProps {
 function MainCell({ file }: MainCellProps) {
   const { currentUser } = useCurrentUser();
   const { downloadFile, isLoading } = useDownloadFile();
-
-  console.log("CHECK THUMB HASH: ", file);
   const { data: thumbImgSrc, error } = useGetImage(file?.info?.thumbnail);
-  console.log("Returned: ", thumbImgSrc);
-  console.log(error);
+
   return (
     <div className={styles.Cell}>
       {thumbImgSrc ? (

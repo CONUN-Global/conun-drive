@@ -47,8 +47,6 @@ function UserDetails() {
     limit: LIMIT,
   });
 
-  console.log("uploads files: ", uploadsData);
-
   return (
     <div className={styles.Background}>
       <BackButton />
