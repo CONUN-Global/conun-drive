@@ -4,13 +4,13 @@ import { useHistory, useParams } from "react-router-dom";
 import AdditionalDetailsCell from "./AdditionalDetailsCell";
 import Button from "../../components/Button";
 import MainCell from "./MainCell";
+import SimilarProducts from "./SimilarProducts";
 
 import useGetFile from "../../hooks/useGetFile";
 
 import BackIcon from "../../assets/icons/left-arrow.svg";
 
 import styles from "./FileDetails.module.scss";
-import SimilarProducts from "./SimilarProducts";
 
 function FileDetails() {
   const { id } = useParams();
