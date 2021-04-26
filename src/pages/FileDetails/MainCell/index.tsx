@@ -23,13 +23,17 @@ function MainCell({ file }: MainCellProps) {
   const { currentUser } = useCurrentUser();
   const { downloadFile, isLoading } = useDownloadFile();
 
-  const { data: thumbImgSrc } = useGetImage(file?.info?.thumbnail);
-
+  console.log("CHECK THUMB HASH: ", file);
+  const { data: thumbImgSrc, error } = useGetImage(file?.info?.thumbnail);
+  console.log("Returned: ", thumbImgSrc);
+  console.log(error);
   return (
     <div className={styles.Cell}>
-      <div className={styles.MainImage}>
-        <img className={styles.MainImage} src={thumbImgSrc}></img>
-      </div>
+      {thumbImgSrc ? (
+        <img className={styles.MainImage} src={thumbImgSrc} />
+      ) : (
+        <div className={styles.NoImage}>No peers available</div>
+      )}
       <LikeBar file={file} />
       <div className={styles.ItemTitle}>{file && trunc(file.name, 55)}</div>
       <FileProperties

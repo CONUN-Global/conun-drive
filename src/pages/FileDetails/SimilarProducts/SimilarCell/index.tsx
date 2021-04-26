@@ -19,7 +19,11 @@ function SimilarCell({ file }: SimProps) {
   return (
     <Link to={`/file/${file.id}`}>
       <div className={styles.SimilarCell}>
-        <img src={thumbImgSrc} className={styles.Thumbnail} />
+        {thumbImgSrc ? (
+          <img className={styles.Thumbnail} src={thumbImgSrc} />
+        ) : (
+          <div className={styles.NoImage}>No peers available</div>
+        )}
         <div className={styles.Text}>{trunc(file.name, 70)}</div>
       </div>
     </Link>

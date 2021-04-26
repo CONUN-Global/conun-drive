@@ -1,15 +1,14 @@
 .ProfileText {
-  display:flex;
+  display: flex;
   flex-direction: column;
-  width:395px;
+  width: 550px;
 
   font-size: 16px;
-
 }
 
 .About {
- font-weight:lighter;
- font-size:14px;
+  font-weight: lighter;
+  font-size: 14px;
 }
 
 .CopyBtn {
@@ -20,11 +19,11 @@
   height: 18px;
   width: 15px;
 }
-  
-.IDPart{
+
+.IDPart {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 .Label {

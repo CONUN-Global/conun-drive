@@ -3,6 +3,7 @@ import fs from "fs";
 import fetch from "electron-fetch";
 import all from "it-all";
 import { concat } from "uint8arrays";
+import Jimp from "jimp";
 
 import { mainWindow, node } from "../";
 
@@ -134,6 +135,27 @@ ipcMain.handle("get-current-user", async (_, walletAddress) => {
     return {
       success: false,
       data: null,
+    };
+  }
+});
+
+ipcMain.handle("upload-avatar", async (_, path) => {
+  try {
+    const preview = await Jimp.read(path);
+    await preview.resize(720, 404).quality(95);
+    const previewContent = await preview.getBufferAsync(preview.getMIME());
+    const previewHash = await node.add({
+      content: previewContent,
+    });
+
+    return {
+      success: true,
+      hash: previewHash?.path,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: String(error),
     };
   }
 });

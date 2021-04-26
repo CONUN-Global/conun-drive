@@ -4,7 +4,7 @@ import { setAuthHeader } from "../helpers/getAuthHeader";
 const { api } = window;
 
 function useCurrentUser() {
-  const { data: currentUser } = useQuery(
+  const { data: currentUser, refetch } = useQuery(
     "get-current-user",
     async () => {
       const { data } = await api.getCurrentUser(
@@ -22,6 +22,7 @@ function useCurrentUser() {
 
   return {
     currentUser,
+    refetch,
   };
 }
 

@@ -5,10 +5,10 @@ function useGetUploads({ authorID, limit }) {
   const { data, isLoading } = useQuery(["uploads", authorID], async () => {
     const formData = new FormData();
     formData.append("user_id", authorID);
-    formData.append("order_by", "rate");
+    formData.append("order_by", "date");
     formData.append("limit", limit);
     const { data } = await instance.post("/content/get-contents-by", formData);
-    return data.data.data;
+    return data.data;
   });
   return { data, isLoading };
 }

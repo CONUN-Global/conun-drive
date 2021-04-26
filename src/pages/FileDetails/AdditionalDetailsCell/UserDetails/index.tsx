@@ -13,7 +13,7 @@ import styles from "./UserDetails.module.scss";
 function Avatar({ avatar }: { avatar: string }) {
   const { data: avatarImgSrc } = useGetImage(avatar);
 
-  if (avatar) {
+  if (avatar && avatar !== "") {
     return <img src={avatarImgSrc} className={styles.Avatar} />;
   }
   return <NoAvatar className={styles.Avatar} />;

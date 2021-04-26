@@ -16,7 +16,11 @@ function FileBoxMini({ file }: FileBoxMiniProps) {
 
   return (
     <Link className={styles.FileBoxMini} to={`file/${file?.id}`}>
-      <img className={styles.FileImage} src={data} alt={file.name} />
+      {data ? (
+        <img className={styles.FileImage} src={data} alt={file.name} />
+      ) : (
+        <div className={styles.NoImage}>No peers available</div>
+      )}
       <p className={styles.FileName}>{file.name}</p>
     </Link>
   );

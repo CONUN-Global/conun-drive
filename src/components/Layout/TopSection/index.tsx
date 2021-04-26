@@ -15,24 +15,25 @@ import NoAvatar from "../../../assets/icons/no-avatar.svg";
 import styles from "./TopSection.module.scss";
 
 function TopSection() {
+  const { handleSavedSearchBar, isSavedSearchOpen } = useAppContext();
   const { currentUser } = useCurrentUser();
   const { data: avatarImgSrc } = useGetImage(currentUser?.avatar);
-  const { handleSavedSearchBar, isSavedSearchOpen } = useAppContext();
 
   return (
     <div className={styles.TopSection}>
       <div className={styles.UserAndSearchBar}>
         <Link
+          className={styles.UserPicture}
           to={`/user-details?user=${currentUser?.id}&walletHash=${currentUser?.wallet_id}&avatar=${currentUser?.avatar}`}
         >
           {avatarImgSrc ? (
             <img
-              className={styles.UserPicture}
+              className={styles.Picture}
               src={avatarImgSrc}
               alt="user profile"
             />
           ) : (
-            <NoAvatar className={styles.UserPicture} />
+            <NoAvatar className={styles.Picture} />
           )}
         </Link>
         <SearchBar />

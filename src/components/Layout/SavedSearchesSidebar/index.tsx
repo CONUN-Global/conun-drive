@@ -26,7 +26,6 @@ function SavedSearchSidebar() {
   const { isSavedSearchOpen, handleSavedSearchBar } = useAppContext();
 
   const savedSearches = getSavedSearches() || [];
-
   return (
     <OutsideClickHandler onClickOutside={() => handleSavedSearchBar(false)}>
       <motion.div

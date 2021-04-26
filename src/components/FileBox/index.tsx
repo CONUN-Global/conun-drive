@@ -51,7 +51,11 @@ function FileBox({ file }: FileBoxProps) {
   return (
     <div className={styles.FileBox}>
       <Link to={`file/${file?.id}`} className={styles.Link}>
-        <img className={styles.FileImage} src={data} alt={file.name} />
+        {data ? (
+          <img className={styles.FileImage} src={data} alt={file.name} />
+        ) : (
+          <div className={styles.NoImage}>No peers available</div>
+        )}
       </Link>
       <div className={styles.InfoSection}>
         <div className={styles.Top}>
