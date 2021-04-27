@@ -38,12 +38,12 @@ function Search() {
     },
     {
       getNextPageParam() {
-        if ((page.current - 1) * PAGE_LIMIT < total.current) {
+        if (page.current * PAGE_LIMIT < total.current) {
           return page.current;
         }
-
         return undefined;
       },
+      enabled: page.current === 1,
     }
   );
 

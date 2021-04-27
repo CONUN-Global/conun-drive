@@ -51,7 +51,7 @@ function ProfilePicture({
     setShowModal(false);
   };
 
-  if (isSelf === true) {
+  if (isSelf) {
     return (
       <>
         <div className={styles.MyPicBox} onClick={() => setShowModal(true)}>
@@ -88,7 +88,7 @@ function ProfilePicture({
   }
   return (
     <div className={styles.PicBox}>
-      {avatarImgSrc && avatarImgSrc !== "" ? (
+      {avatarImgSrc ? (
         <img className={styles.ProPic} src={avatarImgSrc} />
       ) : (
         <NoAvatar className={styles.ProPic} />

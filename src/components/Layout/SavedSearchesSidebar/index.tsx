@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import classNames from "classnames";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -9,9 +9,12 @@ import Button from "../../Button";
 
 import { useAppContext } from "../../AppContext";
 
-import getSavedSearches from "../../../helpers/getSavedSearches";
+import getSavedSearches, {
+  removeSavedSearch,
+} from "../../../helpers/getSavedSearches";
 
 import GlassIcon from "../../../assets/icons/magnifying-glass.svg";
+import RemoveIcon from "../../../assets/icons/remove-icon.svg";
 import AddIcon from "../../../assets/icons/add.svg";
 import SaveSearchIcon from "../../../assets/icons/save-search.svg";
 import HomeIcon from "../../../assets/icons/home.svg";
@@ -26,7 +29,12 @@ const variants = {
 function SavedSearchSidebar() {
   const { isSavedSearchOpen, handleSavedSearchBar } = useAppContext();
 
-  const savedSearches = getSavedSearches() || [];
+  const [savedSearches, setSavedSearches] = useState(getSavedSearches() || []);
+
+  useEffect(() => {
+    setSavedSearches(getSavedSearches() || []);
+  }, [isSavedSearchOpen]);
+
   return (
     <OutsideClickHandler onClickOutside={() => handleSavedSearchBar(false)}>
       <motion.div
@@ -58,10 +66,21 @@ function SavedSearchSidebar() {
               key={search.search.keyword + search.search.filter}
               className={styles.Search}
             >
-              <p className={styles.SearchTitle}>
+              <div className={styles.SearchHeader}>
                 <GlassIcon className={styles.GlassIcon} />
-                {search.title}
-              </p>
+                <p className={styles.SearchTitle}>{search.title}</p>
+                <Button
+                  type="button"
+                  className={styles.RemoveButton}
+                  onClick={() => {
+                    const updatedSearchesList = removeSavedSearch(search);
+                    setSavedSearches(updatedSearchesList);
+                  }}
+                  noStyle
+                >
+                  <RemoveIcon className={styles.RemoveIcon} />
+                </Button>
+              </div>
               <div className={styles.FilesContainer}>
                 <SavedSearchFiles search={search?.search} />
               </div>
