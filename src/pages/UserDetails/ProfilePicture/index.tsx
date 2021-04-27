@@ -1,54 +1,21 @@
 import React, { useState } from "react";
 import classNames from "classnames";
+import { useMutation } from "react-query";
 
 import Modal from "../../../components/Modal";
 import ThumbnailEditor from "../../../components/ThumbnailEditor";
+import ProPic from "./ProPic";
 
 import useGetImage from "../../../hooks/useGetImage";
+import useCurrentUser from "../../../hooks/useCurrentUser";
+
+import instance from "../../../axios/instance";
 
 import NoAvatar from "../../../assets/icons/no-avatar.svg";
 
 import styles from "./ProfilePicture.module.scss";
-import useCurrentUser from "../../../hooks/useCurrentUser";
 
-type ProPicProps = {
-  avatarImgSrc: string;
-  msgShow: boolean;
-  setMsgShow: (boolean) => void;
-};
-
-function ProPic({ avatarImgSrc, msgShow, setMsgShow }: ProPicProps) {
-  if (avatarImgSrc && avatarImgSrc !== "") {
-    return (
-      <img
-        className={classNames(styles.ProPic, {
-          [styles.show]: msgShow,
-        })}
-        src={avatarImgSrc}
-        onMouseEnter={() => {
-          setMsgShow(true);
-        }}
-        onMouseLeave={() => {
-          setMsgShow(false);
-        }}
-      />
-    );
-  }
-
-  return (
-    <NoAvatar
-      className={classNames(styles.ProPic, {
-        [styles.show]: msgShow,
-      })}
-      onMouseEnter={() => {
-        setMsgShow(true);
-      }}
-      onMouseLeave={() => {
-        setMsgShow(false);
-      }}
-    />
-  );
-}
+const { api } = window;
 
 function ProfilePicture({
   avatar,
@@ -57,7 +24,7 @@ function ProfilePicture({
   avatar: string;
   isSelf: boolean;
 }) {
-  const { currentUser } = useCurrentUser();
+  const { currentUser, refetch } = useCurrentUser();
   const { data: avatarImgSrc } = useGetImage(
     isSelf ? currentUser?.avatar : avatar
   );
@@ -65,14 +32,29 @@ function ProfilePicture({
   const [msgShow, setMsgShow] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
 
-  const handleEditPic = () => {
-    setShowModal(true);
+  const { mutateAsync: uploadAvatar } = useMutation(async (hash: string) => {
+    const formData = new FormData();
+    formData.append("avatar", hash);
+    const { data } = await instance.put(`/user/${currentUser?.id}`, formData);
+    return data;
+  });
+
+  const onClickSave = async (editorRef) => {
+    if (editorRef) {
+      const scaledImage = editorRef.current
+        .getImageScaledToCanvas()
+        .toDataURL();
+      const data = await api.uploadAvatar(scaledImage);
+      await uploadAvatar(data?.hash);
+      await refetch();
+    }
+    setShowModal(false);
   };
 
   if (isSelf === true) {
     return (
       <>
-        <div className={styles.MyPicBox} onClick={handleEditPic}>
+        <div className={styles.MyPicBox} onClick={() => setShowModal(true)}>
           <ProPic
             avatarImgSrc={avatarImgSrc}
             msgShow={msgShow}
@@ -98,7 +80,7 @@ function ProfilePicture({
             boxHeight={220}
             boxWidth={220}
             boxRadius={110}
-            handleClose={() => setShowModal(false)}
+            handleUploadProcess={onClickSave}
           />
         </Modal>
       </>

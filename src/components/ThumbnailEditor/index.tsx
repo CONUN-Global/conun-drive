@@ -1,13 +1,10 @@
 import React, { useRef, useState } from "react";
 import AvatarEditor from "react-avatar-editor";
-import { useMutation } from "react-query";
 
-import instance from "../../axios/instance";
-
-import useCurrentUser from "../../hooks/useCurrentUser";
 import Button from "../Button";
 
 import styles from "./ThumbnailEditor.module.scss";
+
 const { api } = window;
 
 interface EditorProps {
@@ -15,7 +12,7 @@ interface EditorProps {
   boxHeight: number;
   boxWidth: number;
   boxRadius: number;
-  handleClose: () => void;
+  handleUploadProcess: (ref: React.MutableRefObject<any>) => void;
 }
 
 function ThumbnailEditor({
@@ -23,38 +20,13 @@ function ThumbnailEditor({
   boxHeight,
   boxWidth,
   boxRadius,
-  handleClose,
+  handleUploadProcess,
 }: EditorProps) {
-  const { currentUser, refetch } = useCurrentUser();
   const inputRef = useRef(null);
   const editorRef = useRef(null);
 
   const [imgFile, setImgFile] = useState<File | null>(null);
   const [imgScale, setImgScale] = useState<number>(1);
-
-  const { mutateAsync: uploadAvatar } = useMutation(async (hash: string) => {
-    const formData = new FormData();
-    formData.append("avatar", hash);
-    const { data } = await instance.put(`/user/${currentUser?.id}`, formData);
-    return data;
-  });
-
-  const handleAvatarUpload = async (imgData) => {
-    const data = await api.uploadAvatar(imgData);
-    console.log(data);
-    await uploadAvatar(data?.hash);
-    await refetch();
-  };
-
-  const onClickSave = () => {
-    if (editorRef) {
-      const scaledImage = editorRef.current
-        .getImageScaledToCanvas()
-        .toDataURL();
-      handleAvatarUpload(scaledImage);
-    }
-    handleClose();
-  };
 
   return (
     <div className={styles.ThumbnailEditor}>
@@ -90,7 +62,7 @@ function ThumbnailEditor({
         accept="image/x-png,image/gif,image/jpeg"
       />
       <div className={styles.Button}>
-        <Button onClick={() => onClickSave()}>Submit</Button>
+        <Button onClick={() => handleUploadProcess(editorRef)}>Submit</Button>
       </div>
     </div>
   );
