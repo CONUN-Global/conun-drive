@@ -11,12 +11,20 @@ import styles from "./ThumbnailEditor.module.scss";
 const { api } = window;
 
 interface EditorProps {
+  origImage: string;
   boxHeight: number;
   boxWidth: number;
   boxRadius: number;
+  handleClose: () => void;
 }
 
-function ThumbnailEditor({ boxHeight, boxWidth, boxRadius }: EditorProps) {
+function ThumbnailEditor({
+  origImage,
+  boxHeight,
+  boxWidth,
+  boxRadius,
+  handleClose,
+}: EditorProps) {
   const { currentUser, refetch } = useCurrentUser();
   const inputRef = useRef(null);
   const editorRef = useRef(null);
@@ -35,7 +43,7 @@ function ThumbnailEditor({ boxHeight, boxWidth, boxRadius }: EditorProps) {
     const data = await api.uploadAvatar(imgData);
     console.log(data);
     await uploadAvatar(data?.hash);
-    refetch();
+    await refetch();
   };
 
   const onClickSave = () => {
@@ -43,11 +51,9 @@ function ThumbnailEditor({ boxHeight, boxWidth, boxRadius }: EditorProps) {
       const scaledImage = editorRef.current
         .getImageScaledToCanvas()
         .toDataURL();
-
-      console.log(scaledImage);
-
       handleAvatarUpload(scaledImage);
     }
+    handleClose();
   };
 
   return (
@@ -57,7 +63,7 @@ function ThumbnailEditor({ boxHeight, boxWidth, boxRadius }: EditorProps) {
       </div>
       <AvatarEditor
         ref={editorRef}
-        image={imgFile}
+        image={imgFile || origImage}
         scale={imgScale}
         height={boxHeight}
         width={boxWidth}
