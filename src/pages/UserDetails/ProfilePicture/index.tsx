@@ -2,6 +2,9 @@ import React, { useRef, useState } from "react";
 import classNames from "classnames";
 import { useMutation } from "react-query";
 
+import Modal from "../../../components/Modal";
+import ThumbnailEditor from "../../../components/ThumbnailEditor";
+
 import useGetImage from "../../../hooks/useGetImage";
 import useCurrentUser from "../../../hooks/useCurrentUser";
 
@@ -15,17 +18,11 @@ const { api } = window;
 
 type ProPicProps = {
   avatarImgSrc: string;
-  handleEditPic: () => void;
   msgShow: boolean;
   setMsgShow: (boolean) => void;
 };
 
-function ProPic({
-  avatarImgSrc,
-  handleEditPic,
-  msgShow,
-  setMsgShow,
-}: ProPicProps) {
+function ProPic({ avatarImgSrc, msgShow, setMsgShow }: ProPicProps) {
   if (avatarImgSrc && avatarImgSrc !== "") {
     return (
       <img
@@ -33,7 +30,6 @@ function ProPic({
           [styles.show]: msgShow,
         })}
         src={avatarImgSrc}
-        onClick={() => handleEditPic()}
         onMouseEnter={() => {
           setMsgShow(true);
         }}
@@ -49,7 +45,6 @@ function ProPic({
       className={classNames(styles.ProPic, {
         [styles.show]: msgShow,
       })}
-      onClick={() => handleEditPic()}
       onMouseEnter={() => {
         setMsgShow(true);
       }}
@@ -71,6 +66,7 @@ function ProfilePicture({
   const { data: avatarImgSrc } = useGetImage(avatar);
 
   const [msgShow, setMsgShow] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   const { mutateAsync: uploadAvatar } = useMutation(async (hash: string) => {
     const formData = new FormData();
@@ -82,7 +78,8 @@ function ProfilePicture({
   const inputRef = useRef(null);
 
   const handleEditPic = () => {
-    inputRef.current.click();
+    console.log("edit");
+    setShowModal(true); // inputRef.current.click();
   };
 
   const handleAvatarUpload = async (e) => {
@@ -91,37 +88,41 @@ function ProfilePicture({
     await uploadAvatar(data?.hash);
     refetch();
   };
-
+  console.log(showModal);
   if (isSelf === true) {
     return (
-      <div className={styles.MyPicBox}>
-        <ProPic
-          avatarImgSrc={avatarImgSrc}
-          handleEditPic={handleEditPic}
-          msgShow={msgShow}
-          setMsgShow={setMsgShow}
-        />
-        <input
-          type="file"
-          onChange={handleAvatarUpload}
-          className={styles.HiddenInput}
-          ref={inputRef}
-          accept="image/x-png,image/gif,image/jpeg"
-        />
-        <span
-          className={classNames(styles.EditMessage, {
-            [styles.show]: msgShow,
-          })}
-          onMouseEnter={() => {
-            setMsgShow(true);
-          }}
-          onMouseLeave={() => {
-            setMsgShow(false);
-          }}
-        >
-          edit
-        </span>
-      </div>
+      <>
+        <div className={styles.MyPicBox} onClick={handleEditPic}>
+          <ProPic
+            avatarImgSrc={avatarImgSrc}
+            msgShow={msgShow}
+            setMsgShow={setMsgShow}
+          />
+          <input
+            type="file"
+            onChange={handleAvatarUpload}
+            className={styles.HiddenInput}
+            ref={inputRef}
+            accept="image/x-png,image/gif,image/jpeg"
+          />
+          <span
+            className={classNames(styles.EditMessage, {
+              [styles.show]: msgShow,
+            })}
+            onMouseEnter={() => {
+              setMsgShow(true);
+            }}
+            onMouseLeave={() => {
+              setMsgShow(false);
+            }}
+          >
+            edit
+          </span>
+        </div>
+        <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+          <ThumbnailEditor boxHeight={220} boxWidth={220} boxRadius={110} />
+        </Modal>
+      </>
     );
   }
   return (
