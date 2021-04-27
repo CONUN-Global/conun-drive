@@ -6,6 +6,9 @@ import { concat } from "uint8arrays";
 import Jimp from "jimp";
 
 import { mainWindow, node } from "../";
+import db from "../store/db";
+
+import { DRIVE_SERVER } from "../const";
 
 ipcMain.handle("get-file-preview", async (_, hash) => {
   try {
@@ -117,15 +120,29 @@ ipcMain.handle("like-content", (_, args) => {
   }
 });
 
-ipcMain.handle("get-current-user", async (_, walletAddress) => {
+ipcMain.handle("get-current-user", async () => {
   try {
-    const res = await fetch("http://192.168.100.54:8000/api/user/auth", {
+    const userDetails = await db.get("userDetailsDrive");
+
+    const res = await fetch(`${DRIVE_SERVER}/user/auth`, {
       method: "POST",
-      body: JSON.stringify({ wallet_id: walletAddress }),
+      body: JSON.stringify({
+        wallet_id:
+          userDetails?.walletAddress ??
+          "0xe4FD245bf3A78D414cFceec73d01b53959635935",
+      }),
       headers: { "Content-Type": "application/json" },
     });
 
     const { data } = await res.json();
+
+    const userDetailsDrive = await db.get("userDetailsDrive");
+
+    await db.put({
+      ...userDetailsDrive,
+      userId: data.id,
+      walletId: data?.wallet_id,
+    });
 
     return {
       success: true,

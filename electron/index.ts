@@ -8,6 +8,8 @@ import Protector from "libp2p/src/pnet";
 import isDev from "electron-is-dev";
 import serve from "electron-serve";
 
+import db, { prepareDb } from "./store/db";
+
 import { DRIVE_SERVER } from "./const";
 
 import "./ipcMain";
@@ -37,9 +39,11 @@ const createWindow = async (): Promise<void> => {
       preload: path.resolve(__dirname, "preload.js"),
       webSecurity: false,
     },
+    resizable: false,
   });
 
   mainWindow.removeMenu();
+  mainWindow.setResizable(false);
 
   try {
     node = await IPFS.create({
@@ -55,6 +59,8 @@ const createWindow = async (): Promise<void> => {
         Bootstrap: [BOOTSTRAP_ADDRESSS],
       },
     });
+
+    await prepareDb();
 
     if (isDev) {
       await mainWindow.loadURL("http://localhost:1234");
@@ -103,11 +109,13 @@ process.on("message", async (message) => {
       content: previewContent,
     });
 
+    const userDetails = await db.get("userDetailsDrive");
+
     const body = {
       name: message?.data?.title,
       cate_id: message?.data?.category,
       type_id: message?.data?.type,
-      user_id: 67,
+      user_id: userDetails?.userId,
       tags: message?.data?.tags,
       status_id: 1,
       info: {
@@ -130,5 +138,14 @@ process.on("message", async (message) => {
     });
 
     mainWindow.webContents.send("is-registering-file", false);
+  }
+
+  if (message.type === "send-user-details") {
+    try {
+      const userDetails = await db.get("userDetailsDrive");
+      await db.put({ ...userDetails, walletAddress: message?.walletAddress });
+    } catch (error) {
+      console.log(`error`, error);
+    }
   }
 });

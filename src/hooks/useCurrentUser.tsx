@@ -7,9 +7,7 @@ function useCurrentUser() {
   const { data: currentUser, refetch } = useQuery(
     "get-current-user",
     async () => {
-      const { data } = await api.getCurrentUser(
-        "0xe4FD245bf3A78D414cFceec73d01b53959635935"
-      );
+      const { data } = await api.getCurrentUser();
 
       return data;
     },
