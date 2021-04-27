@@ -75,17 +75,30 @@
     }
 
     & .Search {
-      & .SearchTitle {
+      & .SearchHeader {
         background-color: #e9ebef;
         padding: 0 20px;
         margin-bottom: 10px;
-        color: var(--dark-grey);
-        font-size: 13px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
 
         & .GlassIcon {
           margin-right: 2px;
           height: 9px;
           fill: var(--dark-grey);
+        }
+
+        & .SearchTitle {
+          color: var(--dark-grey);
+          font-size: 12px;
+        }
+
+        & .RemoveButton {
+          height: 18px;
+          & .RemoveIcon {
+            height: 18px;
+          }
         }
       }
 
