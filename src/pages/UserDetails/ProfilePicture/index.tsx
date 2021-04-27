@@ -26,7 +26,7 @@ function ProPic({
   msgShow,
   setMsgShow,
 }: ProPicProps) {
-  if (avatarImgSrc && avatarImgSrc !== "") {
+  if (avatarImgSrc) {
     return (
       <img
         className={classNames(styles.ProPic, {
@@ -68,7 +68,9 @@ function ProfilePicture({
   isSelf: boolean;
 }) {
   const { currentUser, refetch } = useCurrentUser();
-  const { data: avatarImgSrc } = useGetImage(avatar);
+  const { data: avatarImgSrc } = useGetImage(
+    isSelf ? currentUser?.avatar : avatar
+  );
 
   const [msgShow, setMsgShow] = useState<boolean>(false);
 
@@ -89,10 +91,10 @@ function ProfilePicture({
     const avatarToUpload = e.target.files[0];
     const data = await api.uploadAvatar(avatarToUpload?.path);
     await uploadAvatar(data?.hash);
-    refetch();
+    await refetch();
   };
 
-  if (isSelf === true) {
+  if (isSelf) {
     return (
       <div className={styles.MyPicBox}>
         <ProPic

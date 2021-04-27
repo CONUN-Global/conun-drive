@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 const { api } = window;
 
 function useGetImage(thumbHash: string) {
-  const { data, isLoading, error } = useQuery(
+  const { data, isLoading, error, refetch } = useQuery(
     ["get-preview", thumbHash],
     async () => {
       const data = await api.getFilePreview(thumbHash);
@@ -17,7 +17,7 @@ function useGetImage(thumbHash: string) {
     }
   );
 
-  return { data, isLoading, error };
+  return { data, isLoading, error, refetch };
 }
 
 export default useGetImage;
