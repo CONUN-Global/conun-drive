@@ -4,7 +4,6 @@ import PouchDB from "pouchdb";
 const db = new PouchDB(`${app.getPath("appData")}/conun-drive-db`);
 
 async function initDb() {
-  console.log("init db");
   const newDownloads: any = {
     _id: "downloads",
     list: [],

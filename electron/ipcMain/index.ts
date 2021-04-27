@@ -127,7 +127,9 @@ ipcMain.handle("get-current-user", async () => {
     const res = await fetch(`${DRIVE_SERVER}/user/auth`, {
       method: "POST",
       body: JSON.stringify({
-        wallet_id: userDetails?.walletAddress,
+        wallet_id:
+          userDetails?.walletAddress ??
+          "0xe4FD245bf3A78D414cFceec73d01b53959635935",
       }),
       headers: { "Content-Type": "application/json" },
     });
