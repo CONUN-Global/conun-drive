@@ -56,7 +56,7 @@ function FileUpload() {
       description: data?.description,
       tags: data?.tags?.map((t) => t.value),
       filePath: data?.file?.path,
-      previewPath: data?.thumbnail?.path,
+      previewPath: data?.thumbnail,
       fileName: data?.file?.name,
       ext: getFileExtension(data?.file?.name),
     })
