@@ -7,7 +7,7 @@ import isDev from "electron-is-dev";
 import serve from "electron-serve";
 
 import { prepareDb } from "./store/db";
-import connectToWS, { client } from "./socket";
+import connectToWS from "./socket";
 
 import "./ipcMain";
 

@@ -6,6 +6,7 @@ import { mainWindow, node } from "../";
 import db from "../store/db";
 
 import { DRIVE_SERVER } from "../const";
+import { app } from "electron";
 
 const MANAGER_PORT = 17401;
 
@@ -18,18 +19,21 @@ function connectToWS() {
     if (mainWindow) {
       mainWindow.webContents.send("is-manager-connected", true);
     }
+
+    client.send(
+      JSON.stringify({
+        type: "get-drive-path",
+        path: app.getPath("exe"),
+      })
+    );
   };
 
   client.onclose = () => {
-    if (mainWindow) {
-      mainWindow.webContents.send("is-manager-connected", false);
-    }
+    mainWindow.webContents.send("is-manager-connected", false);
   };
 
   client.onerror = () => {
-    if (mainWindow) {
-      mainWindow.webContents.send("is-manager-connected", false);
-    }
+    mainWindow.webContents.send("is-manager-connected", false);
   };
 
   client.onmessage = async (message) => {
