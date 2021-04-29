@@ -49,7 +49,7 @@ function TopSection() {
                 : "Open the manager and click here to reconnect"
             }
             className={styles.ManagerButton}
-            onClick={() => api.connectToManager()}
+            onClick={() => (isManagerConnected ? {} : api.connectToManager())}
             variant="grey"
           >
             Manager {isManagerConnected ? "Online" : "Offline"}{" "}
