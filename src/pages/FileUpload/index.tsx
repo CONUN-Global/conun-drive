@@ -16,6 +16,8 @@ import getFileExtension from "../../helpers/getFileExtension";
 import LeftArrow from "../../assets/icons/left-arrow.svg";
 
 import styles from "./FileUpload.module.scss";
+import Modal from "../../components/Modal";
+import ThumbnailEditor from "../../components/ThumbnailEditor";
 
 const { api } = window;
 
@@ -41,6 +43,8 @@ interface UploadFormData {
 
 function FileUpload() {
   const [isRegistering, setIsRegistering] = useState(false);
+
+  const [thumbImg, setThumbImg] = useState("");
 
   const history = useHistory();
 
@@ -77,7 +81,8 @@ function FileUpload() {
   }, []);
 
   const onSubmit: SubmitHandler<UploadFormData> = async (data) => {
-    await uploadFile(data);
+    console.log(data);
+    // await uploadFile(data);
   };
 
   return (
@@ -122,14 +127,29 @@ function FileUpload() {
                 control={control}
                 name="thumbnail"
                 render={({ field: { onChange, value } }) => (
-                  <Dropzone
-                    currentFile={value}
-                    className={styles.DropzoneThumbnail}
-                    onDrop={(files) => onChange(files[0])}
-                    label="Drop your thumbnail"
-                    withPreview
-                    accept=".png, .jpg, .jpeg"
-                  />
+                  <>
+                    <Dropzone
+                      currentFile={value}
+                      className={styles.DropzoneThumbnail}
+                      onDrop={(files) => setThumbImg(files[0])}
+                      label="Drop your thumbnail"
+                      withPreview
+                      accept=".png, .jpg, .jpeg"
+                    />
+                    <Modal isOpen={!!thumbImg} onClose={() => setThumbImg("")}>
+                      <ThumbnailEditor
+                        origImage={thumbImg}
+                        boxHeight={105}
+                        boxWidth={190}
+                        boxRadius={5}
+                        handleUploadProcess={(scaledImage) => {
+                          console.log(scaledImage);
+                          onChange(scaledImage);
+                          setThumbImg("");
+                        }}
+                      />
+                    </Modal>
+                  </>
                 )}
                 rules={{
                   required: { value: true, message: "A thumbnail is required" },
