@@ -3,21 +3,21 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { useHistory } from "react-router";
 
-import FormInput from "../../components/Form/HookForm/FormInput";
-import Dropzone from "../../components/Dropzone";
-import FormTextArea from "../../components/Form/HookForm/FormTextArea";
-import TagsSelect from "../../components/Select/TagsSelect";
-import CategorySelect from "../../components/Select/CategorySelect";
-import TypeSelect from "../../components/Select/TypeSelect";
 import Button from "../../components/Button";
+import CategorySelect from "../../components/Select/CategorySelect";
+import Dropzone from "../../components/Dropzone";
+import FormInput from "../../components/Form/HookForm/FormInput";
+import FormTextArea from "../../components/Form/HookForm/FormTextArea";
+import Modal from "../../components/Modal";
+import TagsSelect from "../../components/Select/TagsSelect";
+import ThumbnailEditor from "../../components/ThumbnailEditor";
+import TypeSelect from "../../components/Select/TypeSelect";
 
 import getFileExtension from "../../helpers/getFileExtension";
 
 import LeftArrow from "../../assets/icons/left-arrow.svg";
 
 import styles from "./FileUpload.module.scss";
-import Modal from "../../components/Modal";
-import ThumbnailEditor from "../../components/ThumbnailEditor";
 
 const { api } = window;
 
@@ -81,8 +81,7 @@ function FileUpload() {
   }, []);
 
   const onSubmit: SubmitHandler<UploadFormData> = async (data) => {
-    console.log(data);
-    // await uploadFile(data);
+    await uploadFile(data);
   };
 
   return (
@@ -143,7 +142,6 @@ function FileUpload() {
                         boxWidth={190}
                         boxRadius={5}
                         handleUploadProcess={(scaledImage) => {
-                          console.log(scaledImage);
                           onChange(scaledImage);
                           setThumbImg("");
                         }}

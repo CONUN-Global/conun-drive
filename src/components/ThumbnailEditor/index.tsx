@@ -12,7 +12,7 @@ interface EditorProps {
   boxHeight: number;
   boxWidth: number;
   boxRadius: number;
-  handleUploadProcess: (imgData: any) => void;
+  handleUploadProcess: (imgData: string) => void;
 }
 
 function ThumbnailEditor({
@@ -41,7 +41,9 @@ function ThumbnailEditor({
   return (
     <div className={styles.ThumbnailEditor}>
       <div className={styles.Button}>
-        <Button onClick={() => inputRef.current.click()}>Upload File</Button>
+        <Button onClick={() => inputRef.current.click()}>
+          Upload New File
+        </Button>
       </div>
       <AvatarEditor
         ref={editorRef}
