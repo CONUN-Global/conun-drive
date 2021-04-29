@@ -62,13 +62,6 @@ const createWindow = async (): Promise<void> => {
 
     await prepareDb();
 
-    const id = await node.id();
-
-    console.log(`id`, id);
-
-    const peers = await node.swarm.peers();
-    console.log(`peers`, peers);
-
     if (isDev) {
       await mainWindow.loadURL("http://localhost:1234");
       mainWindow.webContents.openDevTools({ mode: "detach" });
