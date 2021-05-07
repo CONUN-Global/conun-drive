@@ -46,8 +46,6 @@ function UserDetails() {
     enabled: isSelf,
     limit: LIMIT,
   });
-  console.log(downloadsData);
-  console.log(uploadsData);
   return (
     <div className={styles.Background}>
       <BackButton />
@@ -82,7 +80,7 @@ function UserDetails() {
             <div className={styles.Header}>
               <span className={styles.Title}>My Downloads</span>
               <span className={styles.SeeMore}>
-                {downloadsData?.total > 10 && (
+                {downloadsData?.total > 4 && (
                   <Link to={`/user-downloads/`}>SEE MORE</Link>
                 )}
               </span>
