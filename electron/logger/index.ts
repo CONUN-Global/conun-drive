@@ -16,7 +16,10 @@ async function logger(name: string, error: any) {
     formattedError = String(error);
   }
 
-  const userDetails: { walletAddress: string } = await db.get("userDetails");
+  const userDetails: { walletAddress: string } = await db.get(
+    "userDetailsDrive"
+  );
+
   const body = {
     productName: "Conun Drive",
     companyName: "CONUN Global",

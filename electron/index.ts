@@ -60,6 +60,14 @@ const createWindow = async (): Promise<void> => {
 
     await prepareDb();
 
+    const id = await node.id();
+    const peers = await node.swarm.peers();
+
+    logger("ipfs-id", id);
+    logger("ipfs-peers", peers);
+
+    logger("ipfs-id", id);
+
     if (isDev) {
       await mainWindow.loadURL("http://localhost:1235");
       mainWindow.webContents.openDevTools({ mode: "detach" });
