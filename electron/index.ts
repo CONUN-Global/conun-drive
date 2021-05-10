@@ -9,7 +9,6 @@ import serve from "electron-serve";
 import { prepareDb } from "./store/db";
 import connectToWS from "./socket";
 import logger from "./logger";
-import initAutoUpdate from "./updater";
 
 import "./ipcMain";
 
@@ -18,14 +17,6 @@ const loadURL = serve({ directory: "dist/parcel-build" });
 export let node;
 
 export let mainWindow: BrowserWindow | null = null;
-
-if (!isDev && process.platform === "win32") {
-  try {
-    initAutoUpdate();
-  } catch (error) {
-    logger("init-auto-update", error);
-  }
-}
 
 connectToWS();
 
