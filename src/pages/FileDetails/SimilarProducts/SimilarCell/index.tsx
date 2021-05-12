@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import Thumbnail from "../../../../components/Thumbnail";
+
 import useGetImage from "../../../../hooks/useGetImage";
 
 import trunc from "../../../../helpers/trunc";
@@ -8,7 +10,6 @@ import trunc from "../../../../helpers/trunc";
 import { FileProps } from "../../../../types";
 
 import styles from "./SimilarCell.module.scss";
-import Thumbnail from "../../../../components/Thumbnail";
 
 interface SimProps {
   file: FileProps;

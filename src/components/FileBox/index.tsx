@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import Button from "../Button";
 import Tooltip from "../Tooltip";
+import Thumbnail from "../Thumbnail";
 
 import useLikeContent from "../../hooks/useLikeContent";
 import useCurrentUser from "../../hooks/useCurrentUser";
@@ -19,7 +20,6 @@ import Flame from "../../assets/icons/flame.svg";
 import { FileProps } from "../../types";
 
 import styles from "./FileBox.module.scss";
-import Thumbnail from "../Thumbnail";
 
 const { api } = window;
 

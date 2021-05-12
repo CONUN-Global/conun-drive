@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import Button from "../../../components/Button";
 import Tooltip from "../../../components/Tooltip";
+import Thumbnail from "../../../components/Thumbnail";
 
 import useCurrentUser from "../../../hooks/useCurrentUser";
 import useGetImage from "../../../hooks/useGetImage";
@@ -18,7 +19,6 @@ import HeartEmpty from "../../../assets/icons/heart-empty.svg";
 import HeartFull from "../../../assets/icons/heart-full.svg";
 
 import styles from "./Cell.module.scss";
-import Thumbnail from "../../../components/Thumbnail";
 
 const { api } = window;
 

@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import Thumbnail from "../Thumbnail";
+
 import useGetImage from "../../hooks/useGetImage";
 
 import { FileProps } from "../../types";
-import Thumbnail from "../Thumbnail";
 
 import styles from "./FileBoxMini.module.scss";
 

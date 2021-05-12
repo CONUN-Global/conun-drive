@@ -4,6 +4,7 @@ import Button from "../../../components/Button";
 import LikeBar from "./LikeBar";
 import FileProperties from "./FileProperties";
 import Tooltip from "../../../components/Tooltip";
+import Thumbnail from "../../../components/Thumbnail";
 
 import useGetImage from "../../../hooks/useGetImage";
 import useCurrentUser from "../../../hooks/useCurrentUser";
@@ -15,7 +16,6 @@ import trunc from "../../../helpers/trunc";
 import { FileProps } from "../../../types";
 
 import styles from "./MainCell.module.scss";
-import Thumbnail from "../../../components/Thumbnail";
 
 const { api } = window;
 
