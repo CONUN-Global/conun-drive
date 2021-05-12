@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import Button from "../Button";
 import Tooltip from "../Tooltip";
+import Thumbnail from "../Thumbnail";
 
 import useLikeContent from "../../hooks/useLikeContent";
 import useCurrentUser from "../../hooks/useCurrentUser";
@@ -68,11 +69,7 @@ function FileBox({ file }: FileBoxProps) {
   return (
     <div className={styles.FileBox}>
       <Link to={`/file/${file?.id}`} className={styles.Link}>
-        {data ? (
-          <img className={styles.FileImage} src={data} alt={file.name} />
-        ) : (
-          <div className={styles.NoImage}>No peers available</div>
-        )}
+        <Thumbnail imgSrc={data} className={styles.FileImage} />
       </Link>
       <div className={styles.InfoSection}>
         <div className={styles.Top}>
