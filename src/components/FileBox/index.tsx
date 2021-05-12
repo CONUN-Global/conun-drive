@@ -19,6 +19,7 @@ import Flame from "../../assets/icons/flame.svg";
 import { FileProps } from "../../types";
 
 import styles from "./FileBox.module.scss";
+import Thumbnail from "../Thumbnail";
 
 const { api } = window;
 
@@ -68,11 +69,7 @@ function FileBox({ file }: FileBoxProps) {
   return (
     <div className={styles.FileBox}>
       <Link to={`/file/${file?.id}`} className={styles.Link}>
-        {data ? (
-          <img className={styles.FileImage} src={data} alt={file.name} />
-        ) : (
-          <div className={styles.NoImage}>No peers available</div>
-        )}
+        <Thumbnail imgSrc={data} className={styles.FileImage} />
       </Link>
       <div className={styles.InfoSection}>
         <div className={styles.Top}>

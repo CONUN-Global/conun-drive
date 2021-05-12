@@ -18,6 +18,7 @@ import HeartEmpty from "../../../assets/icons/heart-empty.svg";
 import HeartFull from "../../../assets/icons/heart-full.svg";
 
 import styles from "./Cell.module.scss";
+import Thumbnail from "../../../components/Thumbnail";
 
 const { api } = window;
 
@@ -104,11 +105,7 @@ function Cell({ file }: CellProps) {
   return (
     <div className={styles.Cell}>
       <Link to={`/file/${file.id}`}>
-        {thumbImgSrc ? (
-          <img className={styles.Thumb} src={thumbImgSrc} />
-        ) : (
-          <div className={styles.NoImage}>No peers available</div>
-        )}
+        <Thumbnail imgSrc={thumbImgSrc} className={styles.Thumb} />
       </Link>
       <div className={styles.Text}>
         <span className={styles.Title}>{trunc(file.name, 100)}</span>

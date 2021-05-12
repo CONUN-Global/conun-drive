@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import useGetImage from "../../hooks/useGetImage";
 
 import { FileProps } from "../../types";
+import Thumbnail from "../Thumbnail";
 
 import styles from "./FileBoxMini.module.scss";
 
@@ -16,11 +17,7 @@ function FileBoxMini({ file }: FileBoxMiniProps) {
 
   return (
     <Link className={styles.FileBoxMini} to={`file/${file?.id}`}>
-      {data ? (
-        <img className={styles.FileImage} src={data} alt={file.name} />
-      ) : (
-        <div className={styles.NoImage}>No peers available</div>
-      )}
+      <Thumbnail imgSrc={data} className={styles.FileImage} />
       <p className={styles.FileName}>{file.name}</p>
     </Link>
   );

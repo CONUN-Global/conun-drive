@@ -15,6 +15,7 @@ import trunc from "../../../helpers/trunc";
 import { FileProps } from "../../../types";
 
 import styles from "./MainCell.module.scss";
+import Thumbnail from "../../../components/Thumbnail";
 
 const { api } = window;
 
@@ -50,11 +51,9 @@ function MainCell({ file }: MainCellProps) {
 
   return (
     <div className={styles.Cell}>
-      {thumbImgSrc ? (
-        <img className={styles.MainImage} src={thumbImgSrc} />
-      ) : (
-        <div className={styles.NoImage}>No peers available</div>
-      )}
+      <div className={styles.Image}>
+        <Thumbnail imgSrc={thumbImgSrc} className={styles.MainImage} />
+      </div>
       <LikeBar file={file} />
       <div className={styles.ItemTitle}>{file && trunc(file.name, 55)}</div>
       <FileProperties
