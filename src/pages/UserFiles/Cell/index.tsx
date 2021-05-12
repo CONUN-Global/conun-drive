@@ -104,7 +104,11 @@ function Cell({ file }: CellProps) {
   return (
     <div className={styles.Cell}>
       <Link to={`/file/${file.id}`}>
-        <img className={styles.Thumb} src={thumbImgSrc} />
+        {thumbImgSrc ? (
+          <img className={styles.Thumb} src={thumbImgSrc} />
+        ) : (
+          <div className={styles.NoImage}>No peers available</div>
+        )}
       </Link>
       <div className={styles.Text}>
         <span className={styles.Title}>{trunc(file.name, 100)}</span>
