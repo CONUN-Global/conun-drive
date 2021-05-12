@@ -35,12 +35,12 @@
 
   & .UserAndSearchBar {
     display: flex;
-
+    margin: 0 10px;
     & .UserPicture {
       height: 45px;
       width: 45px;
       border-radius: 50%;
-      margin: 0 10px;
+      margin-right: 10px;
       & .Picture {
         height: 45px;
         width: 45px;
@@ -52,6 +52,7 @@
   & .ActionsBar {
     display: flex;
     justify-content: flex-end;
+    margin-top: 5px;
 
     & :not(:last-child) {
       margin-right: 7px;
