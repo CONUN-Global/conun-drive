@@ -47,7 +47,6 @@ function ProfilePicture({
     }
     setShowModal(false);
   };
-
   if (isSelf) {
     return (
       <>
