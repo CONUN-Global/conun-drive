@@ -1,9 +1,10 @@
 .TopSection {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
 
   & .LogoSection {
     display: flex;
+    padding: 0 5px;
 
     & .ConunLogo {
       transform: translateX(-5px);
@@ -35,7 +36,7 @@
 
   & .UserAndSearchBar {
     display: flex;
-    margin: 0 10px;
+    padding: 0 5px;
     & .UserPicture {
       height: 45px;
       width: 45px;
@@ -52,8 +53,7 @@
   & .ActionsBar {
     display: flex;
     justify-content: flex-end;
-    margin-top: 5px;
-
+    padding: 5px;
     & :not(:last-child) {
       margin-right: 7px;
     }
