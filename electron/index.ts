@@ -40,6 +40,8 @@ const createWindow = async (): Promise<void> => {
   mainWindow.removeMenu();
   mainWindow.setResizable(false);
 
+  logger("swarm-key", fs.readFileSync(__dirname + "/assets/swarm.key"));
+
   try {
     node = await IPFS.create({
       libp2p: {
