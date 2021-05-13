@@ -23,6 +23,7 @@ type State = {
   handleSavedSearchBar: (state: boolean) => void;
   isManagerConnected: boolean;
   handleIsManagerConnected: (state: boolean) => void;
+  isIpfsConnected: boolean;
 };
 type AppProviderProps = { children: ReactNode };
 
@@ -32,6 +33,7 @@ function AppProvider({ children }: AppProviderProps) {
   const { currentUser } = useCurrentUser();
   const [isSavedSearchOpen, setIsSavedSearchOpen] = useState(false);
   const [isManagerConnected, setIsManagerConnected] = useState(false);
+  const [isIpfsConnected, setIsIpfsConnected] = useState(false);
 
   useEffect(() => {
     api.listenToError((data) => {
@@ -55,6 +57,7 @@ function AppProvider({ children }: AppProviderProps) {
     };
   }, []);
 
+
   const handleSavedSearchBar = (state: boolean) => setIsSavedSearchOpen(state);
   const handleIsManagerConnected = (state: boolean) =>
     setIsManagerConnected(state);
@@ -66,8 +69,9 @@ function AppProvider({ children }: AppProviderProps) {
       handleSavedSearchBar,
       isManagerConnected,
       handleIsManagerConnected,
+      isIpfsConnected
     }),
-    [currentUser, isSavedSearchOpen, isManagerConnected]
+    [currentUser, isSavedSearchOpen, isManagerConnected,isIpfsConnected]
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

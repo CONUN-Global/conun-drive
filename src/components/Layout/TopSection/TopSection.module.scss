@@ -8,18 +8,17 @@
     & .ConunLogo {
       transform: translateX(-5px);
       height: 35px;
-      margin: 5px 0;
+      margin-bottom: 5px;
     }
 
     & .ManagerButton {
-      align-items: center;
-      border-radius: 4px;
       display: flex;
-      font-size: 14px;
-      height: 30px;
-      justify-content: center;
-      margin-top: 7px;
       width: 150px;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+      border-radius: 4px;
+      height: 30px;
 
       & .DotIcon {
         width: 10px;
@@ -35,7 +34,7 @@
 
   & .UserAndSearchBar {
     display: flex;
-    margin: 0 10px;
+
     & .UserPicture {
       height: 45px;
       width: 45px;
@@ -52,7 +51,6 @@
   & .ActionsBar {
     display: flex;
     justify-content: flex-end;
-    margin-top: 5px;
 
     & :not(:last-child) {
       margin-right: 7px;

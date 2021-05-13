@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 import Button from "../../../components/Button";
 import Tooltip from "../../../components/Tooltip";
-import Thumbnail from "../../../components/Thumbnail";
 
 import useCurrentUser from "../../../hooks/useCurrentUser";
 import useGetImage from "../../../hooks/useGetImage";
@@ -105,7 +104,7 @@ function Cell({ file }: CellProps) {
   return (
     <div className={styles.Cell}>
       <Link to={`/file/${file.id}`}>
-        <Thumbnail imgSrc={thumbImgSrc} className={styles.Thumb} />
+        <img className={styles.Thumb} src={thumbImgSrc} />
       </Link>
       <div className={styles.Text}>
         <span className={styles.Title}>{trunc(file.name, 100)}</span>

@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 import Button from "../Button";
 import Tooltip from "../Tooltip";
-import Thumbnail from "../Thumbnail";
 
 import useLikeContent from "../../hooks/useLikeContent";
 import useCurrentUser from "../../hooks/useCurrentUser";
@@ -41,19 +40,19 @@ function FileBox({ file }: FileBoxProps) {
 
   const { data } = useGetImage(file?.info?.thumbnail);
 
-  useEffect(() => {
-    const listener = (data) => {
-      if (data.contentId === file?.id) {
-        setLocalLikeStatus(false);
-        setLocalLikeCount((prev) => prev - 1);
-      }
-    };
-    api.listenToError(listener);
+  // useEffect(() => {
+  //   const listener = (data) => {
+  //     if (data.contentId === file?.id) {
+  //       setLocalLikeStatus(false);
+  //       setLocalLikeCount((prev) => prev - 1);
+  //     }
+  //   };
+  //   api.listenToError(listener);
 
-    return () => {
-      api.removeListener("error-listener", listener);
-    };
-  }, []);
+  //   return () => {
+  //     api.removeListener("error-listener", listener);
+  //   };
+  // }, []);
 
   const handleLike = async () => {
     await likeContent({
@@ -69,7 +68,11 @@ function FileBox({ file }: FileBoxProps) {
   return (
     <div className={styles.FileBox}>
       <Link to={`/file/${file?.id}`} className={styles.Link}>
-        <Thumbnail imgSrc={data} className={styles.FileImage} />
+        {data ? (
+          <img className={styles.FileImage} src={data} alt={file.name} />
+        ) : (
+          <div className={styles.NoImage}>No peers available</div>
+        )}
       </Link>
       <div className={styles.InfoSection}>
         <div className={styles.Top}>

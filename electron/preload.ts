@@ -26,6 +26,9 @@ contextBridge.exposeInMainWorld("api", {
   listenToError: (fn: any) => {
     ipcRenderer.on("error-listener", (e, ...args) => fn(...args));
   },
+  // listenToIpfsConnection: (fn: any) => {
+  //   ipcRenderer.on("ipfs-connection-succesful", (e, ...args) => fn(...args));
+  // },
   removeListener: (name: string, fn: any) =>
     ipcRenderer.removeListener(name, fn),
   getAppVersion: () => ipcRenderer.invoke("get-app-version"),

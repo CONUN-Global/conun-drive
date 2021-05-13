@@ -14,7 +14,7 @@ import { FileProps } from "../../types";
 
 import styles from "./Category.module.scss";
 
-const PAGE_LIMIT = 10;
+const PAGE_LIMIT = 10
 
 function Category() {
   const { id } = useParams();

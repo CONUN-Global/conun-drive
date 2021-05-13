@@ -1,12 +1,9 @@
 import { ipcMain } from "electron";
 import fs from "fs";
 import fetch from "electron-fetch";
-import all from "it-all";
-import { concat } from "uint8arrays";
-import Jimp from "jimp";
 import isDev from "electron-is-dev";
 
-import { mainWindow, node } from "../";
+import ipfsNode, { mainWindow } from "../index";
 import db from "../store/db";
 import connectToWS, { client } from "../socket";
 import logger from "../logger";
@@ -19,7 +16,8 @@ ipcMain.handle("get-file-preview", async (_, hash) => {
   try {
     logger("file-preview-logger", `Getting preview with hash ${hash}`);
 
-    const preview = concat(await all(node.cat(hash)));
+    const preview = await ipfsNode.preview(hash);
+    console.log('preview: ', preview);
 
     logger(
       "file-preview-cat-success",
@@ -41,8 +39,8 @@ ipcMain.handle("get-file-preview", async (_, hash) => {
 
 ipcMain.handle("get-file-description", async (_, hash) => {
   try {
-    const description = concat(await all(node.cat(hash, { timeout: 5000 })));
-
+    // const description = concat(await all(node.cat(hash, { timeout: 5000 })));
+    const description = await ipfsNode.preview(hash);
     return {
       success: true,
       description,
@@ -78,9 +76,7 @@ ipcMain.handle("upload-file", async (_, info) => {
     mainWindow.webContents.send("is-registering-file", true);
     const file = fs.readFileSync(info.filePath);
     const fileContent = Buffer.from(file);
-    const fileHash = await node.add({
-      content: fileContent,
-    });
+    const fileHash = await ipfsNode.send(fileContent);
 
     client.send(
       JSON.stringify({ type: "upload-file", fileHash, price: 0, data: info })
@@ -149,27 +145,28 @@ ipcMain.handle("get-current-user", async () => {
   }
 });
 
-ipcMain.handle("upload-avatar", async (_, path) => {
-  try {
-    const bufferizedPath = Buffer.from(path.split(",")[1], "base64");
-    const preview = await Jimp.read(bufferizedPath);
-    await preview.resize(Jimp.AUTO, 500).quality(95);
-    const previewContent = await preview.getBufferAsync(preview.getMIME());
-    const previewHash = await node.add({
-      content: previewContent,
-    });
+// ipcMain.handle("upload-avatar", async (_, path) => {
+//   try {
+//     const ipfsd = await getIpfsd();
 
-    return {
-      success: true,
-      hash: previewHash?.path,
-    };
-  } catch (error) {
-    logger("upload-avatar", error);
-    return {
-      success: false,
-      error: String(error),
-    };
-  }
-});
+//     const bufferizedPath = Buffer.from(path.split(",")[1], "base64");
+//     const preview = await Jimp.read(bufferizedPath);
+//     await preview.resize(Jimp.AUTO, 500).quality(95);
+//     const previewContent = await preview.getBufferAsync(preview.getMIME());
+
+//     const previewHash = await node.add(previewContent, { pin: false });
+
+//     return {
+//       success: true,
+//       hash: previewHash?.path,
+//     };
+//   } catch (error) {
+//     logger("upload-avatar", error);
+//     return {
+//       success: false,
+//       error: String(error),
+//     };
+//   }
+// });
 
 ipcMain.handle("connect-to-manager", () => connectToWS());

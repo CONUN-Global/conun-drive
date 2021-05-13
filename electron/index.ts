@@ -1,27 +1,31 @@
-import { app, BrowserWindow } from "electron";
-import fs from "fs";
+import { app, BrowserWindow, ipcMain } from "electron";
 import path from "path";
-import IPFS from "ipfs-core";
-import Protector from "libp2p/src/pnet";
 import isDev from "electron-is-dev";
 import serve from "electron-serve";
+import Jimp from "jimp";
 
 import { prepareDb } from "./store/db";
+import "./ipcMain";
 import connectToWS from "./socket";
+
 import logger from "./logger";
 
-import "./ipcMain";
+
+import NodeIPFS from "./ipfs/index";
 
 const loadURL = serve({ directory: "dist/parcel-build" });
 
-export let node;
-
 export let mainWindow: BrowserWindow | null = null;
 
-connectToWS();
 
-const BOOTSTRAP_ADDRESSS =
-  "/ip4/52.79.200.55/tcp/4001/ipfs/12D3KooWFyYb19Xki7pj4PyQ1jnZsEx4MfExyng2MZCAtpPXoCxb";
+connectToWS();
+const ipfsNode = new NodeIPFS();
+
+
+(async () =>{
+  await prepareDb();
+  await ipfsNode.initialize();
+})();
 
 const createWindow = async (): Promise<void> => {
   // Create the browser window.
@@ -41,30 +45,6 @@ const createWindow = async (): Promise<void> => {
   mainWindow.setResizable(false);
 
   try {
-    node = await IPFS.create({
-      libp2p: {
-        modules: {
-          connProtector: new Protector(
-            fs.readFileSync(__dirname + "/assets/swarm.key")
-          ),
-        },
-      },
-      // @ts-expect-error
-      config: {
-        Bootstrap: [BOOTSTRAP_ADDRESSS],
-      },
-    });
-
-    await prepareDb();
-
-    const id = await node.id();
-    const peers = await node.swarm.peers();
-
-    logger("ipfs-id", id);
-    logger("ipfs-peers", peers);
-
-    logger("ipfs-id", id);
-
     if (isDev) {
       await mainWindow.loadURL("http://localhost:1235");
       mainWindow.webContents.openDevTools({ mode: "detach" });
@@ -72,14 +52,41 @@ const createWindow = async (): Promise<void> => {
       await loadURL(mainWindow);
     }
   } catch (err) {
+    console.log(`err`, err);
     logger("ipfs-connection", err);
   }
 };
 
+ipcMain.handle("upload-avatar", async (_, path) => {
+  try {
+    console.log('>>>>')
+    const bufferizedPath = Buffer.from(path.split(",")[1], "base64");
+    const preview = await Jimp.read(bufferizedPath);
+    await preview.resize(Jimp.AUTO, 500).quality(95);
+    const previewContent = await preview.getBufferAsync(preview.getMIME());
+
+    const previewHash = await ipfsNode.send(previewContent);
+    console.log('res send: ', previewHash);
+
+    return {
+      success: true,
+      hash: previewHash?.path,
+    };
+
+  } catch (error) {
+    logger("upload-avatar", error);
+    return {
+      success: false,
+      error: String(error),
+    };
+  }
+});
+
 app.on("ready", createWindow);
 
-app.on("window-all-closed", () => {
+app.on("window-all-closed", async () => {
   if (process.platform !== "darwin") {
+    ipfsNode.disconnect();
     app.quit();
   }
 });
@@ -91,5 +98,8 @@ app.on("activate", () => {
 });
 
 process.on("uncaughtException", (uncaughtException) => {
+  console.log('uncaughtException: ', uncaughtException);
   logger("uncaught-exception", uncaughtException);
 });
+
+export default ipfsNode;

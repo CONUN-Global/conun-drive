@@ -4,7 +4,9 @@ import fetch from "electron-fetch";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 import isDev from "electron-is-dev";
 
-import { mainWindow, node } from "../";
+import ipfsNode, { mainWindow } from "../index";
+
+
 import db from "../store/db";
 import logger from "../logger";
 
@@ -61,9 +63,8 @@ function connectToWS() {
 
       if (data.type === "upload-success") {
         try {
-          const descriptionHash = await node.add({
-            content: data?.data?.description,
-          });
+          const descriptionHash: any = await ipfsNode.send(data?.data?.description);
+
           const previewBuffer = Buffer.from(
             data?.data?.previewPath.split(",")[1],
             "base64"
@@ -73,9 +74,7 @@ function connectToWS() {
           const previewContent = await preview.getBufferAsync(
             preview.getMIME()
           );
-          const previewHash = await node.add({
-            content: previewContent,
-          });
+          const previewHash: any = await ipfsNode.send(previewContent);
 
           const userDetails = await db.get("userDetailsDrive");
 
@@ -130,22 +129,14 @@ function connectToWS() {
 
       if (data.type === "download-success") {
         // eslint-disable-next-line
-        for await (const file of node.get(data?.contentHash)) {
-          // eslint-disable-next-line
-          if (!file.content) continue;
-          const content = [];
+         await ipfsNode.download(data, (content) => {
+           mainWindow.webContents.send("download-success", {
+             success: true,
+             fileName: data?.name,
+             file: content,
+           });
+         });
 
-          // eslint-disable-next-line
-          for await (const chunk of file.content) {
-            content.push(chunk);
-          }
-
-          mainWindow.webContents.send("download-success", {
-            success: true,
-            fileName: data?.name,
-            file: content,
-          });
-        }
       }
       if (data.type === "upload-failure") {
         mainWindow.webContents.send("error-listener", { data: data?.data });
