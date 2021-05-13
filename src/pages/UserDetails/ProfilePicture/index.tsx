@@ -47,7 +47,6 @@ function ProfilePicture({
     }
     setShowModal(false);
   };
-  console.log(typeof avatar);
   if (isSelf) {
     return (
       <>

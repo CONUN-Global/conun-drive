@@ -28,20 +28,6 @@ function LikeButton({ file }: Props) {
   const { currentUser } = useCurrentUser();
   const { isManagerConnected } = useAppContext();
 
-  useEffect(() => {
-    const listener = (data) => {
-      if (data.contentId === file?.id) {
-        setLiked(false);
-        setLikeCount((prev) => prev - 1);
-      }
-    };
-    api.listenToError(listener);
-
-    return () => {
-      api.removeListener("error-listener", listener);
-    };
-  }, []);
-
   const handleLike = async () => {
     await likeContent({
       userId: currentUser?.id,
