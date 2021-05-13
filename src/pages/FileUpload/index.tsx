@@ -203,6 +203,7 @@ function FileUpload() {
                     onChange={onChange}
                     isMulti
                     formatCreateLabel={(value) => `Add new ${value} tag`}
+                    createOptionPosition="first"
                     placeholder=""
                   />
                 )}
