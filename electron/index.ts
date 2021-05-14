@@ -17,6 +17,8 @@ export let mainWindow: BrowserWindow | null = null;
 connectToWS();
 
 const createWindow = async (): Promise<void> => {
+  await createIpfs();
+
   // Create the browser window.
   mainWindow = new BrowserWindow({
     height: 720,
@@ -47,11 +49,7 @@ const createWindow = async (): Promise<void> => {
   }
 };
 
-app.on("ready", async () => {
-  const result = await createIpfs();
-  console.log(`result`, result);
-  createWindow();
-});
+app.on("ready", createWindow);
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
