@@ -39,7 +39,6 @@ export async function createIpfs() {
 
     return true;
   } catch (error) {
-    console.log(`error`, error);
     logger("ipfs-connection", error, "error");
 
     return false;
