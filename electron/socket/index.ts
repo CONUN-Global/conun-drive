@@ -199,20 +199,12 @@ function connectToWS() {
         }
       }
       if (data.type === "upload-failure") {
-        logger(
-          "upload-failure",
-          `failed to register hash ${data.contentHash}`,
-          "error"
-        );
+        logger("upload-failure", data?.data, "error");
         mainWindow.webContents.send("error-listener", { data: data?.data });
       }
 
       if (data.type === "like-failure") {
-        logger(
-          "like-failure",
-          `failed to like hash ${data.contentHash}`,
-          "error"
-        );
+        logger("like-failure", data?.data, "error");
         mainWindow.webContents.send("error-listener", {
           data: data?.data,
           contentId: data.contentId,
