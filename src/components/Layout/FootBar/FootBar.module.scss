@@ -13,5 +13,8 @@
   & span {
     margin-right: 10px;
     font-weight: 400;
+    & a {
+      color: var(--emerald);
+    }
   }
 }

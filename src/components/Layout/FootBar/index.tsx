@@ -9,17 +9,22 @@ function FootBar() {
 
   return (
     <div className={styles.FootBar}>
-      {currentAppVersion && (
+      {currentAppVersion && latestVersion && (
         <>
           <span className={styles.CurrentVersion}>
-            VERSION {currentAppVersion}
+            Ver. {currentAppVersion}
           </span>
-          {currentAppVersion !== latestVersion ? (
+          {currentAppVersion !== latestVersion && (
             <span className={styles.UpdateStatus}>
-              A new version is available!
+              A new version is available! Get the new version from{" "}
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href="https://dappstore.conun.io/"
+              >
+                CONUN DApp Store
+              </a>
             </span>
-          ) : (
-            <span className={styles.UpdateStatus}>All up-to-date!</span>
           )}
         </>
       )}
