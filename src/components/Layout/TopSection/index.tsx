@@ -53,7 +53,7 @@ function TopSection() {
             data-tip={
               isManagerConnected
                 ? "Manager is connected!"
-                : "Open the manager and click here to reconnect"
+                : "Sign into the manager and click here to reconnect"
             }
             className={styles.ManagerButton}
             onClick={() => (isManagerConnected ? {} : api.connectToManager())}
