@@ -9,6 +9,7 @@ import connectToWS from "./socket";
 import logger from "./logger";
 
 import "./ipcMain";
+import "./ipcMain/app";
 
 const loadURL = serve({ directory: "dist/parcel-build" });
 

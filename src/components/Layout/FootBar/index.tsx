@@ -7,11 +7,9 @@ function FootBar() {
   const { version: currentAppVersion } = useGetAppVersion();
   const { latestVersion } = useGetLatestRelease();
 
-  console.log(latestVersion);
-
   return (
     <div className={styles.FootBar}>
-      {!currentAppVersion && (
+      {currentAppVersion && (
         <>
           <span className={styles.CurrentVersion}>
             VERSION {currentAppVersion}
