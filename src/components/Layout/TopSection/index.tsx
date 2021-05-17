@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import classNames from "classnames";
 
@@ -43,7 +43,9 @@ function TopSection() {
   return (
     <div className={styles.TopSection}>
       <div className={styles.LogoSection}>
-        <ConunIcon className={styles.ConunLogo} />
+        <Link to="/">
+          <ConunIcon className={styles.ConunLogo} />
+        </Link>
         <Tooltip id="manager-check">
           <Button
             type="button"
