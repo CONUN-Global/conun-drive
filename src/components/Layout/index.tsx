@@ -4,6 +4,7 @@ import TopSection from "./TopSection";
 import SavedSearchSidebar from "./SavedSearchesSidebar";
 
 import styles from "./Layout.module.scss";
+import FootBar from "./FootBar";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -15,6 +16,7 @@ function Layout({ children }: LayoutProps) {
       <TopSection />
       {children}
       <SavedSearchSidebar />
+      <FootBar />
     </div>
   );
 }
