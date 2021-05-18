@@ -20,7 +20,11 @@ ReactDOM.render(
       <AppProvider>
         <Layout>
           <App />
-          <ToastContainer limit={1} bodyClassName={styles.ToastBody} />
+          <ToastContainer
+            limit={1}
+            bodyClassName={styles.ToastBody}
+            hideProgressBar
+          />
         </Layout>
       </AppProvider>
     </Router>

@@ -182,6 +182,11 @@ function connectToWS() {
 
           // eslint-disable-next-line
           for await (const chunk of file.content) {
+            logger(
+              "download-progress",
+              `${chunk.length} of ${data?.data?.size}`,
+              "info"
+            );
             content.push(chunk);
           }
 
@@ -193,7 +198,7 @@ function connectToWS() {
 
           mainWindow.webContents.send("download-success", {
             success: true,
-            fileName: data?.name,
+            data: data?.data,
             file: content,
           });
         }

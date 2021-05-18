@@ -76,6 +76,8 @@ ipcMain.handle("get-file-description", async (_, hash) => {
 
 ipcMain.handle("download-file", async (_, args) => {
   try {
+    const userDetails = await db.get("userDetailsDrive");
+
     logger(
       "downloading-file",
       `sending file ${args.hash} sent to manager`,
@@ -86,14 +88,26 @@ ipcMain.handle("download-file", async (_, args) => {
       JSON.stringify({
         type: "download-content",
         ccid: args?.publicHash,
-        user_id: args?.userId,
+        user_id: userDetails?.userId,
         content_id: args?.contentId,
         name: args?.name,
         hash: args?.hash,
+        size: args?.size,
       })
     );
+
+    mainWindow.webContents.send("download-start", args);
+
+    return {
+      success: true,
+    };
   } catch (error) {
     logger("download-file", error, "error");
+
+    return {
+      success: false,
+      error: String(error),
+    };
   }
 });
 
@@ -129,8 +143,9 @@ ipcMain.handle("upload-file", async (_, info) => {
   }
 });
 
-ipcMain.handle("like-content", (_, args) => {
+ipcMain.handle("like-content", async (_, args) => {
   try {
+    const userDetails = await db.get("userDetailsDrive");
     logger(
       "like-content",
       `attempting like of file ${args?.publicHash}`,
@@ -140,7 +155,7 @@ ipcMain.handle("like-content", (_, args) => {
       JSON.stringify({
         type: "like-content",
         ccid: args?.publicHash,
-        user_id: args?.userId,
+        user_id: userDetails?.userId,
         content_id: args?.contentId,
       })
     );

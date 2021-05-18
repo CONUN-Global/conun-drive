@@ -9,6 +9,7 @@
   position: fixed;
   width: 100%;
   z-index: 5;
+  border-top: solid 1px var(--bg);
 
   & span {
     margin-right: 10px;

@@ -23,6 +23,9 @@ contextBridge.exposeInMainWorld("api", {
   listenToUploadSuccess: (fn: any) => {
     ipcRenderer.on("upload-success", (e, ...args) => fn(...args));
   },
+  listenToDownloadStart: (fn: any) => {
+    ipcRenderer.on("download-start", (e, ...args) => fn(...args));
+  },
   listenToError: (fn: any) => {
     ipcRenderer.on("error-listener", (e, ...args) => fn(...args));
   },
