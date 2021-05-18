@@ -176,17 +176,24 @@ function connectToWS() {
 
         // eslint-disable-next-line
         for await (const file of node.get(data?.contentHash)) {
+          let totalBytes = 0;
           // eslint-disable-next-line
           if (!file.content) continue;
           const content = [];
 
           // eslint-disable-next-line
           for await (const chunk of file.content) {
-            logger(
-              "download-progress",
-              `${chunk.length} of ${data?.data?.size}`,
-              "info"
-            );
+            totalBytes += chunk?.length;
+            const currentPercentage = (
+              (totalBytes * 100) /
+              data?.data?.size
+            ).toFixed(2);
+
+            mainWindow.webContents.send("download-percentage", {
+              file: data?.data,
+              percentage: currentPercentage,
+            });
+
             content.push(chunk);
           }
 

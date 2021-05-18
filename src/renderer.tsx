@@ -23,6 +23,8 @@ ReactDOM.render(
           <ToastContainer
             limit={1}
             bodyClassName={styles.ToastBody}
+            toastClassName={styles.Toast}
+            className={styles.ToastCotainer}
             hideProgressBar
           />
         </Layout>

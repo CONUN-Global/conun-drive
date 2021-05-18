@@ -8,7 +8,6 @@ import Tooltip from "../../../components/Tooltip";
 import Thumbnail from "../../../components/Thumbnail";
 
 import useGetImage from "../../../hooks/useGetImage";
-import useCurrentUser from "../../../hooks/useCurrentUser";
 import useDownloadFile from "../../../hooks/useDownloadFile";
 import { useAppContext } from "../../../components/AppContext";
 
@@ -40,9 +39,9 @@ function MainCell({ file }: MainCellProps) {
     });
 
     if (data?.success) {
-      toast.info("your download has started", {
+      toast.info("Your download has started", {
         position: "bottom-center",
-        autoClose: 1000,
+        autoClose: 2000,
       });
     } else {
       toast.error(data?.error ?? "An error ocurred", {

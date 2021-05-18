@@ -29,6 +29,9 @@ contextBridge.exposeInMainWorld("api", {
   listenToError: (fn: any) => {
     ipcRenderer.on("error-listener", (e, ...args) => fn(...args));
   },
+  listenToDownloadProgress: (fn: any) => {
+    ipcRenderer.on("download-percentage", (e, ...args) => fn(...args));
+  },
   removeListener: (name: string, fn: any) =>
     ipcRenderer.removeListener(name, fn),
   getAppVersion: () => ipcRenderer.invoke("get-app-version"),

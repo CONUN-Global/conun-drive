@@ -1,7 +1,6 @@
 import React from "react";
 import { saveAs } from "file-saver";
 
-import SmallSpinner from "../../../../Spinner/SmallSpinner";
 import Button from "../../../../Button";
 
 import CheckmarkIcon from "../../../../../assets/icons/checkmark.svg";
@@ -14,17 +13,14 @@ interface DownloadItemProps {
     name: string;
     status: "IN_PROGRESS" | "FINISHED" | "CANCELLED";
     fileName: string;
+    percentage: number;
     data: any;
   };
 }
 
-function DownloadIcon({
-  status,
-}: {
-  status: "IN_PROGRESS" | "FINISHED" | "CANCELLED";
-}) {
-  if (status === "IN_PROGRESS") {
-    return <SmallSpinner className={styles.Loading} inverted />;
+function DownloadIcon({ download }: DownloadItemProps) {
+  if (download.status === "IN_PROGRESS") {
+    return <p>{download.percentage}</p>;
   }
 
   return <CheckmarkIcon className={styles.CheckmarkIcon} />;
@@ -41,8 +37,7 @@ function DownloadItem({ download }: DownloadItemProps) {
   return (
     <Button className={styles.Download} onClick={downloadFile} noStyle>
       <p className={styles.Title}>{download.name}</p>
-
-      <DownloadIcon status={download.status} />
+      <DownloadIcon download={download} />
     </Button>
   );
 }

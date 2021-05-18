@@ -12,6 +12,7 @@ function DownloadQueue() {
   const [state, dispatch] = useReducer(reducer, {
     downloads: {},
   });
+
   useEffect(() => {
     const listener = (data) => {
       dispatch({
@@ -20,10 +21,6 @@ function DownloadQueue() {
       });
     };
     api.listenToDownloadSuccess(listener);
-
-    return () => {
-      api.removeListener("download-success", listener);
-    };
   }, []);
 
   useEffect(() => {
@@ -35,15 +32,22 @@ function DownloadQueue() {
           fileName: data?.name,
           name: data?.title,
           status: "IN_PROGRESS",
+          percentage: null,
           data: null,
         },
       });
     };
     api.listenToDownloadStart(listener);
+  }, []);
 
-    return () => {
-      api.removeListener("download-start", listener);
+  useEffect(() => {
+    const listener = (data) => {
+      dispatch({
+        type: "SET_DOWNLOAD_PERCENTAGE",
+        payload: { id: data?.file?.content_id, percentage: +data.percentage },
+      });
     };
+    api.listenToDownloadProgress(listener);
   }, []);
 
   const downloads = Object.keys(state?.downloads);

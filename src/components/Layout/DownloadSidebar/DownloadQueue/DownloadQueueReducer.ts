@@ -7,13 +7,18 @@ type QueueFile = {
   name: string;
   status: Status;
   fileName: string;
+  percentage: number;
   data: any;
 };
 
 type Action =
   | { type: "ADD_DOWNLOAD"; payload: QueueFile }
   | { type: "REMOVE_DOWNLOAD"; payload: string }
-  | { type: "SET_DOWNLOAD_DATA"; payload: { id: string; data: any } };
+  | { type: "SET_DOWNLOAD_DATA"; payload: { id: string; data: any } }
+  | {
+      type: "SET_DOWNLOAD_PERCENTAGE";
+      payload: { id: string; percentage: number };
+    };
 
 interface State {
   downloads: { [key: string]: QueueFile } | {};
@@ -44,6 +49,11 @@ const reducer = produce(
         draft.downloads[ID_LABEL + action?.payload?.id].status = "FINISHED";
         draft.downloads[ID_LABEL + action?.payload?.id].data =
           action?.payload?.data;
+        break;
+
+      case "SET_DOWNLOAD_PERCENTAGE":
+        draft.downloads[ID_LABEL + action?.payload?.id].percentage =
+          action?.payload?.percentage;
         break;
 
       default: {
