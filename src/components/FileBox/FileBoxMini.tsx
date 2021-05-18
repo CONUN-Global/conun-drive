@@ -18,7 +18,7 @@ function FileBoxMini({ file }: FileBoxMiniProps) {
 
   return (
     <Link className={styles.FileBoxMini} to={`file/${file?.id}`}>
-      <div className={styles.FileImage}>
+      <div className={styles.FileImageBox}>
         <Thumbnail imgSrc={data} className={styles.FileImage} />
       </div>
       <p className={styles.FileName}>{file.name}</p>
