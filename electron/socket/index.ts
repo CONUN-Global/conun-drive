@@ -1,6 +1,8 @@
 import { app } from "electron";
 import Jimp from "jimp";
 import fetch from "electron-fetch";
+import { join } from "path";
+import { appendFileSync } from "fs";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 import isDev from "electron-is-dev";
 
@@ -189,6 +191,11 @@ function connectToWS() {
               data?.data?.size
             ).toFixed(2);
 
+            appendFileSync(
+              join(app.getPath("downloads"), data.name),
+              Buffer.from(chunk)
+            );
+
             mainWindow.webContents.send("download-percentage", {
               file: data?.data,
               percentage: currentPercentage,
@@ -205,8 +212,8 @@ function connectToWS() {
 
           mainWindow.webContents.send("download-success", {
             success: true,
+            path: join(app.getPath("downloads"), data.name),
             data: data?.data,
-            file: content,
           });
         }
       }
