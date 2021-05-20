@@ -19,11 +19,24 @@ interface DownloadItemProps {
 }
 
 function DownloadIcon({ download }: DownloadItemProps) {
-  if (download.status === "IN_PROGRESS") {
-    return <p>{download.percentage}</p>;
+  if (download.status === "FINISHED") {
+    return <CheckmarkIcon className={styles.CheckmarkIcon} />;
   }
+  if (download.status === "CANCELLED") {
+    return <CheckmarkIcon className={styles.CancelledIcon} />;
+  }
+  return null;
+}
 
-  return <CheckmarkIcon className={styles.CheckmarkIcon} />;
+function ProgressBar({ download }: DownloadItemProps) {
+  return (
+    <div className={styles.ProgressBar}>
+      <span
+        className={styles.Progress}
+        style={{ width: `${download.percentage}%` }}
+      ></span>
+    </div>
+  );
 }
 
 function DownloadItem({ download }: DownloadItemProps) {
@@ -35,10 +48,13 @@ function DownloadItem({ download }: DownloadItemProps) {
   };
 
   return (
-    <Button className={styles.Download} onClick={downloadFile} noStyle>
-      <p className={styles.Title}>{download.name}</p>
-      <DownloadIcon download={download} />
-    </Button>
+    <>
+      <Button className={styles.Download} onClick={downloadFile} noStyle>
+        <p className={styles.Title}>{download.name}</p>
+        <DownloadIcon download={download} />
+      </Button>
+      <ProgressBar download={download} />
+    </>
   );
 }
 

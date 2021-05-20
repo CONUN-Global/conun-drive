@@ -21,8 +21,26 @@
   }
 
   & .CheckmarkIcon {
-    height: 15px;
-    width: 15px;
+    height: 13px;
+    width: 13px;
     fill: var(--primary);
+  }
+  & .CancelledIcon {
+    height: 13px;
+    width: 13px;
+    fill: var(--ui-red);
+  }
+}
+
+.ProgressBar {
+  height: 1px;
+  width: 100%;
+  position: relative;
+
+  .Progress {
+    background-color: var(--emerald);
+    height: 1px;
+    position: absolute;
+    z-index: 5;
   }
 }
