@@ -33,13 +33,14 @@
 }
 
 .ProgressBar {
-  height: 1px;
+  height: 3px;
   width: 100%;
   position: relative;
 
   .Progress {
     background-color: var(--emerald);
-    height: 1px;
+    border-radius: 1px;
+    height: 3px;
     position: absolute;
     z-index: 5;
   }

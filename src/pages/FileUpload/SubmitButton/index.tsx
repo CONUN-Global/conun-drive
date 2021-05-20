@@ -29,8 +29,16 @@ function SubmitButton() {
         noStyle
         className={styles.UploadButton}
         disabled={!!downloadPercentage}
+        data-percentage={downloadPercentage}
       >
-        {downloadPercentage || "Upload Content"}
+        <div
+          className={styles.Progress}
+          style={{ width: `${downloadPercentage || 0}%` }}
+        >
+          <div className={styles.Label}>
+            {downloadPercentage || "Upload Content"}
+          </div>
+        </div>
       </Button>
     );
   }
