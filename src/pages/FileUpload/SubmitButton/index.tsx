@@ -6,6 +6,7 @@ import Tooltip from "../../../components/Tooltip";
 import { useAppContext } from "../../../components/AppContext";
 
 import styles from "./SubmitButton.module.scss";
+import { toast } from "react-toastify";
 
 const { api } = window;
 
@@ -20,12 +21,14 @@ const FORM_DEFAULT_VALUES = {
 };
 
 function SubmitButton({ reset }) {
-  const [downloadPercentage, setDownloadPercentage] = useState(null);
+  const [buttonLabel, setButtonLabel] = useState("Upload Content");
+  const [uploadPercentage, setUploadPercentage] = useState(null);
   const { isManagerConnected } = useAppContext();
 
   useEffect(() => {
     const listener = (percentage) => {
-      setDownloadPercentage(Math.ceil(percentage));
+      setButtonLabel(`${Math.ceil(Math.ceil(percentage))}%`);
+      setUploadPercentage(percentage);
     };
     api.listenToUploadProgress(listener);
 
@@ -33,20 +36,26 @@ function SubmitButton({ reset }) {
   }, []);
 
   useEffect(() => {
+    api.listenToError(() => {
+      setButtonLabel("Upload Content");
+      setUploadPercentage(null);
+    });
+  }, []);
+
+  useEffect(() => {
     const listener = () => {
       reset(FORM_DEFAULT_VALUES);
-      setDownloadPercentage(null);
+      setButtonLabel("Upload Complete");
+
+      setTimeout(() => {
+        setButtonLabel("Upload Content");
+        setUploadPercentage(null);
+      }, 2000);
     };
     api.listenToUploadSuccess(listener);
 
     return () => api.removeListeners("upload-success");
   }, []);
-
-  const percentLabel = downloadPercentage
-    ? downloadPercentage === 100
-      ? "Upload Complete"
-      : `${downloadPercentage}%`
-    : "Upload Content";
 
   if (isManagerConnected) {
     return (
@@ -54,14 +63,13 @@ function SubmitButton({ reset }) {
         type="submit"
         noStyle
         className={styles.UploadButton}
-        disabled={!!downloadPercentage}
-        data-percentage={downloadPercentage}
+        disabled={!!uploadPercentage}
       >
         <div
           className={styles.Progress}
-          style={{ width: `${downloadPercentage || 0}%` }}
+          style={{ width: `${uploadPercentage || 0}%` }}
         >
-          <div className={styles.Label}>{percentLabel}</div>
+          <div className={styles.Label}>{buttonLabel}</div>
         </div>
       </Button>
     );

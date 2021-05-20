@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { useHistory } from "react-router";
-import { toast } from "react-toastify";
 
 import Button from "../../components/Button";
 import CategorySelect from "../../components/Select/CategorySelect";
@@ -45,7 +44,6 @@ interface UploadFormData {
 
 function FileUpload() {
   const [thumbImg, setThumbImg] = useState("");
-  const [isUploadComplete, setUploadComplete] = useState(false);
 
   const history = useHistory();
 
