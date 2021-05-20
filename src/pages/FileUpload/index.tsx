@@ -45,6 +45,7 @@ interface UploadFormData {
 
 function FileUpload() {
   const [thumbImg, setThumbImg] = useState("");
+  const [isUploadComplete, setUploadComplete] = useState(false);
 
   const history = useHistory();
 
@@ -71,25 +72,6 @@ function FileUpload() {
   } = useForm<UploadFormData>({
     defaultValues: FORM_DEFAULT_VALUES,
   });
-
-  useEffect(() => {
-    const listener = () => {
-      reset(FORM_DEFAULT_VALUES);
-    };
-    api.listenToUploadSuccess(listener);
-  }, []);
-
-  useEffect(() => {
-    const listener = () => {
-      toast.success("Upload successful", {
-        position: "bottom-center",
-        autoClose: 2000,
-      });
-    };
-    api.listenToUploadSuccess(listener);
-
-    return () => api.removeListeners("upload-success");
-  }, []);
 
   const onSubmit: SubmitHandler<UploadFormData> = async (data) => {
     await uploadFile(data);
@@ -256,7 +238,7 @@ function FileUpload() {
             </div>
           </div>
         </div>
-        <SubmitButton />
+        <SubmitButton reset={reset} />
       </form>
     </div>
   );

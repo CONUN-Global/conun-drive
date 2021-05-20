@@ -9,18 +9,44 @@ import styles from "./SubmitButton.module.scss";
 
 const { api } = window;
 
-function SubmitButton() {
+const FORM_DEFAULT_VALUES = {
+  title: "",
+  file: "",
+  thumbnail: "",
+  description: "",
+  tags: [],
+  category: null,
+  type: null,
+};
+
+function SubmitButton({ reset }) {
   const [downloadPercentage, setDownloadPercentage] = useState(null);
   const { isManagerConnected } = useAppContext();
 
   useEffect(() => {
     const listener = (percentage) => {
-      setDownloadPercentage(percentage);
+      setDownloadPercentage(Math.ceil(percentage));
     };
     api.listenToUploadProgress(listener);
 
     return () => api.removeListeners("upload-percentage");
   }, []);
+
+  useEffect(() => {
+    const listener = () => {
+      reset(FORM_DEFAULT_VALUES);
+      setDownloadPercentage(null);
+    };
+    api.listenToUploadSuccess(listener);
+
+    return () => api.removeListeners("upload-success");
+  }, []);
+
+  const percentLabel = downloadPercentage
+    ? downloadPercentage === 100
+      ? "Upload Complete"
+      : `${downloadPercentage}%`
+    : "Upload Content";
 
   if (isManagerConnected) {
     return (
@@ -35,9 +61,7 @@ function SubmitButton() {
           className={styles.Progress}
           style={{ width: `${downloadPercentage || 0}%` }}
         >
-          <div className={styles.Label}>
-            {downloadPercentage || "Upload Content"}
-          </div>
+          <div className={styles.Label}>{percentLabel}</div>
         </div>
       </Button>
     );
