@@ -8,13 +8,13 @@ type QueueFile = {
   status: Status;
   fileName: string;
   percentage: number;
-  data: any;
+  path: string;
 };
 
 type Action =
   | { type: "ADD_DOWNLOAD"; payload: QueueFile }
   | { type: "REMOVE_DOWNLOAD"; payload: string }
-  | { type: "SET_DOWNLOAD_DATA"; payload: { id: string; data: any } }
+  | { type: "SET_DOWNLOAD_PATH"; payload: { id: string; path: string } }
   | {
       type: "SET_DOWNLOAD_PERCENTAGE";
       payload: { id: string; percentage: number };
@@ -45,10 +45,10 @@ const reducer = produce(
         break;
       }
 
-      case "SET_DOWNLOAD_DATA":
+      case "SET_DOWNLOAD_PATH":
         draft.downloads[ID_LABEL + action?.payload?.id].status = "FINISHED";
-        draft.downloads[ID_LABEL + action?.payload?.id].data =
-          action?.payload?.data;
+        draft.downloads[ID_LABEL + action?.payload?.id].path =
+          action?.payload?.path;
         break;
 
       case "SET_DOWNLOAD_PERCENTAGE":

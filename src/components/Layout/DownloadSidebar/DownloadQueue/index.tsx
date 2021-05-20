@@ -16,8 +16,8 @@ function DownloadQueue() {
   useEffect(() => {
     const listener = (data) => {
       dispatch({
-        type: "SET_DOWNLOAD_DATA",
-        payload: { id: data?.data?.content_id, data: data.file },
+        type: "SET_DOWNLOAD_PATH",
+        payload: { id: data?.data?.content_id, path: data.path },
       });
     };
     api.listenToDownloadSuccess(listener);
@@ -33,7 +33,7 @@ function DownloadQueue() {
           name: data?.title,
           status: "IN_PROGRESS",
           percentage: null,
-          data: null,
+          path: null,
         },
       });
     };

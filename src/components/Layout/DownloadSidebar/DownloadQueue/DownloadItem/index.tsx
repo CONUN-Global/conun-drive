@@ -7,6 +7,8 @@ import CheckmarkIcon from "../../../../../assets/icons/checkmark.svg";
 
 import styles from "./DownloadItem.module.scss";
 
+const { api } = window;
+
 interface DownloadItemProps {
   download: {
     id: string;
@@ -14,7 +16,7 @@ interface DownloadItemProps {
     status: "IN_PROGRESS" | "FINISHED" | "CANCELLED";
     fileName: string;
     percentage: number;
-    data: any;
+    path: string;
   };
 }
 
@@ -40,16 +42,15 @@ function ProgressBar({ download }: DownloadItemProps) {
 }
 
 function DownloadItem({ download }: DownloadItemProps) {
-  const downloadFile = () => {
-    if (download?.data) {
-      const newFile = new Blob(download?.data);
-      saveAs(newFile, download?.fileName);
+  const openFile = async () => {
+    if (download?.path) {
+      await api.openFile(download?.path);
     }
   };
 
   return (
     <>
-      <Button className={styles.Download} onClick={downloadFile} noStyle>
+      <Button className={styles.Download} onClick={openFile} noStyle>
         <p className={styles.Title}>{download.name}</p>
         <DownloadIcon download={download} />
       </Button>

@@ -1,4 +1,4 @@
-import { ipcMain } from "electron";
+import { ipcMain, shell } from "electron";
 import fs from "fs";
 import fetch from "electron-fetch";
 import all from "it-all";
@@ -249,5 +249,13 @@ ipcMain.handle("connect-to-manager", () => {
     connectToWS();
   } catch (error) {
     logger("connect-to-manager", error?.message, "error");
+  }
+});
+
+ipcMain.handle("open-file", async (_, path: string) => {
+  try {
+    await shell.openPath(path);
+  } catch (error) {
+    logger("open-file", error?.message, "error");
   }
 });

@@ -36,5 +36,6 @@ contextBridge.exposeInMainWorld("api", {
     ipcRenderer.on("upload-percentage", (e, ...args) => fn(...args));
   },
   removeListeners: (name: string) => ipcRenderer.removeAllListeners(name),
+  openFile: (path: string) => ipcRenderer.invoke("open-file", path),
   getAppVersion: () => ipcRenderer.invoke("get-app-version"),
 });
