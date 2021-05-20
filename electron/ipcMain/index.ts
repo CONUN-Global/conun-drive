@@ -117,12 +117,21 @@ ipcMain.handle("upload-file", async (_, info) => {
 
     logger("upload-file", `uploading file ${info?.filePath} to ipfs`, "info");
 
-    mainWindow.webContents.send("is-registering-file", true);
+    const handleProgress = (data) => {
+      const currentPercentage = ((data * 100) / info?.size).toFixed(2);
+
+      mainWindow.webContents.send("upload-percentage", currentPercentage);
+    };
     const file = fs.readFileSync(info.filePath);
     const fileContent = Buffer.from(file);
-    const fileHash = await node.add({
-      content: fileContent,
-    });
+    const fileHash = await node.add(
+      {
+        content: fileContent,
+      },
+      {
+        progress: handleProgress,
+      }
+    );
 
     logger("upload-file", `sending ${fileHash.path} hash to manager`, "info");
 

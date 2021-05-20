@@ -44,20 +44,6 @@ function AppProvider({ children }: AppProviderProps) {
     });
   }, []);
 
-  useEffect(() => {
-    const listener = () => {
-      toast.success("Upload successful", {
-        position: "bottom-center",
-        autoClose: 2000,
-      });
-    };
-    api.listenToUploadSuccess(listener);
-
-    return () => {
-      api.removeListener("upload-success", listener);
-    };
-  }, []);
-
   const handleSavedSearchBar = (state: boolean) => setIsSavedSearchOpen(state);
   const handleIsManagerConnected = (state: boolean) =>
     setIsManagerConnected(state);
