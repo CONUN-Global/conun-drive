@@ -3,6 +3,7 @@ import classNames from "classnames";
 import { DropzoneOptions, useDropzone } from "react-dropzone";
 
 import styles from "./Dropzone.module.scss";
+import { toast } from "react-toastify";
 
 interface DropzoneProps extends DropzoneOptions {
   currentFile?: any;
@@ -24,6 +25,13 @@ function Dropzone({
     onDrop,
     multiple: false,
     accept,
+    maxSize: 2000000000,
+    onDropRejected: () => {
+      toast.error("Your file is too big. Max file size is 2gb.", {
+        autoClose: 1500,
+        position: "bottom-center",
+      });
+    },
   });
 
   return (
