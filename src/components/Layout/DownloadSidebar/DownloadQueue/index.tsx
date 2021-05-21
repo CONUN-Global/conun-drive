@@ -57,7 +57,16 @@ function DownloadQueue() {
       <p className={styles.Title}>Download Queue</p>
       <div>
         {downloads.map((id) => (
-          <DownloadItem key={id} download={state?.downloads?.[id]} />
+          <DownloadItem
+            key={id}
+            download={state?.downloads?.[id]}
+            removeItem={(id) => {
+              dispatch({
+                type: "REMOVE_DOWNLOAD",
+                payload: id,
+              });
+            }}
+          />
         ))}
       </div>
     </div>
