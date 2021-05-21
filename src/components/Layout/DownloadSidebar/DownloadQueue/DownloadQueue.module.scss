@@ -1,0 +1,14 @@
+.DownloadQueue {
+  width: 70%;
+
+  & .Title {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 15px;
+  }
+
+  .NoDownloads {
+    color: var(--grey-button-color);
+    font-size: 11px;
+  }
+}

@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { useHistory } from "react-router";
-import { toast } from "react-toastify";
 
 import Button from "../../components/Button";
 import CategorySelect from "../../components/Select/CategorySelect";
@@ -13,9 +12,7 @@ import Modal from "../../components/Modal";
 import TagsSelect from "../../components/Select/TagsSelect";
 import ThumbnailEditor from "../../components/ThumbnailEditor";
 import TypeSelect from "../../components/Select/TypeSelect";
-import Tooltip from "../../components/Tooltip";
-
-import { useAppContext } from "../../components/AppContext";
+import SubmitButton from "./SubmitButton";
 
 import getFileExtension from "../../helpers/getFileExtension";
 
@@ -46,14 +43,11 @@ interface UploadFormData {
 }
 
 function FileUpload() {
-  const { isManagerConnected } = useAppContext();
-  const [isRegistering, setIsRegistering] = useState(false);
-
   const [thumbImg, setThumbImg] = useState("");
 
   const history = useHistory();
 
-  const { mutateAsync: uploadFile, isLoading } = useMutation((data: any) =>
+  const { mutateAsync: uploadFile } = useMutation((data: any) =>
     api.uploadFile({
       title: data?.title,
       category: data?.category?.value,
@@ -64,6 +58,7 @@ function FileUpload() {
       previewPath: data?.thumbnail,
       fileName: data?.file?.name,
       ext: getFileExtension(data?.file?.name),
+      size: data?.file?.size,
     })
   );
   const {
@@ -76,20 +71,7 @@ function FileUpload() {
     defaultValues: FORM_DEFAULT_VALUES,
   });
 
-  useEffect(() => {
-    const listener = () => {
-      setIsRegistering(false);
-      reset(FORM_DEFAULT_VALUES);
-    };
-    api.listenToUploadSuccess(listener);
-
-    return () => {
-      api.removeListener("upload-success", listener);
-    };
-  }, []);
-
   const onSubmit: SubmitHandler<UploadFormData> = async (data) => {
-    setIsRegistering(true);
     await uploadFile(data);
   };
 
@@ -254,26 +236,7 @@ function FileUpload() {
             </div>
           </div>
         </div>
-        {isManagerConnected ? (
-          <Button
-            type="submit"
-            loading={isLoading || isRegistering}
-            className={styles.UploadButton}
-          >
-            Upload Content
-          </Button>
-        ) : (
-          <Tooltip id="upload-button">
-            <Button
-              type="button"
-              className={styles.UploadButton}
-              data-for="upload-button"
-              data-tip="Connect to Conun manager in order to upload"
-            >
-              Upload Content
-            </Button>
-          </Tooltip>
-        )}
+        <SubmitButton reset={reset} />
       </form>
     </div>
   );
