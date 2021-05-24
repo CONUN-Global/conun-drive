@@ -11,6 +11,8 @@ interface DropzoneProps extends DropzoneOptions {
   className?: string;
   label?: string;
   withPreview?: boolean;
+  maxSize: number;
+  rejectMessage: string;
 }
 
 function Dropzone({
@@ -20,14 +22,16 @@ function Dropzone({
   currentFile,
   withPreview,
   accept,
+  maxSize,
+  rejectMessage,
 }: DropzoneProps) {
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     multiple: false,
     accept,
-    maxSize: 2000000000,
+    maxSize: maxSize,
     onDropRejected: () => {
-      toast.error("Your file is too big. Max file size is 2gb.", {
+      toast.error(rejectMessage, {
         autoClose: 1500,
         position: "bottom-center",
       });

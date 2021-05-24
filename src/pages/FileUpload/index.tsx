@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { useHistory } from "react-router";
-import { toast } from "react-toastify";
 
 import Button from "../../components/Button";
 import CategorySelect from "../../components/Select/CategorySelect";
@@ -99,13 +98,8 @@ function FileUpload() {
                     currentFile={value}
                     className={styles.DropzoneFile}
                     onDrop={(files) => onChange(files[0])}
-                    maxSize={2000}
-                    onDropRejected={() => {
-                      toast.error(
-                        "Your file is too big. Max file size is 2gb.",
-                        { autoClose: 1500, position: "bottom-center" }
-                      );
-                    }}
+                    maxSize={2000000000}
+                    rejectMessage="File too large: Max file size is 2Gb."
                     label="Drop your file"
                   />
                 )}
@@ -133,6 +127,8 @@ function FileUpload() {
                       label="Drop your thumbnail"
                       withPreview
                       accept=".png, .jpg, .jpeg"
+                      maxSize={20000000}
+                      rejectMessage="File too large: Max file size is 20Mb."
                     />
                     <Modal isOpen={!!thumbImg} onClose={() => setThumbImg("")}>
                       <ThumbnailEditor
