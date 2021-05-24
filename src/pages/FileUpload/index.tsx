@@ -127,8 +127,8 @@ function FileUpload() {
                       label="Drop your thumbnail"
                       withPreview
                       accept=".png, .jpg, .jpeg"
-                      maxSize={20000000}
-                      rejectMessage="File too large: Max file size is 20Mb."
+                      maxSize={2000000}
+                      rejectMessage="File too large: Max file size is 2Mb."
                     />
                     <Modal isOpen={!!thumbImg} onClose={() => setThumbImg("")}>
                       <ThumbnailEditor
