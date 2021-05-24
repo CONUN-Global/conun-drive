@@ -1,5 +1,7 @@
-import classNames from "classnames";
 import React from "react";
+
+import classNames from "classnames";
+
 import styles from "./Thumbnail.module.scss";
 
 type Props = {
