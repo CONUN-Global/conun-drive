@@ -25,6 +25,16 @@ export async function prepareDb() {
     };
     await db.put(newUserDetails);
   }
+
+  try {
+    await db.get("ipfs-path");
+  } catch (error) {
+    const newIpfsPath: any = {
+      _id: "ipfs-path",
+      path: "",
+    };
+    await db.put(newIpfsPath);
+  }
 }
 
 export default db;

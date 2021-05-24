@@ -1,10 +1,14 @@
 import { app } from "electron";
-import IPFS from "ipfs-core";
+import Ctl from "ipfsd-ctl";
 import fs from "fs-extra";
 import { join } from "path";
 
 import logger from "../logger";
 import db from "../store/db";
+
+import getIpfsBinPath from "../helpers/getIpfsBinPath";
+import writeIpfsBinaryPath from "../helpers/writeIpfsBinaryPath";
+import configExists from "../helpers/configExists";
 
 let node = null;
 
@@ -29,7 +33,37 @@ export async function createIpfs() {
       });
     }
 
-    node = await IPFS.create();
+    const ipfsBin = getIpfsBinPath();
+    writeIpfsBinaryPath(ipfsBin);
+    const ipfsPath = await db.get("ipfs-path");
+
+    const ipfsd = await await Ctl.createController({
+      ipfsHttpModule: require("ipfs-http-client"),
+      type: "go",
+      ipfsBin: ipfsBin,
+      ipfsOptions: {
+        repo: ipfsPath?.path || "",
+      },
+      remote: false,
+      disposable: false,
+      test: false,
+      args: ["--migrate", "--enable-gc", "--routing", "dhtclient"],
+    });
+
+    if (!ipfsPath?.path) {
+      await db.put({
+        ...ipfsPath,
+        path: ipfsd.path,
+      });
+    }
+
+    if (!configExists(ipfsd)) {
+      await ipfsd.init();
+    }
+
+    await ipfsd.start();
+
+    node = ipfsd.api;
 
     const id = await node.id();
     const peers = await node.swarm.peers();
@@ -39,7 +73,7 @@ export async function createIpfs() {
 
     return true;
   } catch (error) {
-    logger("ipfs-connection", error, "error");
+    logger("ipfs-connection", error?.message ?? error, "error");
 
     return false;
   }

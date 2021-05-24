@@ -35,7 +35,7 @@ ipcMain.handle("get-file-preview", async (_, hash) => {
       preview,
     };
   } catch (error) {
-    logger("get-file-preview", error, "error");
+    logger("get-file-preview", error?.message ?? error, "error");
     return {
       success: false,
       error: String(error),
