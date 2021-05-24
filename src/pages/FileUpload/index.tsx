@@ -89,7 +89,7 @@ function FileUpload() {
         <div className={styles.InputsBox}>
           <div className={styles.UploadSection}>
             <div className={styles.AddFileInput}>
-              <p className={styles.InputLabel}>1. Add File</p>
+              <p className={styles.InputLabel}>1. Add File (Max. 2Gb)</p>
               <Controller
                 control={control}
                 name="file"
@@ -98,6 +98,8 @@ function FileUpload() {
                     currentFile={value}
                     className={styles.DropzoneFile}
                     onDrop={(files) => onChange(files[0])}
+                    maxSize={2147483648}
+                    rejectMessage="File too large: Max file size is 2Gb."
                     label="Drop your file"
                   />
                 )}
