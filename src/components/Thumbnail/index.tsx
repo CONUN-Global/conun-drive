@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React from "react";
 import styles from "./Thumbnail.module.scss";
 
@@ -10,7 +11,11 @@ function Thumbnail({ imgSrc, className }: Props) {
   if (imgSrc) {
     return <img className={className} src={imgSrc} />;
   }
-  return <div className={styles.NoImage}>No peers available</div>;
+  return (
+    <div className={classNames(className, styles.NoImage)}>
+      No peers available
+    </div>
+  );
 }
 
 export default Thumbnail;
