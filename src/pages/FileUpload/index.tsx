@@ -98,7 +98,7 @@ function FileUpload() {
                     currentFile={value}
                     className={styles.DropzoneFile}
                     onDrop={(files) => onChange(files[0])}
-                    maxSize={2000000000}
+                    maxSize={2147483648}
                     rejectMessage="File too large: Max file size is 2Gb."
                     label="Drop your file"
                   />
@@ -127,8 +127,6 @@ function FileUpload() {
                       label="Drop your thumbnail"
                       withPreview
                       accept=".png, .jpg, .jpeg"
-                      maxSize={2000000}
-                      rejectMessage="File too large: Max file size is 2Mb."
                     />
                     <Modal isOpen={!!thumbImg} onClose={() => setThumbImg("")}>
                       <ThumbnailEditor
