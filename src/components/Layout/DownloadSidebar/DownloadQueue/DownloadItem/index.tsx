@@ -30,7 +30,9 @@ function DownloadIcon({ download }: { download: Download }) {
   if (download.status === "CANCELLED") {
     return <CheckmarkIcon className={styles.CancelledIcon} />;
   }
-  return null;
+  return (
+    <span>{download.percentage && `${download.percentage.toFixed()}%`}</span>
+  );
 }
 
 function ProgressBar({ download }: { download: Download }) {
