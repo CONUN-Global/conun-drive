@@ -2,21 +2,11 @@ import { app } from "electron";
 import IPFS from "ipfs-core";
 import fs from "fs-extra";
 import { join } from "path";
-import Protector from "libp2p/src/pnet";
 
 import logger from "../logger";
 import db from "../store/db";
 
 let node = null;
-
-const BOOTSTRAP_ADDRESSS_1 =
-  "/ip4/3.37.88.192/tcp/4001/ipfs/12D3KooWHcQJrUAHAt3XSGzEoedRbdmf2S4Y4aX39EqR8wAExTDb";
-
-const BOOTSTRAP_ADDRESSS_2 =
-  "/ip4/15.164.162.140/tcp/4001/ipfs/12D3KooWLe8sbS7M4mPuWeF2v8h9qyR7qjMeTuiPgYi51AGFQNdS";
-
-const BOOTSTRAP_ADDRESSS_3 =
-  "/ip4/52.79.200.55/tcp/4001/ipfs/12D3KooWMLsqXp8j3Q4eFqfQh1cEVFrmrkKdtcd3JVRaZ2wq94ok";
 
 export function getIpfs() {
   return node;
@@ -39,23 +29,7 @@ export async function createIpfs() {
       });
     }
 
-    node = await IPFS.create({
-      libp2p: {
-        modules: {
-          connProtector: new Protector(
-            fs.readFileSync(join(__dirname, "../assets/swarm.key"))
-          ),
-        },
-        config: {
-          Bootstrap: [
-            BOOTSTRAP_ADDRESSS_1,
-            BOOTSTRAP_ADDRESSS_2,
-            BOOTSTRAP_ADDRESSS_3,
-          ],
-          Routing: "dhtserver",
-        },
-      },
-    });
+    node = await IPFS.create();
 
     const id = await node.id();
     const peers = await node.swarm.peers();
