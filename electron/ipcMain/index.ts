@@ -35,7 +35,7 @@ ipcMain.handle("get-file-preview", async (_, hash) => {
       preview,
     };
   } catch (error) {
-    logger("get-file-preview", error, "error");
+    logger("get-file-preview", error?.message, "error");
     return {
       success: false,
       error: String(error),
@@ -66,7 +66,7 @@ ipcMain.handle("get-file-description", async (_, hash) => {
       description,
     };
   } catch (error) {
-    logger("get-file-description", error, "error");
+    logger("get-file-description", error?.message, "error");
     return {
       success: false,
       error: String(error),
@@ -102,7 +102,7 @@ ipcMain.handle("download-file", async (_, args) => {
       success: true,
     };
   } catch (error) {
-    logger("download-file", error, "error");
+    logger("download-file", error?.message, "error");
 
     return {
       success: false,
@@ -257,5 +257,18 @@ ipcMain.handle("open-file", async (_, path: string) => {
     await shell.openPath(path);
   } catch (error) {
     logger("open-file", error?.message, "error");
+  }
+});
+
+ipcMain.handle("get-peers", async () => {
+  try {
+    const node = getIpfs();
+
+    const peers = await node.swarm.peers();
+
+    logger("peers", peers, "info");
+    return peers;
+  } catch (error) {
+    logger("get-peers", error?.message, "error");
   }
 });
