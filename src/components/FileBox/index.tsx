@@ -15,8 +15,6 @@ import { FileProps } from "../../types";
 
 import styles from "./FileBox.module.scss";
 
-const { api } = window;
-
 export interface FileBoxProps {
   file: FileProps;
 }
