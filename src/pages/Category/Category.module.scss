@@ -2,8 +2,6 @@
   overflow-y: auto;
   overflow-x: hidden;
   height: 580px;
-  display: flex;
-  flex-direction: column;
 
   & .Title {
     font-size: 18px;
@@ -13,10 +11,10 @@
   }
 
   & .ResultsContainer {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
     gap: 20px;
-    align-self: center;
+    grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
+    justify-items: center;
   }
 
   & .NoResults {
