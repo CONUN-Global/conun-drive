@@ -12,12 +12,21 @@
 
   & .ActionsBar {
     display: flex;
-    width: fit-content;
+    width: 90%;
     margin-right: 0;
     margin-left: auto;
     padding-top: 16px;
     padding-right: 18px;
     margin-bottom: 30px;
+
+    .PeersButton {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 26px;
+      width: 160px;
+      padding: 10px;
+    }
 
     & :not(:last-child) {
       margin-right: 7px;
