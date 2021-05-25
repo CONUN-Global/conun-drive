@@ -73,7 +73,7 @@ export async function createIpfs() {
 
     return true;
   } catch (error) {
-    logger("ipfs-connection", error?.message ?? error, "error");
+    logger("ipfs-connection", error?.message, "error");
 
     return false;
   }

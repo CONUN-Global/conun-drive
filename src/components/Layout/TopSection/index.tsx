@@ -87,9 +87,7 @@ function TopSection() {
           )}
         </Link>
       )}
-
       <SearchBar />
-
       <div className={styles.ActionsBar}>
         <Link className={styles.ActionButtonAdd} to="/">
           <HomeIcon className={styles.Icon} />
