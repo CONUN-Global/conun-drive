@@ -1,15 +1,12 @@
 import { app } from "electron";
 import Jimp from "jimp";
 import fetch from "electron-fetch";
-import { join } from "path";
-import { appendFileSync } from "fs";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 import isDev from "electron-is-dev";
 
-import { mainWindow } from "../";
+import IPFSNode, { mainWindow } from "../";
 import db from "../store/db";
 import logger from "../logger";
-import { getIpfs } from "../ipfs";
 
 import { DEV_DRIVE_SERVER, PROD_DRIVE_SERVER } from "../const";
 
@@ -80,17 +77,15 @@ function connectToWS() {
 
       if (data.type === "upload-success") {
         try {
-          const node = getIpfs();
-
           logger(
             "manager-file-register-success",
             `received public hash from manager: ${data?.publicHash}`,
             "info"
           );
 
-          const descriptionHash = await node.add({
-            content: data?.data?.description,
-          });
+          const descriptionHash = await IPFSNode.upload(
+            data?.data?.description
+          );
           const previewBuffer = Buffer.from(
             data?.data?.previewPath.split(",")[1],
             "base64"
@@ -100,9 +95,7 @@ function connectToWS() {
           const previewContent = await preview.getBufferAsync(
             preview.getMIME()
           );
-          const previewHash = await node.add({
-            content: previewContent,
-          });
+          const previewHash = await IPFSNode.upload(previewContent);
 
           logger(
             "manager-file-register-success",
@@ -168,54 +161,13 @@ function connectToWS() {
       }
 
       if (data.type === "download-success") {
-        const node = getIpfs();
-
         logger(
           "download-start",
           `Downloading hash ${data.contentHash}`,
           "info"
         );
 
-        // eslint-disable-next-line
-        for await (const file of node.get(data?.contentHash)) {
-          let totalBytes = 0;
-          // eslint-disable-next-line
-          if (!file.content) continue;
-          const content = [];
-
-          // eslint-disable-next-line
-          for await (const chunk of file.content) {
-            totalBytes += chunk?.length;
-            const currentPercentage = (
-              (totalBytes * 100) /
-              data?.data?.size
-            ).toFixed(2);
-
-            appendFileSync(
-              join(app.getPath("downloads"), data.name),
-              Buffer.from(chunk)
-            );
-
-            mainWindow.webContents.send("download-percentage", {
-              file: data?.data,
-              percentage: currentPercentage,
-            });
-
-            content.push(chunk);
-          }
-
-          logger(
-            "download-succes",
-            `Downloaded hash ${data.contentHash}`,
-            "info"
-          );
-
-          mainWindow.webContents.send("download-success", {
-            success: true,
-            path: join(app.getPath("downloads"), data.name),
-            data: data?.data,
-          });
-        }
+        await IPFSNode.download(data);
       }
       if (data.type === "upload-failure") {
         logger("upload-failure", data?.data, "error");

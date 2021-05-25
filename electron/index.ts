@@ -4,7 +4,7 @@ import isDev from "electron-is-dev";
 import serve from "electron-serve";
 
 import { prepareDb } from "./store/db";
-import { createIpfs } from "./ipfs";
+import NodeIPFS from "./ipfs";
 import connectToWS from "./socket";
 import logger from "./logger";
 
@@ -17,11 +17,13 @@ export let mainWindow: BrowserWindow | null = null;
 
 connectToWS();
 
+const IPFSNode = new NodeIPFS();
+
 const createWindow = async (): Promise<void> => {
   try {
     await prepareDb();
 
-    await createIpfs();
+    await IPFSNode.initialize();
 
     mainWindow = new BrowserWindow({
       height: 720,
@@ -71,3 +73,5 @@ app.on("activate", () => {
 process.on("uncaughtException", (uncaughtException) => {
   logger("uncaught-exception", uncaughtException, "error");
 });
+
+export default IPFSNode;

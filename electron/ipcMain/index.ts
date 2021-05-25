@@ -1,13 +1,10 @@
 import { ipcMain, shell } from "electron";
 import fs from "fs";
 import fetch from "electron-fetch";
-import all from "it-all";
-import { concat } from "uint8arrays";
 import Jimp from "jimp";
 import isDev from "electron-is-dev";
 
-import { mainWindow } from "../";
-import { getIpfs } from "../ipfs";
+import IPFSNode, { mainWindow } from "../";
 import db from "../store/db";
 import connectToWS, { client } from "../socket";
 import logger from "../logger";
@@ -18,11 +15,9 @@ const SERVER_URL = isDev ? DEV_DRIVE_SERVER : PROD_DRIVE_SERVER;
 
 ipcMain.handle("get-file-preview", async (_, hash) => {
   try {
-    const node = getIpfs();
-
     logger("file-preview-logger", `getting preview with hash ${hash}`, "info");
 
-    const preview = concat(await all(node.cat(hash)));
+    const preview = await IPFSNode.getPreview(hash);
 
     logger(
       "file-preview-cat-success",
@@ -45,21 +40,7 @@ ipcMain.handle("get-file-preview", async (_, hash) => {
 
 ipcMain.handle("get-file-description", async (_, hash) => {
   try {
-    const node = getIpfs();
-
-    logger(
-      "cat-file-description",
-      `getting file description with hash ${hash}`,
-      "info"
-    );
-
-    const description = concat(await all(node.cat(hash)));
-
-    logger(
-      "cat-file-description",
-      `description cat successful with hash ${hash}`,
-      "info"
-    );
+    const description = await IPFSNode.getPreview(hash);
 
     return {
       success: true,
@@ -113,8 +94,6 @@ ipcMain.handle("download-file", async (_, args) => {
 
 ipcMain.handle("upload-file", async (_, info) => {
   try {
-    const node = getIpfs();
-
     logger("upload-file", `uploading file ${info?.filePath} to ipfs`, "info");
 
     const handleProgress = (data) => {
@@ -124,14 +103,7 @@ ipcMain.handle("upload-file", async (_, info) => {
     };
     const file = fs.readFileSync(info.filePath);
     const fileContent = Buffer.from(file);
-    const fileHash = await node.add(
-      {
-        content: fileContent,
-      },
-      {
-        progress: handleProgress,
-      }
-    );
+    const fileHash = await IPFSNode.upload(fileContent, handleProgress);
 
     logger("upload-file", `sending ${fileHash.path} hash to manager`, "info");
 
@@ -218,17 +190,13 @@ ipcMain.handle("get-current-user", async () => {
 
 ipcMain.handle("upload-avatar", async (_, path) => {
   try {
-    const node = getIpfs();
-
     logger("upload-avatar", `uploading avatar with path ${path}`, "info");
 
     const bufferizedPath = Buffer.from(path.split(",")[1], "base64");
     const preview = await Jimp.read(bufferizedPath);
     await preview.resize(Jimp.AUTO, 500).quality(95);
     const previewContent = await preview.getBufferAsync(preview.getMIME());
-    const previewHash = await node.add({
-      content: previewContent,
-    });
+    const previewHash: any = IPFSNode.upload(previewContent);
 
     return {
       success: true,
