@@ -12,6 +12,7 @@ type ProPicProps = {
 };
 
 function ProPic({ avatarImgSrc, msgShow, setMsgShow }: ProPicProps) {
+  console.log("Pro Pic");
   if (avatarImgSrc && avatarImgSrc !== "") {
     return (
       <img
