@@ -86,15 +86,10 @@ function ProfilePicture({
       </>
     );
   }
-  console.log("Here");
   return (
     <div className={styles.PicBox}>
       {avatarImgSrc ? (
-        <img
-          className={styles.ProPic}
-          src={avatarImgSrc}
-          onError={() => console.log("Broken Image")}
-        />
+        <img className={styles.ProPic} src={avatarImgSrc} />
       ) : (
         <NoAvatar className={styles.ProPic} />
       )}
