@@ -1,10 +1,8 @@
 import { ipcMain, shell } from "electron";
-import fs from "fs";
 import fetch from "electron-fetch";
-import Jimp from "jimp";
 import isDev from "electron-is-dev";
 
-import IPFSNode, { mainWindow } from "../";
+import { mainWindow } from "../";
 import db from "../store/db";
 import connectToWS, { client } from "../socket";
 import logger from "../logger";
@@ -12,48 +10,6 @@ import logger from "../logger";
 import { DEV_DRIVE_SERVER, PROD_DRIVE_SERVER } from "../const";
 
 const SERVER_URL = isDev ? DEV_DRIVE_SERVER : PROD_DRIVE_SERVER;
-
-ipcMain.handle("get-file-preview", async (_, hash) => {
-  try {
-    logger("file-preview-logger", `getting preview with hash ${hash}`, "info");
-
-    const preview = await IPFSNode.getPreview(hash);
-
-    logger(
-      "file-preview-cat-success",
-      `preview cat succeeded with hash ${hash}`,
-      "info"
-    );
-
-    return {
-      success: true,
-      preview,
-    };
-  } catch (error) {
-    logger("get-file-preview", error?.message ?? error, "error");
-    return {
-      success: false,
-      error: String(error),
-    };
-  }
-});
-
-ipcMain.handle("get-file-description", async (_, hash) => {
-  try {
-    const description = await IPFSNode.getPreview(hash);
-
-    return {
-      success: true,
-      description,
-    };
-  } catch (error) {
-    logger("get-file-description", error, "error");
-    return {
-      success: false,
-      error: String(error),
-    };
-  }
-});
 
 ipcMain.handle("download-file", async (_, args) => {
   try {
@@ -85,38 +41,6 @@ ipcMain.handle("download-file", async (_, args) => {
   } catch (error) {
     logger("download-file", error, "error");
 
-    return {
-      success: false,
-      error: String(error),
-    };
-  }
-});
-
-ipcMain.handle("upload-file", async (_, info) => {
-  try {
-    logger("upload-file", `uploading file ${info?.filePath} to ipfs`, "info");
-
-    const handleProgress = (data) => {
-      const currentPercentage = ((data * 100) / info?.size).toFixed(2);
-
-      mainWindow.webContents.send("upload-percentage", currentPercentage);
-    };
-    const file = fs.readFileSync(info.filePath);
-    const fileContent = Buffer.from(file);
-    const fileHash = await IPFSNode.upload(fileContent, handleProgress);
-
-    logger("upload-file", `sending ${fileHash.path} hash to manager`, "info");
-
-    client.send(
-      JSON.stringify({ type: "upload-file", fileHash, price: 0, data: info })
-    );
-
-    return {
-      success: true,
-      fileHash,
-    };
-  } catch (error) {
-    logger("upload-file", error, "error");
     return {
       success: false,
       error: String(error),
@@ -169,11 +93,18 @@ ipcMain.handle("get-current-user", async () => {
 
     logger("get-current-user", `current user has id ${data?.id}`, "info");
 
-    await db.put({
-      ...userDriveDetails,
-      userId: data.id,
-      walletId: data?.wallet_id,
-    });
+    if (userDriveDetails.userId !== data?.id) {
+      logger(
+        "update-current-user",
+        `removing id ${userDriveDetails.userId} for id: ${data?.id}`,
+        "info"
+      );
+      await db.put({
+        ...userDriveDetails,
+        userId: data.id,
+        walletId: data?.wallet_id,
+      });
+    }
 
     return {
       success: true,
@@ -184,29 +115,6 @@ ipcMain.handle("get-current-user", async () => {
     return {
       success: false,
       data: null,
-    };
-  }
-});
-
-ipcMain.handle("upload-avatar", async (_, path) => {
-  try {
-    logger("upload-avatar", `uploading avatar with path ${path}`, "info");
-
-    const bufferizedPath = Buffer.from(path.split(",")[1], "base64");
-    const preview = await Jimp.read(bufferizedPath);
-    await preview.resize(Jimp.AUTO, 500).quality(95);
-    const previewContent = await preview.getBufferAsync(preview.getMIME());
-    const previewHash: any = IPFSNode.upload(previewContent);
-
-    return {
-      success: true,
-      hash: previewHash?.path,
-    };
-  } catch (error) {
-    logger("upload-avatar", error, "error");
-    return {
-      success: false,
-      error: String(error),
     };
   }
 });

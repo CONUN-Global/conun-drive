@@ -1,23 +1,30 @@
 import { useQuery } from "react-query";
-
-const { api } = window;
+import axios from "axios";
 
 function useGetImage(thumbHash: string) {
   const { data, isLoading, error, refetch } = useQuery(
     ["get-preview", thumbHash],
     async () => {
-      const data = await api.getFilePreview(thumbHash);
+      const { data } = await axios.get(
+        `http://localhost:8080/ipfs/${thumbHash}`,
+        {
+          responseType: "arraybuffer",
+        }
+      );
 
-      const preview = new Blob([data?.preview?.buffer]);
-      return URL.createObjectURL(preview);
+      return `data:image/png;base64,${Buffer.from(data).toString("base64")}`;
     },
     {
-      enabled: !!thumbHash,
-      refetchOnMount: true,
+      refetchInterval: 2000,
     }
   );
 
-  return { data, isLoading, error, refetch };
+  return {
+    data: data || `http://localhost:8080/ipfs/${thumbHash}`,
+    isLoading,
+    error,
+    refetch,
+  };
 }
 
 export default useGetImage;

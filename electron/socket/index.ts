@@ -2,9 +2,11 @@ import { app } from "electron";
 import Jimp from "jimp";
 import fetch from "electron-fetch";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
+import { join } from "path";
+import { appendFileSync } from "fs";
 import isDev from "electron-is-dev";
 
-import IPFSNode, { mainWindow } from "../";
+import { ipfsd, mainWindow } from "../";
 import db from "../store/db";
 import logger from "../logger";
 
@@ -83,9 +85,8 @@ function connectToWS() {
             "info"
           );
 
-          const descriptionHash = await IPFSNode.upload(
-            data?.data?.description
-          );
+          const descriptionHash = await ipfsd.api.add(data?.data?.description);
+
           const previewBuffer = Buffer.from(
             data?.data?.previewPath.split(",")[1],
             "base64"
@@ -95,7 +96,7 @@ function connectToWS() {
           const previewContent = await preview.getBufferAsync(
             preview.getMIME()
           );
-          const previewHash = await IPFSNode.upload(previewContent);
+          const previewHash = await ipfsd.api.add(previewContent);
 
           logger(
             "manager-file-register-success",
@@ -114,13 +115,13 @@ function connectToWS() {
             status_id: 1,
             info: {
               content_hash: data?.fileHash,
-              description: String(descriptionHash.cid),
+              description: descriptionHash?.path,
               txhash: data?.transactionHash,
               file_name: data?.data?.fileName,
               public_hash: data?.publicHash,
               ext: data?.data?.ext,
               size: data?.size,
-              thumbnail: String(previewHash.cid),
+              thumbnail: previewHash?.path,
             },
           };
 
@@ -167,7 +168,43 @@ function connectToWS() {
           "info"
         );
 
-        await IPFSNode.download(data);
+        // eslint-disable-next-line
+        for await (const file of ipfsd.api.get(data?.contentHash)) {
+          let totalBytes = 0;
+          // eslint-disable-next-line
+          if (!file.content) continue;
+
+          // eslint-disable-next-line
+          for await (const chunk of file.content) {
+            totalBytes += chunk?.length;
+            const currentPercentage = (
+              (totalBytes * 100) /
+              data?.data?.size
+            ).toFixed(2);
+
+            appendFileSync(
+              join(app.getPath("downloads"), data.name),
+              Buffer.from(chunk)
+            );
+
+            mainWindow.webContents.send("download-percentage", {
+              file: data?.data,
+              percentage: currentPercentage,
+            });
+          }
+
+          logger(
+            "download-succes",
+            `Downloaded hash ${data.contentHash}`,
+            "info"
+          );
+
+          mainWindow.webContents.send("download-success", {
+            success: true,
+            path: join(app.getPath("downloads"), data.name),
+            data: data?.data,
+          });
+        }
       }
       if (data.type === "upload-failure") {
         logger("upload-failure", data?.data, "error");
