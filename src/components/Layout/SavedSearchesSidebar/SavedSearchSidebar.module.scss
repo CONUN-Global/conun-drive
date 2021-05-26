@@ -12,7 +12,6 @@
 
   & .ActionsBar {
     display: flex;
-    width: 90%;
     margin-right: 0;
     margin-left: auto;
     padding-top: 16px;
@@ -20,11 +19,12 @@
     margin-bottom: 30px;
 
     .PeersButton {
+      border-radius: 4px;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 26px;
-      width: 160px;
+      width: 130px;
       padding: 10px;
     }
 

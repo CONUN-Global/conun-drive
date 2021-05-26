@@ -10,7 +10,7 @@ function useGetPeers() {
       return data;
     },
     {
-      refetchOnMount: true,
+      refetchInterval: 30000,
     }
   );
 
