@@ -38,4 +38,5 @@ contextBridge.exposeInMainWorld("api", {
   removeListeners: (name: string) => ipcRenderer.removeAllListeners(name),
   openFile: (path: string) => ipcRenderer.invoke("open-file", path),
   getAppVersion: () => ipcRenderer.invoke("get-app-version"),
+  getPeers: () => ipcRenderer.invoke("get-peers"),
 });

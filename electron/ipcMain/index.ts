@@ -2,7 +2,7 @@ import { ipcMain, shell } from "electron";
 import fetch from "electron-fetch";
 import isDev from "electron-is-dev";
 
-import { mainWindow } from "../";
+import { ipfsd, mainWindow } from "../";
 import db from "../store/db";
 import connectToWS, { client } from "../socket";
 import logger from "../logger";
@@ -39,7 +39,7 @@ ipcMain.handle("download-file", async (_, args) => {
       success: true,
     };
   } catch (error) {
-    logger("download-file", error, "error");
+    logger("download-file", error?.message, "error");
 
     return {
       success: false,
@@ -133,5 +133,16 @@ ipcMain.handle("open-file", async (_, path: string) => {
     await shell.openPath(path);
   } catch (error) {
     logger("open-file", error?.message, "error");
+  }
+});
+
+ipcMain.handle("get-peers", async () => {
+  try {
+    const peers = await ipfsd.api.swarm.peers();
+
+    logger("peers", peers, "info");
+    return peers;
+  } catch (error) {
+    logger("get-peers", error?.message, "error");
   }
 });
