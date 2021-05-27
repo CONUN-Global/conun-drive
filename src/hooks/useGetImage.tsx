@@ -8,16 +8,16 @@ function useGetImage(thumbHash: string) {
       const { data } = await axios.get(
         `http://localhost:8080/ipfs/${thumbHash}`,
         {
-          responseType: "arraybuffer",
+          responseType: "blob",
         }
       );
 
-      return `data:image/png;base64,${Buffer.from(data).toString("base64")}`;
+      return URL.createObjectURL(data);
     }
   );
 
   return {
-    data: `http://localhost:8080/ipfs/${thumbHash}`,
+    data: data || `http://localhost:8080/ipfs/${thumbHash}`,
     isLoading,
     error,
     refetch,
