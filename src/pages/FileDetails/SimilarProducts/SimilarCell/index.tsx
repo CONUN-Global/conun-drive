@@ -19,12 +19,15 @@ function SimilarCell({ file }: SimProps) {
   const { data: thumbImgSrc } = useGetImage(file.info.thumbnail);
 
   return (
-    <Link to={`/file/${file.id}`}>
-      <div className={styles.SimilarCell}>
-        <Thumbnail imgSrc={thumbImgSrc} className={styles.Thumbnail} />
-        <div className={styles.Text}>{trunc(file.name, 70)}</div>
-      </div>
-    </Link>
+    <div className={styles.SimilarCell}>
+      <Thumbnail
+        imgSrc={thumbImgSrc}
+        className={styles.Thumbnail}
+        link={`/file/${file.id}`}
+        listDetails={{ hash: file.info.content_hash, name: file.name }}
+      />
+      <div className={styles.Text}>{trunc(file.name, 70)}</div>
+    </div>
   );
 }
 

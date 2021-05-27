@@ -43,9 +43,12 @@ function Cell({ file }: CellProps) {
 
   return (
     <div className={styles.Cell}>
-      <Link to={`/file/${file.id}`}>
-        <Thumbnail imgSrc={thumbImgSrc} className={styles.Thumb} />
-      </Link>
+      <Thumbnail
+        imgSrc={thumbImgSrc}
+        className={styles.Thumb}
+        link={`/file/${file.id}`}
+        listDetails={{ hash: file.info.content_hash, name: file.name }}
+      />
       <div className={styles.Text}>
         <span className={styles.Title}>{trunc(file.name, 100)}</span>
         <span className={styles.Date}>

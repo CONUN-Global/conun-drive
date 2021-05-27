@@ -29,7 +29,7 @@ function FileBox({ file }: FileBoxProps) {
           imgSrc={data}
           className={styles.FileImage}
           link={`/file/${file?.id}`}
-          linkClass={styles.Link}
+          listDetails={{ hash: file.info.content_hash, name: file.name }}
         />
       </div>
       <div className={styles.InfoSection}>

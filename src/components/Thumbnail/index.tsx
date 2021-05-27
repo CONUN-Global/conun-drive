@@ -1,12 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import classNames from "classnames";
+import { toast } from "react-toastify";
 
 import Button from "../../components/Button";
 
+import AddIcon from "../../assets/icons/addToList.svg";
+
 import styles from "./Thumbnail.module.scss";
 
-type ShareProps = {
+type ListProps = {
   name: string;
   hash: string;
 };
@@ -14,27 +17,30 @@ type ShareProps = {
 type Props = {
   imgSrc: string;
   className: string;
-  share?: ShareProps;
+  listDetails?: ListProps;
   link?: string;
 };
 
-function HandleListAdd(share: ShareProps) {
-  console.log("Added: ", share);
+function HandleListAdd(listDetails: ListProps) {
+  toast.success(`File "${listDetails.name}" added to 'Saved for later'!`, {
+    autoClose: 1500,
+    position: "bottom-center",
+  });
 }
 
-function ListButton({ share }: { share: ShareProps }) {
+function ListButton({ listDetails }: { listDetails: ListProps }) {
   return (
     <Button
       className={styles.ShareButton}
       noStyle
-      onClick={() => HandleListAdd(share)}
+      onClick={() => HandleListAdd(listDetails)}
     >
-      <span>pic</span>
+      <AddIcon className={styles.Icon} />
     </Button>
   );
 }
 
-function Thumbnail({ imgSrc, className, share, link }: Props) {
+function Thumbnail({ imgSrc, className, listDetails, link }: Props) {
   if (imgSrc) {
     return (
       <div className={classNames(className, styles.Container)}>
@@ -45,13 +51,14 @@ function Thumbnail({ imgSrc, className, share, link }: Props) {
         ) : (
           <img className={styles.Image} src={imgSrc} />
         )}
-        {!share && <ListButton share={share} />}
+        {listDetails && <ListButton listDetails={listDetails} />}
       </div>
     );
   }
   return (
-    <div className={classNames(className, styles.NoImage)}>
+    <div className={classNames(className, styles.NoImage, styles.Container)}>
       No peers available
+      {listDetails && <ListButton listDetails={listDetails} />}
     </div>
   );
 }

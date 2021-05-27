@@ -3,25 +3,34 @@
 }
 .Container:hover {
   .ShareButton {
-    display: block;
+    align-items: center;
+    display: flex;
+    justify-content: center;
   }
 }
 
 .Image {
-  object-fit: fill;
+  border-radius: 3px;
   height: 100%;
+  object-fit: fill;
   width: 100%;
-  border-radius: 3px 3px 0 0;
 }
 
 .ShareButton {
+  background-color: white;
+  border-radius: 2px;
   display: none;
-  background-color: aqua;
-  width: 25px;
-  height: 25px;
+  height: 26px;
   position: absolute;
-  top: 8%;
   right: 5%;
+  top: 8%;
+  width: 26px;
+
+  & .Icon {
+    fill: black;
+    height: 16px;
+    width: 16px;
+  }
 }
 
 .NoImage {
