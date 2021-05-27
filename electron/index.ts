@@ -6,6 +6,7 @@ import Ctl from "ipfsd-ctl";
 import copyfiles from "copyfiles";
 import fs from "fs-extra";
 import Jimp from "jimp";
+import { globSource } from "ipfs-http-client";
 
 import db, { prepareDb } from "./store/db";
 import connectToWS, { client } from "./socket";
@@ -215,18 +216,27 @@ ipcMain.handle("upload-file", async (_, info) => {
       const currentPercentage = ((data * 100) / info?.size).toFixed(2);
       mainWindow.webContents.send("upload-percentage", currentPercentage);
     };
-    const file = fs.readFileSync(info.filePath);
-    const fileContent = Buffer.from(file);
 
-    const fileHash = await ipfsd.api.add({
-      content: fileContent,
-      handleProgress,
+    const fileHash = await ipfsd.api.add(globSource(info.filePath), {
+      progress: handleProgress,
     });
 
-    logger("upload-file", `sending ${fileHash.path} hash to manager`, "info");
+    logger(
+      "upload-file",
+      `sending ${fileHash.cid.toString()} hash to manager`,
+      "info"
+    );
 
     client.send(
-      JSON.stringify({ type: "upload-file", fileHash, price: 0, data: info })
+      JSON.stringify({
+        type: "upload-file",
+        fileHash: {
+          path: fileHash.cid.toString(),
+          size: fileHash.size,
+        },
+        price: 0,
+        data: info,
+      })
     );
 
     return {
