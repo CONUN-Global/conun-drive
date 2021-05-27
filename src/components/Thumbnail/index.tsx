@@ -8,6 +8,8 @@ import Button from "../../components/Button";
 import AddIcon from "../../assets/icons/addToList.svg";
 
 import styles from "./Thumbnail.module.scss";
+import useUpdateLaterList from "../../hooks/useUpdateLaterList";
+import useGetLaterList from "../../hooks/useGetLaterList";
 
 type ListProps = {
   name: string;
@@ -21,14 +23,20 @@ type Props = {
   link?: string;
 };
 
-function HandleListAdd(listDetails: ListProps) {
-  toast.success(`File "${listDetails.name}" added to 'Saved for later'!`, {
-    autoClose: 1500,
-    position: "bottom-center",
-  });
-}
-
 function ListButton({ listDetails }: { listDetails: ListProps }) {
+  const { list, refetch } = useGetLaterList();
+  const { updateList } = useUpdateLaterList();
+
+  const HandleListAdd = async (listDetails: ListProps) => {
+    await updateList([...list, listDetails]);
+
+    toast.success(`File "${listDetails.name}" added to 'Saved for later'!`, {
+      autoClose: 1500,
+      position: "bottom-center",
+    });
+    refetch();
+  };
+
   return (
     <Button
       className={styles.ShareButton}

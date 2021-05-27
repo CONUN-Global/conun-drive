@@ -1,11 +1,10 @@
 .DownloadQueue {
-  width: 70%;
+  width: 73%;
   height: 30vh;
 
   & .ListContainer {
     height: 25vh;
     overflow-y: auto;
-    overflow-x: hidden;
   }
 
   & .Title {

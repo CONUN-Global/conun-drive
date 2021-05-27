@@ -8,9 +8,10 @@ import styles from "./ListItem.module.scss";
 
 type Download = {
   name: string;
+  handleDelete: () => void;
 };
 
-function ListItem({ name }: Download) {
+function ListItem({ name, handleDelete }: Download) {
   return (
     <div className={styles.ItemContainer}>
       <div className={styles.Item}>
@@ -19,7 +20,7 @@ function ListItem({ name }: Download) {
         </Button>
       </div>
 
-      <Button className={styles.DeleteButton} noStyle>
+      <Button className={styles.DeleteButton} noStyle onClick={handleDelete}>
         <CloseIcon className={styles.DeleteIcon} />
       </Button>
     </div>
