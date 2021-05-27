@@ -13,14 +13,11 @@ function useGetImage(thumbHash: string) {
       );
 
       return `data:image/png;base64,${Buffer.from(data).toString("base64")}`;
-    },
-    {
-      refetchInterval: 2000,
     }
   );
 
   return {
-    data: data || `http://localhost:8080/ipfs/${thumbHash}`,
+    data: `http://localhost:8080/ipfs/${thumbHash}`,
     isLoading,
     error,
     refetch,
