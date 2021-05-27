@@ -24,9 +24,14 @@ function FileBox({ file }: FileBoxProps) {
 
   return (
     <div className={styles.FileBox}>
-      <Link to={`/file/${file?.id}`} className={styles.Link}>
-        <Thumbnail imgSrc={data} className={styles.FileImage} />
-      </Link>
+      <div className={styles.ImageContainer}>
+        <Thumbnail
+          imgSrc={data}
+          className={styles.FileImage}
+          link={`/file/${file?.id}`}
+          linkClass={styles.Link}
+        />
+      </div>
       <div className={styles.InfoSection}>
         <div className={styles.Top}>
           <LikeButton file={file} />
