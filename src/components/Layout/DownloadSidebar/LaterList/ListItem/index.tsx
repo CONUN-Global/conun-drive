@@ -53,7 +53,7 @@ function ListItem({ file, handleDelete }: Props) {
     <div className={styles.ListItemContainer}>
       <div className={styles.ListItem}>
         <div className={styles.Item}>
-          <Link to={`/file/${file.id.toString()}`}>
+          <Link to={`/file/${file.id}`}>
             <Button className={styles.ItemButton} noStyle>
               <p className={styles.Title}>{file.name}</p>
             </Button>
