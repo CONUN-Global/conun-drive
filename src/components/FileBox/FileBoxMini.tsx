@@ -23,7 +23,7 @@ function FileBoxMini({ file }: FileBoxMiniProps) {
           imgSrc={data}
           className={styles.FileImage}
           link={`file/${file?.id}`}
-          listDetails={{ hash: file.info.content_hash, name: file.name }}
+          fileForList={file}
         />
       </div>
       <p className={styles.FileName}>{file.name}</p>

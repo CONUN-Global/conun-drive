@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 import Thumbnail from "../../../../components/Thumbnail";
 
@@ -24,7 +23,7 @@ function SimilarCell({ file }: SimProps) {
         imgSrc={thumbImgSrc}
         className={styles.Thumbnail}
         link={`/file/${file.id}`}
-        listDetails={{ hash: file.info.content_hash, name: file.name }}
+        fileForList={file}
       />
       <div className={styles.Text}>{trunc(file.name, 70)}</div>
     </div>

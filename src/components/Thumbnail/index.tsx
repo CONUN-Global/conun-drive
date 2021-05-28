@@ -5,32 +5,27 @@ import { toast } from "react-toastify";
 
 import Button from "../../components/Button";
 
-import AddIcon from "../../assets/icons/addToList.svg";
-
-import styles from "./Thumbnail.module.scss";
 import useUpdateLaterList from "../../hooks/useUpdateLaterList";
 import useGetLaterList from "../../hooks/useGetLaterList";
 
-type ListProps = {
-  name: string;
-  hash: string;
-};
+import { FileProps } from "../../types";
 
-type Props = {
-  imgSrc: string;
-  className: string;
-  listDetails?: ListProps;
-  link?: string;
-};
+import AddIcon from "../../assets/icons/addToList.svg";
 
-function ListButton({ listDetails }: { listDetails: ListProps }) {
+import styles from "./Thumbnail.module.scss";
+
+interface ListProps {
+  file: FileProps;
+}
+
+function ListButton({ file }: ListProps) {
   const { list, refetch } = useGetLaterList();
   const { updateList } = useUpdateLaterList();
 
-  const HandleListAdd = async (listDetails: ListProps) => {
-    await updateList([...list, listDetails]);
+  const HandleListAdd = async (file: FileProps) => {
+    await updateList([...list, file]);
 
-    toast.success(`File "${listDetails.name}" added to 'Saved for later'!`, {
+    toast.success(`File "${file}" added to 'Saved for later'!`, {
       autoClose: 1500,
       position: "bottom-center",
     });
@@ -41,14 +36,21 @@ function ListButton({ listDetails }: { listDetails: ListProps }) {
     <Button
       className={styles.ShareButton}
       noStyle
-      onClick={() => HandleListAdd(listDetails)}
+      onClick={() => HandleListAdd(file)}
     >
       <AddIcon className={styles.Icon} />
     </Button>
   );
 }
 
-function Thumbnail({ imgSrc, className, listDetails, link }: Props) {
+type Props = {
+  imgSrc: string;
+  className: string;
+  fileForList?: FileProps;
+  link?: string;
+};
+
+function Thumbnail({ imgSrc, className, fileForList, link }: Props) {
   if (imgSrc) {
     return (
       <div className={classNames(className, styles.Container)}>
@@ -59,14 +61,14 @@ function Thumbnail({ imgSrc, className, listDetails, link }: Props) {
         ) : (
           <img className={styles.Image} src={imgSrc} />
         )}
-        {listDetails && <ListButton listDetails={listDetails} />}
+        {fileForList && <ListButton file={fileForList} />}
       </div>
     );
   }
   return (
     <div className={classNames(className, styles.NoImage, styles.Container)}>
       No peers available
-      {listDetails && <ListButton listDetails={listDetails} />}
+      {fileForList && <ListButton file={fileForList} />}
     </div>
   );
 }

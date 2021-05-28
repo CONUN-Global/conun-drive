@@ -8,7 +8,7 @@ function useUpdateLaterList() {
     async (newList: any) => {
       const { list } = await api.updateLaterList(newList);
 
-      return list;
+      return list.list;
     }
   );
 

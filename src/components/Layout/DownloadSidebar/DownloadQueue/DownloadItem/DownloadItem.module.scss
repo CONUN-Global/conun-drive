@@ -2,7 +2,6 @@
   display: flex;
   align-items: center;
   position: relative;
-  overflow-x: visible;
 
   &:hover {
     .DeleteButton {
@@ -12,6 +11,7 @@
 
   & .DownloadItem {
     width: 85%;
+
     .Download {
       display: flex;
       justify-content: space-between;

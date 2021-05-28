@@ -1,8 +1,7 @@
-.ItemContainer {
-  display: flex;
+.ListItemContainer {
   align-items: center;
+  display: flex;
   position: relative;
-  width: 10vw;
 
   &:hover {
     .DeleteButton {
@@ -10,33 +9,46 @@
     }
   }
 
-  & .Item {
-    flex: 1 1 85%;
+  & .ListItem {
+    border-bottom: solid 1px var(--bg);
+    width: 85%;
+
+    .Item {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      padding: 2px 0;
+      width: 100%;
+
+      .DownloadIcon {
+        height: 13px;
+        width: 13px;
+        fill: var(--emerald);
+      }
+    }
     .ItemButton {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: solid 1px var(--bg);
       padding: 5px 0;
       width: 100%;
 
       & .Title {
-        white-space: nowrap;
+        max-width: 100px;
         overflow: hidden;
-        text-overflow: ellipsis;
-        width: 85%;
         text-align: start;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 85%;
       }
     }
   }
 
   & .DeleteButton {
-    flex: 0 0 20px;
     position: absolute;
     opacity: 0;
-    right: -25px;
+    right: 0;
     width: 25px;
-    top: 6px;
     transition: opacity 0.1s linear;
 
     & .DeleteIcon {

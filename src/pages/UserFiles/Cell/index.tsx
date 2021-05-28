@@ -1,7 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
-
 import Thumbnail from "../../../components/Thumbnail";
+import LikeButton from "../../../components/LikeButton";
 
 import useGetImage from "../../../hooks/useGetImage";
 
@@ -12,7 +11,6 @@ import { FileProps } from "../../../types";
 import DownloadIcon from "../../../assets/icons/download.svg";
 
 import styles from "./Cell.module.scss";
-import LikeButton from "../../../components/LikeButton";
 
 const { api } = window;
 
@@ -47,7 +45,7 @@ function Cell({ file }: CellProps) {
         imgSrc={thumbImgSrc}
         className={styles.Thumb}
         link={`/file/${file.id}`}
-        listDetails={{ hash: file.info.content_hash, name: file.name }}
+        fileForList={file}
       />
       <div className={styles.Text}>
         <span className={styles.Title}>{trunc(file.name, 100)}</span>

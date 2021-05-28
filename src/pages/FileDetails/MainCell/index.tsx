@@ -56,7 +56,7 @@ function MainCell({ file }: MainCellProps) {
         <Thumbnail
           imgSrc={thumbImgSrc}
           className={styles.MainImage}
-          listDetails={{ hash: file.info.content_hash, name: file.name }}
+          fileForList={file}
         />
       </div>
       <LikeBar file={file} />

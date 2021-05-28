@@ -11,8 +11,8 @@ function LaterList() {
   const { list, refetch } = useGetLaterList();
   const { updateList } = useUpdateLaterList();
 
-  const handleDelete = async (hash: string) => {
-    await updateList(list.filter((i) => i.hash !== hash));
+  const handleDelete = async (id: number) => {
+    await updateList(list.filter((i) => i.id !== id));
     refetch();
   };
 
@@ -23,9 +23,9 @@ function LaterList() {
         {list?.length > 0 ? (
           list?.map((item) => (
             <ListItem
-              key={item.hash}
-              name={item.name}
-              handleDelete={() => handleDelete(item.hash)}
+              key={item.id}
+              file={item}
+              handleDelete={() => handleDelete(item.id)}
             />
           ))
         ) : (
