@@ -9,6 +9,8 @@ contextBridge.exposeInMainWorld("api", {
   uploadFile: (info: any) => ipcRenderer.invoke("upload-file", info),
   likeContent: (args: any) => ipcRenderer.invoke("like-content", args),
   getCurrentUser: () => ipcRenderer.invoke("get-current-user"),
+  getLaterList: () => ipcRenderer.invoke("get-later-list"),
+  updateLaterList: (list: any) => ipcRenderer.invoke("update-later-list", list),
   listenToFileRegister: (fn: any) => {
     ipcRenderer.on("is-registering-file", (e, ...args) => fn(...args));
   },
