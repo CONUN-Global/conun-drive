@@ -23,13 +23,20 @@ function ListButton({ file }: ListProps) {
   const { updateList } = useUpdateLaterList();
 
   const HandleListAdd = async (file: FileProps) => {
-    await updateList([...list, file]);
+    if (list.some((i) => i.id === file.id)) {
+      toast.warning(`File "${file.name}" is already on the list!`, {
+        autoClose: 1500,
+        position: "bottom-center",
+      });
+    } else {
+      await updateList([...list, file]);
 
-    toast.success(`File "${file}" added to 'Saved for later'!`, {
-      autoClose: 1500,
-      position: "bottom-center",
-    });
-    refetch();
+      toast.success(`File "${file.name}" added to 'Saved for later'!`, {
+        autoClose: 1500,
+        position: "bottom-center",
+      });
+      refetch();
+    }
   };
 
   return (
