@@ -73,6 +73,10 @@ function connectToWS() {
             ...userDetails,
             walletAddress: data?.walletAddress,
           });
+
+          if (!data?.managerVersion) {
+            mainWindow.webContents.send("update-manager");
+          }
         } catch (error) {
           logger("send-user-details", error.message, "error");
         }
