@@ -40,7 +40,7 @@ function ProgressBar({ download }: { download: Download }) {
     <div className={styles.ProgressBar}>
       <span
         className={styles.Progress}
-        style={{ width: `${download.percentage}%` }}
+        style={{ width: `${download.percentage || "0"}%` }}
       ></span>
     </div>
   );
@@ -62,9 +62,11 @@ function DownloadItem({ download, removeItem }: DownloadItemProps) {
         </Button>
         <ProgressBar download={download} />
       </div>
+
       <Button
         className={styles.DeleteButton}
         onClick={() => removeItem(download.id)}
+        disabled={download.status !== "FINISHED"}
         noStyle
       >
         <CloseIcon className={styles.DeleteIcon} />

@@ -10,7 +10,8 @@
   }
 
   & .DownloadItem {
-    width: 100%;
+    width: 85%;
+
     .Download {
       display: flex;
       justify-content: space-between;
@@ -63,7 +64,7 @@
   & .DeleteButton {
     position: absolute;
     opacity: 0;
-    right: -25px;
+    right: 0;
     width: 25px;
     top: 6px;
     transition: opacity 0.1s linear;

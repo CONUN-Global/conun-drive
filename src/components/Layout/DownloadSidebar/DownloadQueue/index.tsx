@@ -65,7 +65,7 @@ function DownloadQueue() {
   return (
     <div className={styles.DownloadQueue}>
       <p className={styles.Title}>Download Queue</p>
-      <div>
+      <div className={styles.ListContainer}>
         {downloads?.length > 0 ? (
           downloads.map((id) => (
             <DownloadItem

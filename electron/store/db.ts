@@ -35,6 +35,16 @@ export async function prepareDb() {
     };
     await db.put(newIpfsPath);
   }
+
+  try {
+    await db.get("savedForLaterList");
+  } catch {
+    const fallbackLaterList: any = {
+      _id: "savedForLaterList",
+      list: [],
+    };
+    await db.put(fallbackLaterList);
+  }
 }
 
 export default db;
