@@ -17,6 +17,8 @@ const SERVER_URL = isDev ? DEV_DRIVE_SERVER : PROD_DRIVE_SERVER;
 
 const MANAGER_PORT = 17401;
 
+const MANAGER_CURRENT_VERSION = "1";
+
 export let client: W3CWebSocket | null;
 
 function connectToWS() {
@@ -74,7 +76,7 @@ function connectToWS() {
             walletAddress: data?.walletAddress,
           });
 
-          if (!data?.managerVersion) {
+          if (!data?.managerVersion.startsWith(MANAGER_CURRENT_VERSION)) {
             mainWindow.webContents.send("update-manager");
           }
         } catch (error) {
