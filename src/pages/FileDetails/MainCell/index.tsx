@@ -26,6 +26,7 @@ interface MainCellProps {
 function MainCell({ file }: MainCellProps) {
   const { isManagerConnected } = useAppContext();
   const { downloadFile, isLoading } = useDownloadFile();
+
   const { data: thumbImgSrc } = useGetImage(file?.info?.thumbnail);
 
   const handleDownload = async () => {

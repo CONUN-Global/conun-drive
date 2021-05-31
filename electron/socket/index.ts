@@ -2,13 +2,13 @@ import { app } from "electron";
 import Jimp from "jimp";
 import fetch from "electron-fetch";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
-import { join } from "path";
-import { appendFileSync } from "fs";
+
 import isDev from "electron-is-dev";
 
 import { ipfsd, mainWindow } from "../";
 import db from "../store/db";
 import logger from "../logger";
+import downloader from "../helpers/downloader";
 
 import { DEV_DRIVE_SERVER, PROD_DRIVE_SERVER } from "../const";
 
@@ -168,43 +168,7 @@ function connectToWS() {
           "info"
         );
 
-        // eslint-disable-next-line
-        for await (const file of ipfsd.api.get(data?.contentHash)) {
-          let totalBytes = 0;
-          // eslint-disable-next-line
-          if (!file.content) continue;
-
-          // eslint-disable-next-line
-          for await (const chunk of file.content) {
-            totalBytes += chunk?.length;
-            const currentPercentage = (
-              (totalBytes * 100) /
-              data?.data?.size
-            ).toFixed(2);
-
-            appendFileSync(
-              join(app.getPath("downloads"), data.name),
-              Buffer.from(chunk)
-            );
-
-            mainWindow.webContents.send("download-percentage", {
-              file: data?.data,
-              percentage: currentPercentage,
-            });
-          }
-
-          logger(
-            "download-succes",
-            `Downloaded hash ${data.contentHash}`,
-            "info"
-          );
-
-          mainWindow.webContents.send("download-success", {
-            success: true,
-            path: join(app.getPath("downloads"), data.name),
-            data: data?.data,
-          });
-        }
+        await downloader(ipfsd.api, data);
       }
       if (data.type === "upload-failure") {
         logger("upload-failure", data?.data, "error");

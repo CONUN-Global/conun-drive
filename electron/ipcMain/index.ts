@@ -140,7 +140,6 @@ ipcMain.handle("get-peers", async () => {
   try {
     const peers = await ipfsd.api.swarm.peers();
 
-    logger("peers", peers, "info");
     return peers;
   } catch (error) {
     logger("get-peers", error?.message, "error");

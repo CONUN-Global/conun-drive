@@ -1,8 +1,11 @@
 import React, { useEffect, useReducer } from "react";
+import { saveAs } from "file-saver";
 
 import DownloadItem from "./DownloadItem";
 
 import reducer from "./DownloadQueueReducer";
+
+import { BOOTSTRAP } from "../../../../const";
 
 import styles from "./DownloadQueue.module.scss";
 
@@ -48,6 +51,13 @@ function DownloadQueue() {
       });
     };
     api.listenToDownloadProgress(listener);
+  }, []);
+
+  useEffect(() => {
+    const listener = ({ data }) => {
+      saveAs(`${BOOTSTRAP}/ipfs/${data.hash}`, data.name);
+    };
+    api.listenToAttemptBoostrapDownload(listener);
   }, []);
 
   const downloads = Object.keys(state?.downloads);

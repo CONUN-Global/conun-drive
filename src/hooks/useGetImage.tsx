@@ -1,6 +1,8 @@
 import { useQuery } from "react-query";
 import axios from "axios";
 
+import { BOOTSTRAP } from "../const";
+
 function useGetImage(thumbHash: string) {
   const { data, isLoading, error, refetch } = useQuery(
     ["get-preview", thumbHash],
@@ -17,7 +19,7 @@ function useGetImage(thumbHash: string) {
   );
 
   return {
-    data: data || `http://localhost:8080/ipfs/${thumbHash}`,
+    data: data || `${BOOTSTRAP}/ipfs/${thumbHash}`,
     isLoading,
     error,
     refetch,

@@ -35,6 +35,9 @@ contextBridge.exposeInMainWorld("api", {
   listenToUploadProgress: (fn: any) => {
     ipcRenderer.on("upload-percentage", (e, ...args) => fn(...args));
   },
+  listenToAttemptBoostrapDownload: (fn: any) => {
+    ipcRenderer.on("attemp-bootstrap-download", (e, ...args) => fn(...args));
+  },
   removeListeners: (name: string) => ipcRenderer.removeAllListeners(name),
   openFile: (path: string) => ipcRenderer.invoke("open-file", path),
   getAppVersion: () => ipcRenderer.invoke("get-app-version"),
