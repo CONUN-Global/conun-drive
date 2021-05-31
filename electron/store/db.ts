@@ -27,6 +27,16 @@ export async function prepareDb() {
   }
 
   try {
+    await db.get("ipfs-path");
+  } catch (error) {
+    const newIpfsPath: any = {
+      _id: "ipfs-path",
+      path: "",
+    };
+    await db.put(newIpfsPath);
+  }
+
+  try {
     await db.get("savedForLaterList");
   } catch {
     const fallbackLaterList: any = {

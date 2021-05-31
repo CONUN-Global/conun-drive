@@ -1,14 +1,15 @@
 import { useQuery } from "react-query";
-
-const { api } = window;
+import axios from "axios";
 
 function useGetDescription(descriptionHash) {
   const { data, isLoading } = useQuery(
     ["get-description", descriptionHash],
     async () => {
-      const data = await api.getFileDescription(descriptionHash);
-      const description = new TextDecoder("utf-8").decode(data?.description);
-      return description;
+      const { data } = await axios.get(
+        `http://localhost:8080/ipfs/${descriptionHash}`
+      );
+
+      return data;
     },
     {
       enabled: !!descriptionHash,
