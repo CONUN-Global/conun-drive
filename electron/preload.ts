@@ -37,8 +37,12 @@ contextBridge.exposeInMainWorld("api", {
   listenToUploadProgress: (fn: any) => {
     ipcRenderer.on("upload-percentage", (e, ...args) => fn(...args));
   },
+  listenToDeepLink: (fn: any) => {
+    ipcRenderer.on("send-share-link", (e, ...args) => fn(...args));
+  },
   removeListeners: (name: string) => ipcRenderer.removeAllListeners(name),
   openFile: (path: string) => ipcRenderer.invoke("open-file", path),
   getAppVersion: () => ipcRenderer.invoke("get-app-version"),
   getPeers: () => ipcRenderer.invoke("get-peers"),
+  getShareLink: () => ipcRenderer.invoke("get-share-link"),
 });

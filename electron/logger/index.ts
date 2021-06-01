@@ -22,8 +22,9 @@ const localLogger = createLogger({
   transports: [
     new transports.Console({
       level: "debug",
-      silent: !isDev,
     }),
+    new transports.File({ filename: "error.log", level: "error" }),
+    new transports.File({ filename: "combined.log" }),
   ],
 });
 

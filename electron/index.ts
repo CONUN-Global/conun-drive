@@ -43,6 +43,20 @@ const createWindow = async (): Promise<void> => {
       mainWindow.webContents.openDevTools({ mode: "detach" });
     } else {
       await loadURL(mainWindow);
+      mainWindow.webContents.openDevTools({ mode: "detach" }); // DEV
+    }
+
+    if (process.platform !== "darwin") {
+      logger(
+        "Start up with file:",
+        `Start up with file: ${process.argv}`,
+        "error"
+      );
+      if (process.argv.length > 1) {
+        mainWindow.webContents.send("send-share-link", {
+          targetLink: process.argv[1].split("conun-drive://")[1],
+        });
+      }
     }
   } catch (err) {
     logger("app-init", err, "error");
@@ -54,18 +68,58 @@ const createWindow = async (): Promise<void> => {
   });
 };
 
-app.on("ready", createWindow);
+const singleInstanceLock = app.requestSingleInstanceLock();
+app.on("ready", () => {
+  createWindow();
+  logger("ready", "ready", "error");
+});
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
   }
 });
-
 app.on("activate", () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
+});
+
+app.setAsDefaultProtocolClient("conun-drive");
+
+if (!singleInstanceLock) {
+  app.quit();
+} else {
+  app.on("second-instance", (_, argv) => {
+    logger("Push to file:", `Instance lock triggered`, "error");
+    if (argv.length > 1) {
+      // Only try this if there is an argv (might be redundant)
+      if (process.platform == "win32" || process.platform === "linux") {
+        try {
+          logger(
+            "Push to file:",
+            `Direct link to file - SUCCESS: ${argv[1]}`,
+            "error"
+          );
+          const deepFileLink = argv[1].split("conun-drive://")[1];
+          mainWindow.webContents.send("send-share-link", {
+            targetLink: deepFileLink,
+          });
+        } catch {
+          logger(
+            "Push to file:",
+            `Direct link to file - FAILED: ${argv[1]}`,
+            "error"
+          );
+        }
+      }
+    }
+  });
+}
+
+// for mac
+app.on("open-url", () => {
+  logger("OPEN-URL", "message", "error");
 });
 
 process.on("uncaughtException", (uncaughtException) => {

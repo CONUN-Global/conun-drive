@@ -1,6 +1,6 @@
 {
   "name": "conun-drive",
-  "productName": "Conun Drive",
+  "productName": "conun-drive",
   "version": "0.1.2-beta",
   "description": "Conun Drive App",
   "main": "dist/index.js",
@@ -39,6 +39,12 @@
     "publish": {
       "provider": "github"
     },
+    "protocols": {
+      "name": "conun-drive",
+      "schemes": [
+        "conun-drive"
+      ]
+    },
     "mac": {
       "category": "public.app-category.productivity"
     },
@@ -59,7 +65,13 @@
     },
     "linux": {
       "category": "Utility",
-      "target": "deb"
+      "target": "deb",
+      "mimeTypes": [
+        "x-scheme-handler/conun-drive"
+      ],
+      "desktop": {
+        "exec": "conun-drive %U"
+      }
     },
     "nsis": {
       "oneClick": false,

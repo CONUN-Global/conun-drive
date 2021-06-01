@@ -13,7 +13,7 @@ function ShareButton({ fileID }: { fileID: string | number }) {
       autoClose: 1500,
       position: "bottom-center",
     });
-    navigator.clipboard.writeText(`conundrive:///file/${fileID}`);
+    navigator.clipboard.writeText(`conun-drive://file/${fileID}`);
   };
 
   return (
