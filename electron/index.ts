@@ -128,7 +128,8 @@ if (!singleInstanceLock) {
 }
 
 // for mac
-app.on("open-url", (_, url) => {
+app.on("open-url", (event, url) => {
+  event.preventDefault();
   logger("OPEN-URL:", url, "error");
   mainWindow.webContents.send("send-share-link", {
     targetLink: url.split("conun-drive://")[1],
