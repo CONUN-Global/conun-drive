@@ -124,7 +124,7 @@ if (!singleInstanceLock) {
 app.on("open-url", (_, url) => {
   logger("OPEN-URL:", url, "error");
   mainWindow.webContents.send("send-share-link", {
-    targetLink: url.split("conun-drive://")[1],
+    targetLink: url.split("conun-drive://")[1]
   });
 
 });
