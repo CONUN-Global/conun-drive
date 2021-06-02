@@ -60,29 +60,6 @@ const createWindow = async (): Promise<void> => {
           targetLink: process.argv[1].split("conun-drive://")[1],
         });
       }
-    } else {
-      // Mac Only -
-      logger("MAC STARTUP: ", `START UP ARGS: ${process.argv}`, "error");
-      console.log("STARTUP ARGS: ", process.argv);
-
-      protocol.registerHttpProtocol("conun-drive", (req, cb) => {
-        const url = req.url;
-        console.log(url);
-        logger("url", `http-url: ${url}`, "error");
-        logger("url", `http-url: ${req}`, "error");
-      });
-      protocol.registerFileProtocol("conun-drive", (req, cb) => {
-        const url = req.url;
-        console.log(url);
-        logger("url", `file-url: ${url}`, "error");
-        logger("url", `file-url: ${req}`, "error");
-      });
-      protocol.registerStringProtocol("conun-drive", (req, cb) => {
-        const url = req.url;
-        console.log(url);
-        logger("url", `string-url: ${url}`, "error");
-        logger("url", `string-url: ${req}`, "error");
-      });
     }
   } catch (err) {
     logger("app-init", err, "error");
@@ -139,8 +116,18 @@ if (!singleInstanceLock) {
     }
   });
 }
+// For startup..?
+app.on("will-finish-launching", () => {
+  app.on("open-url", (event, url) => {
+    event.preventDefault();
+    logger("OPEN-URL:", url, "error");
+    mainWindow.webContents.send("send-share-link", {
+      targetLink: url.split("conun-drive://")[1],
+    });
+  });
+});
 
-// for mac
+// for mac, when open already
 app.on("open-url", (event, url) => {
   event.preventDefault();
   logger("OPEN-URL:", url, "error");
