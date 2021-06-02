@@ -19,7 +19,7 @@ function useGetImage(thumbHash: string) {
   );
 
   return {
-    data: data || `${BOOTSTRAP}/ipfs/${thumbHash}`,
+    data: !data && !isLoading ? `${BOOTSTRAP}/ipfs/${thumbHash}` : data,
     isLoading,
     error,
     refetch,

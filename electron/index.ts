@@ -28,12 +28,6 @@ const loadURL = serve({ directory: "dist/parcel-build" });
 
 export let mainWindow: BrowserWindow | null = null;
 
-const BOOTSTRAP = [
-  "/ip4/52.79.200.55/tcp/4001/ipfs/12D3KooWMLsqXp8j3Q4eFqfQh1cEVFrmrkKdtcd3JVRaZ2wq94ok",
-  "/ip4/15.164.162.140/tcp/4001/ipfs/12D3KooWLe8sbS7M4mPuWeF2v8h9qyR7qjMeTuiPgYi51AGFQNdS",
-  "/ip4/3.37.88.192/tcp/4001/ipfs/12D3KooWHcQJrUAHAt3XSGzEoedRbdmf2S4Y4aX39EqR8wAExTDb",
-];
-
 export let ipfsd;
 
 const createWindow = async (): Promise<void> => {
@@ -66,23 +60,6 @@ const createWindow = async (): Promise<void> => {
         ipfsBin: ipfsBin,
         ipfsOptions: {
           repo: ipfsPath?.path || "",
-          config: {
-            Bootstrap: BOOTSTRAP,
-            Routing: {
-              Type: "dhtserver",
-            },
-            Discovery: {
-              MDNS: {
-                Enabled: true,
-              },
-            },
-            Swarm: {
-              DisableBandwidthMetrics: false,
-              DisableNatPortMap: false,
-              EnableAutoRelay: true,
-              EnableRelayHop: true,
-            },
-          },
         },
         remote: false,
         disposable: false,
@@ -95,16 +72,6 @@ const createWindow = async (): Promise<void> => {
           ...ipfsPath,
           path: ipfsd.path,
         });
-      }
-
-      if (!swarmKeyExists(ipfsd)) {
-        copyfiles(
-          [path.join(__dirname, "../assets/swarm.key"), ipfsd.path],
-          { up: true, error: true },
-          (err) => {
-            logger("copy-swarm-key", err, "error");
-          }
-        );
       }
 
       if (!configExists(ipfsd)) {
