@@ -62,6 +62,8 @@ const createWindow = async (): Promise<void> => {
       }
     } else {
       // Mac Only -
+      logger("MAC STARTUP: ", `START UP ARGS: ${process.argv}`, "error");
+      console.log("STARTUP ARGS: ", process.argv);
 
       protocol.registerHttpProtocol("conun-drive", (req, cb) => {
         const url = req.url;
