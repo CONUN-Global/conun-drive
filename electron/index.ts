@@ -60,6 +60,13 @@ const createWindow = async (): Promise<void> => {
           targetLink: process.argv[1].split("conun-drive://")[1],
         });
       }
+    } else {
+      protocol.registerHttpProtocol("conun-drive", (req, cb) => {
+        const url = req.url;
+        console.log(url);
+        logger("url", `http-url: ${url}`, "error");
+        logger("url", `http-url: ${req}`, "error");
+      });
     }
   } catch (err) {
     logger("app-init", err, "error");
