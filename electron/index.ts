@@ -99,6 +99,12 @@ const createWindow = async (): Promise<void> => {
       rmApiFile(ipfsd);
 
       await ipfsd.start();
+
+      const id = await ipfsd.api.id();
+      const peers = await ipfsd.api.swarm.peers();
+
+      logger("ipfs-id", `peer ID: ${JSON.stringify(id?.id)}`, "info");
+      logger("ipfs-peers", `peers: ${JSON.stringify(peers)}`, "info");
     }
 
     mainWindow = new BrowserWindow({
