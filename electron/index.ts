@@ -68,7 +68,20 @@ const createWindow = async (): Promise<void> => {
       protocol.registerHttpProtocol("conun-drive", (req, cb) => {
         const url = req.url;
         console.log(url);
-        logger("url", `url: ${url}`, "error");
+        logger("url", `http-url: ${url}`, "error");
+        logger("url", `http-url: ${req}`, "error");
+      });
+      protocol.registerFileProtocol("conun-drive", (req, cb) => {
+        const url = req.url;
+        console.log(url);
+        logger("url", `file-url: ${url}`, "error");
+        logger("url", `file-url: ${req}`, "error");
+      });
+      protocol.registerStringProtocol("conun-drive", (req, cb) => {
+        const url = req.url;
+        console.log(url);
+        logger("url", `string-url: ${url}`, "error");
+        logger("url", `string-url: ${req}`, "error");
       });
     }
   } catch (err) {
