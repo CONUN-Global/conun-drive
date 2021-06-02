@@ -126,8 +126,9 @@ if (!singleInstanceLock) {
 }
 
 // for mac
-app.on("open-url", () => {
+app.on("open-url", (_, url) => {
   logger("OPEN-URL", "message", "error");
+  logger("OPEN-URL:", url, "error");
 });
 
 process.on("uncaughtException", (uncaughtException) => {
