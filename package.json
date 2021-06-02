@@ -46,7 +46,17 @@
       ]
     },
     "mac": {
-      "category": "public.app-category.productivity"
+      "category": "public.app-category.productivity",
+      "extendInfo": {
+        "CFBundleURLTypes": [
+          {
+            "CFBundleURLSchemes": [
+              "conun-drive"
+            ],
+            "CFBundleURLName": "Conun Drive"
+          }
+        ]
+      }
     },
     "win": {
       "target": [
