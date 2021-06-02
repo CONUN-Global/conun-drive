@@ -1,4 +1,4 @@
-import { app, BrowserWindow, shell } from "electron";
+import { app, BrowserWindow, protocol, shell } from "electron";
 import path from "path";
 import isDev from "electron-is-dev";
 import serve from "electron-serve";
@@ -8,7 +8,7 @@ import { createIpfs } from "./ipfs";
 import connectToWS from "./socket";
 import logger from "./logger";
 
-import {linuxGetArgPath, windowsGetArgPath} from "./helpers"
+import { linuxGetArgPath, windowsGetArgPath } from "./helpers";
 
 import "./ipcMain";
 import "./ipcMain/app";
@@ -54,12 +54,20 @@ const createWindow = async (): Promise<void> => {
         `Start up with file: ${process.argv}`,
         "error"
       );
-      if (process.argv.length > 1) { 
+      if (process.argv.length > 1) {
         // This line works for win and lin
         mainWindow.webContents.send("send-share-link", {
           targetLink: process.argv[1].split("conun-drive://")[1],
         });
       }
+    } else {
+      // Mac Only -
+
+      protocol.registerHttpProtocol("conun-drive", (req, cb) => {
+        const url = req.url;
+        console.log(url);
+        logger("url", `url: ${url}`, "error");
+      });
     }
   } catch (err) {
     logger("app-init", err, "error");
@@ -98,22 +106,22 @@ if (!singleInstanceLock) {
     if (argv.length > 1) {
       // Only try this if there is an argv (might be redundant)
 
-        if (process.platform == "win32") {
-          const deepFileLink = windowsGetArgPath(argv)
-          if (deepFileLink){
-            mainWindow.webContents.send("send-share-link", {
-              targetLink: deepFileLink,
-            });
-          }
-        } else if (process.platform =="linux"){
-          const deepFileLink = linuxGetArgPath(argv)
-          if (deepFileLink){
-            mainWindow.webContents.send("send-share-link", {
-              targetLink: deepFileLink,
-            });
-          }
+      if (process.platform == "win32") {
+        const deepFileLink = windowsGetArgPath(argv);
+        if (deepFileLink) {
+          mainWindow.webContents.send("send-share-link", {
+            targetLink: deepFileLink,
+          });
+        }
+      } else if (process.platform == "linux") {
+        const deepFileLink = linuxGetArgPath(argv);
+        if (deepFileLink) {
+          mainWindow.webContents.send("send-share-link", {
+            targetLink: deepFileLink,
+          });
         }
       }
+    }
   });
 }
 
