@@ -82,7 +82,12 @@ const createWindow = async (): Promise<void> => {
 const singleInstanceLock = app.requestSingleInstanceLock();
 app.on("ready", () => {
   createWindow();
-  logger("ready", "ready", "error");split("conun-drive://")[1]
+  logger("ready", "ready", "error");
+});
+
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") {
+    app.quit();
   }
 });
 app.on("activate", () => {
@@ -124,9 +129,8 @@ if (!singleInstanceLock) {
 app.on("open-url", (_, url) => {
   logger("OPEN-URL:", url, "error");
   mainWindow.webContents.send("send-share-link", {
-    targetLink: url.split("conun-drive://")[1]
+    targetLink: url.split("conun-drive://")[1],
   });
-
 });
 
 process.on("uncaughtException", (uncaughtException) => {
