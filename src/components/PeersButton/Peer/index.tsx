@@ -2,6 +2,8 @@ import React from "react";
 import axios from "axios";
 import { useQuery } from "react-query";
 
+import Unknown from "../../../assets/icons/unknown.svg";
+
 import styles from "./Peer.module.scss";
 
 const regex = /\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/;
@@ -19,15 +21,17 @@ function Peer({ peer }) {
     return data.substring(26, 28);
   });
 
-  console.log(`peer`, peer);
-
   return (
     <div className={styles.Peer}>
       <div className={styles.FlagContainer}>
-        <img
-          className={styles.Flag}
-          src={`https://www.countryflags.io/${data}/flat/64.png`}
-        />
+        {data ? (
+          <img
+            className={styles.Flag}
+            src={`https://www.countryflags.io/${data}/flat/64.png`}
+          />
+        ) : (
+          <Unknown className={styles.Flag} />
+        )}
       </div>
 
       <p>{peer.peer}</p>
