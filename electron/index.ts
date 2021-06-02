@@ -8,6 +8,8 @@ import { createIpfs } from "./ipfs";
 import connectToWS from "./socket";
 import logger from "./logger";
 
+import {linuxGetArgPath, windowsGetArgPath} from "./helpers"
+
 import "./ipcMain";
 import "./ipcMain/app";
 
@@ -52,7 +54,8 @@ const createWindow = async (): Promise<void> => {
         `Start up with file: ${process.argv}`,
         "error"
       );
-      if (process.argv.length > 1) {
+      if (process.argv.length > 1) { 
+        // This line works for win and lin
         mainWindow.webContents.send("send-share-link", {
           targetLink: process.argv[1].split("conun-drive://")[1],
         });
@@ -94,26 +97,23 @@ if (!singleInstanceLock) {
     logger("Push to file:", `Instance lock triggered`, "error");
     if (argv.length > 1) {
       // Only try this if there is an argv (might be redundant)
-      if (process.platform == "win32" || process.platform === "linux") {
-        try {
-          logger(
-            "Push to file:",
-            `Direct link to file - SUCCESS: ${argv[1]}`,
-            "error"
-          );
-          const deepFileLink = argv[1].split("conun-drive://")[1];
-          mainWindow.webContents.send("send-share-link", {
-            targetLink: deepFileLink,
-          });
-        } catch {
-          logger(
-            "Push to file:",
-            `Direct link to file - FAILED: ${argv[1]}`,
-            "error"
-          );
+
+        if (process.platform == "win32") {
+          const deepFileLink = windowsGetArgPath(argv)
+          if (deepFileLink){
+            mainWindow.webContents.send("send-share-link", {
+              targetLink: deepFileLink,
+            });
+          }
+        } else if (process.platform =="linux"){
+          const deepFileLink = linuxGetArgPath(argv)
+          if (deepFileLink){
+            mainWindow.webContents.send("send-share-link", {
+              targetLink: deepFileLink,
+            });
+          }
         }
       }
-    }
   });
 }
 
