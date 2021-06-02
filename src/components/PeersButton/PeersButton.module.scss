@@ -1,3 +1,13 @@
+.PeersButton {
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 26px;
+  width: 130px;
+  padding: 10px;
+}
+
 .DotIcon {
   width: 10px;
   margin-right: 5px;
@@ -9,4 +19,28 @@
   height: 10px;
   font-size: 10px;
   margin: 0 5px 0 0;
+}
+
+.PeersPopper {
+  background-color: #fff;
+  padding: 20px 35px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 3px;
+  box-shadow: var(--box-shadow-1);
+
+  & .HeaderRow {
+    display: flex;
+    margin-bottom: 5px;
+
+    & .Header {
+      min-width: 50px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    & :last-child {
+      min-width: 315px;
+    }
+  }
 }
