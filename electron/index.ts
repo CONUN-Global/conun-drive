@@ -8,12 +8,13 @@ import { createIpfs } from "./ipfs";
 import connectToWS from "./socket";
 import logger from "./logger";
 
-import { getURLFromArgv, windowsGetURLFromArgv, readFileURL } from "./helpers";
+import { getURLFromArgv } from "./helpers";
 
 import "./ipcMain";
 import "./ipcMain/app";
 
 const loadURL = serve({ directory: "dist/parcel-build" });
+const PROTOCOL_PREFIX = "conun-drive://";
 
 export let mainWindow: BrowserWindow | null = null;
 
@@ -49,24 +50,21 @@ const createWindow = async (): Promise<void> => {
     }
 
     if (process.platform !== "darwin") {
-      logger(
-        "Start up with file:",
-        `Start up with file: ${process.argv}`,
-        "error"
-      );
-      if (process.argv.length > 1) {
+      if (
+        process.argv.length > 1 &&
+        process.argv[1].startsWith(PROTOCOL_PREFIX)
+      ) {
+        console.log("second arg: ", process.argv[1]);
         // This line works for win and lin
-        mainWindow.webContents.send("send-share-link", {
-          targetLink: getURLFromArgv(process.argv),
+        getURLFromArgv(process.argv[1]).then((url: string) => {
+          logger("start-up-with-link", `Start up with link: ${url}`, "error");
+          if (url) {
+            mainWindow.webContents.send("send-share-link", {
+              targetLink: url,
+            });
+          }
         });
       }
-    } else {
-      protocol.registerHttpProtocol("conun-drive", (req, cb) => {
-        const url = req.url;
-        console.log(url);
-        logger("url", `http-url: ${url}`, "error");
-        logger("url", `http-url: ${req}`, "error");
-      });
     }
   } catch (err) {
     logger("app-init", err, "error");
@@ -106,15 +104,15 @@ if (!singleInstanceLock) {
       // Only try this if there is an argv (might be redundant)
 
       if (process.platform == "win32") {
-        const deepFileLink = windowsGetURLFromArgv(argv);
-        if (deepFileLink) {
-          mainWindow.webContents.send("send-share-link", {
-            targetLink: deepFileLink,
-          });
-        }
+        getURLFromArgv(argv[argv.length - 1]).then((url: string) => {
+          if (url) {
+            mainWindow.webContents.send("send-share-link", {
+              targetLink: url,
+            });
+          }
+        });
       } else if (process.platform == "linux") {
-        // is async now, use then
-        getURLFromArgv(argv).then((url: string) => {
+        getURLFromArgv(argv[1]).then((url: string) => {
           if (url) {
             mainWindow.webContents.send("send-share-link", {
               targetLink: url,
@@ -130,8 +128,12 @@ app.on("will-finish-launching", () => {
   app.on("open-url", (event, url) => {
     event.preventDefault();
     logger("OPEN-URL:", url, "error");
-    mainWindow.webContents.send("send-share-link", {
-      targetLink: readFileURL(url),
+    getURLFromArgv(url).then((url: string) => {
+      if (url) {
+        mainWindow.webContents.send("send-share-link", {
+          targetLink: url,
+        });
+      }
     });
   });
 });
@@ -140,8 +142,12 @@ app.on("will-finish-launching", () => {
 app.on("open-url", (event, url) => {
   event.preventDefault();
   logger("OPEN-URL:", url, "error");
-  mainWindow.webContents.send("send-share-link", {
-    targetLink: readFileURL(url),
+  getURLFromArgv(url).then((url: string) => {
+    if (url) {
+      mainWindow.webContents.send("send-share-link", {
+        targetLink: url,
+      });
+    }
   });
 });
 

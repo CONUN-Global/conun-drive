@@ -13,9 +13,19 @@ import BackIcon from "../../assets/icons/left-arrow.svg";
 
 import styles from "./FileDetails.module.scss";
 
+const NO_USER = "NO_USER";
+
 function FileDetails() {
   const { id } = useParams();
   const history = useHistory();
+
+  if (!id) {
+    return <div className={styles.Background}>No File</div>;
+  }
+
+  if (id === NO_USER) {
+    return <div className={styles.Background}>Not logged in</div>;
+  }
 
   const { data, isLoading } = useGetFile(id);
 

@@ -20,7 +20,7 @@ async function getFileIDfromPHash(argv: string) {
       `user ID not present. Not logged in?`,
       "info"
     );
-    return "file/"; // Add some sort of error page here?
+    return "file/NO_USER"; // Add some sort of error page here?
   }
 
   logger(
@@ -58,7 +58,7 @@ async function getFileIDfromPHash(argv: string) {
 
 export async function getURLFromArgv(argv) {
   try {
-    const res = await getFileIDfromPHash(argv[1]);
+    const res = await getFileIDfromPHash(argv);
     logger("Push to file:", `Direct link to file - SUCCESS: ${argv}`, "error");
     console.log("Log assembled URL before pushing: ", res);
     return res;
@@ -68,21 +68,21 @@ export async function getURLFromArgv(argv) {
   }
 }
 
-export async function windowsGetURLFromArgv(argv) {
-  try {
-    const res = await getFileIDfromPHash(argv[argv.length - 1]);
-    logger(
-      "Push to file:",
-      `WINDOWS Direct link to file - SUCCESS: ${argv}`,
-      "error"
-    );
-    return res;
-  } catch {
-    logger(
-      "Push to file:",
-      `WINDOWS Direct link to file - FAILED: ${argv}`,
-      "error"
-    );
-    return null;
-  }
-}
+// export async function windowsGetURLFromArgv(argv) {
+//   try {
+//     const res = await getFileIDfromPHash(argv[argv.length - 1]);
+//     logger(
+//       "Push to file:",
+//       `WINDOWS Direct link to file - SUCCESS: ${argv}`,
+//       "error"
+//     );
+//     return res;
+//   } catch {
+//     logger(
+//       "Push to file:",
+//       `WINDOWS Direct link to file - FAILED: ${argv}`,
+//       "error"
+//     );
+//     return null;
+//   }
+// }
