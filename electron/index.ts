@@ -8,7 +8,7 @@ import { createIpfs } from "./ipfs";
 import connectToWS from "./socket";
 import logger from "./logger";
 
-import { linuxGetArgPath, windowsGetArgPath } from "./helpers";
+import { getURLFromArgv, windowsGetURLFromArgv, readFileURL } from "./helpers";
 
 import "./ipcMain";
 import "./ipcMain/app";
@@ -57,7 +57,7 @@ const createWindow = async (): Promise<void> => {
       if (process.argv.length > 1) {
         // This line works for win and lin
         mainWindow.webContents.send("send-share-link", {
-          targetLink: process.argv[1].split("conun-drive://")[1],
+          targetLink: getURLFromArgv(process.argv),
         });
       }
     } else {
@@ -106,14 +106,14 @@ if (!singleInstanceLock) {
       // Only try this if there is an argv (might be redundant)
 
       if (process.platform == "win32") {
-        const deepFileLink = windowsGetArgPath(argv);
+        const deepFileLink = windowsGetURLFromArgv(argv);
         if (deepFileLink) {
           mainWindow.webContents.send("send-share-link", {
             targetLink: deepFileLink,
           });
         }
       } else if (process.platform == "linux") {
-        const deepFileLink = linuxGetArgPath(argv);
+        const deepFileLink = getURLFromArgv(argv);
         if (deepFileLink) {
           mainWindow.webContents.send("send-share-link", {
             targetLink: deepFileLink,
@@ -123,13 +123,13 @@ if (!singleInstanceLock) {
     }
   });
 }
-// For startup..?
+// For mac
 app.on("will-finish-launching", () => {
   app.on("open-url", (event, url) => {
     event.preventDefault();
     logger("OPEN-URL:", url, "error");
     mainWindow.webContents.send("send-share-link", {
-      targetLink: url.split("conun-drive://")[1],
+      targetLink: readFileURL(url),
     });
   });
 });
@@ -139,7 +139,7 @@ app.on("open-url", (event, url) => {
   event.preventDefault();
   logger("OPEN-URL:", url, "error");
   mainWindow.webContents.send("send-share-link", {
-    targetLink: url.split("conun-drive://")[1],
+    targetLink: readFileURL(url),
   });
 });
 
