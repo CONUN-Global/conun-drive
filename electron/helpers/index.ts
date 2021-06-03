@@ -40,21 +40,14 @@ async function getFileIDfromPHash(argv: string) {
   );
 
   const { data } = await res.json();
-  logger("get-file-id-from-hash", `Received this id - ${data.data}`, "info");
-  if (data?.data) {
+  if (data?.data && data.data[0]?.id) {
+    logger("get-file-id-from-hash", `Received this id: ${data.data}`, "info");
     return `file/${data.data[0]?.id}`;
   }
-  return "file/";
+  logger("get-file-id-from-hash", `Received no id: ${data.data}`, "info");
+
+  return "file/NO_BAD_FILE";
 }
-
-// export function readFileURL(fileURL: string) {
-//   const encodedPart = fileURL.split("conun-drive://")[1];
-
-//   const fileID = Buffer.from(encodedPart, "base64")
-//     .toString("ascii")
-//     .split("%")[1];
-//   return `file/${fileID}`;
-// }
 
 export async function getURLFromArgv(argv) {
   try {
@@ -67,22 +60,3 @@ export async function getURLFromArgv(argv) {
     return null;
   }
 }
-
-// export async function windowsGetURLFromArgv(argv) {
-//   try {
-//     const res = await getFileIDfromPHash(argv[argv.length - 1]);
-//     logger(
-//       "Push to file:",
-//       `WINDOWS Direct link to file - SUCCESS: ${argv}`,
-//       "error"
-//     );
-//     return res;
-//   } catch {
-//     logger(
-//       "Push to file:",
-//       `WINDOWS Direct link to file - FAILED: ${argv}`,
-//       "error"
-//     );
-//     return null;
-//   }
-// }
