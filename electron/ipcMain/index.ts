@@ -176,7 +176,10 @@ ipcMain.handle("get-peers", async () => {
   try {
     const peers = await ipfsd.api.swarm.peers();
 
-    return peers;
+    return peers.map((p: any) => ({
+      peer: p.peer,
+      addr: String(p.addr),
+    }));
   } catch (error) {
     logger("get-peers", error?.message, "error");
   }
