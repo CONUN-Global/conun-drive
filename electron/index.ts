@@ -113,12 +113,14 @@ if (!singleInstanceLock) {
           });
         }
       } else if (process.platform == "linux") {
-        const deepFileLink = getURLFromArgv(argv);
-        if (deepFileLink) {
-          mainWindow.webContents.send("send-share-link", {
-            targetLink: deepFileLink,
-          });
-        }
+        // is async now, use then
+        getURLFromArgv(argv).then((url: string) => {
+          if (url) {
+            mainWindow.webContents.send("send-share-link", {
+              targetLink: url,
+            });
+          }
+        });
       }
     }
   });
