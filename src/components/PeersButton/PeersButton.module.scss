@@ -28,6 +28,8 @@
   flex-direction: column;
   border-radius: 3px;
   box-shadow: var(--box-shadow-1);
+  max-height: 210px;
+  overflow-y: auto;
 
   & .HeaderRow {
     display: flex;
