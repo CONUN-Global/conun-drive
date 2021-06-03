@@ -15,10 +15,10 @@ function ipExtractor(addr: string) {
 function Peer({ peer }) {
   const { data } = useQuery(["peer", peer.addr], async () => {
     const { data } = await axios.get(
-      `https://geolocation-db.com/jsonp/${ipExtractor(peer.addr)}`
+      `https://get.geojs.io/v1/ip/country/${ipExtractor(peer.addr)}`
     );
 
-    return data.substring(26, 28);
+    return data;
   });
 
   return (
