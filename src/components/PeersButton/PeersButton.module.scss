@@ -3,9 +3,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 26px;
   width: 130px;
   padding: 10px;
+  background-color: var(--bg);
+  border: 0.5px solid var(--grey-button-color);
+  color: var(--grey-button-color);
+  box-shadow: inset 0px -4px 4px rgba(0, 0, 0, 0.05), inset 0px 4px 4px #ffffff;
 }
 
 .DotIcon {
