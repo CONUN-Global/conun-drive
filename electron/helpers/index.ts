@@ -1,6 +1,8 @@
 import fetch from "electron-fetch";
 import isDev from "electron-is-dev";
 
+import qrcode from "qrcode";
+
 import logger from "../logger";
 import db from "../store/db";
 
@@ -59,4 +61,9 @@ export async function getURLFromArgv(argv) {
     logger("Push to file:", `Direct link to file - FAILED: ${argv}`, "error");
     return null;
   }
+}
+
+export async function createQrCode(fileURL: string) {
+  const fileQrCode = await qrcode.toDataURL(fileURL);
+  return fileQrCode;
 }
