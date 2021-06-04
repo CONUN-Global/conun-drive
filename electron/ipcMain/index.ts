@@ -302,8 +302,10 @@ ipcMain.handle("get-peers", async () => {
 
     const peers = await node.swarm.peers();
 
-    logger("peers", peers, "info");
-    return peers;
+    return peers.map((p: any) => ({
+      peer: p.peer,
+      addr: String(p.addr),
+    }));
   } catch (error) {
     logger("get-peers", error?.message, "error");
   }

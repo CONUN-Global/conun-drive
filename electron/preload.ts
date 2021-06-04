@@ -40,6 +40,9 @@ contextBridge.exposeInMainWorld("api", {
   listenToDeepLink: (fn: any) => {
     ipcRenderer.on("send-share-link", (e, ...args) => fn(...args));
   },
+  listenToUpdateManager: (fn: any) => {
+    ipcRenderer.on("update-manager", (e, ...args) => fn(...args));
+  },
   removeListeners: (name: string) => ipcRenderer.removeAllListeners(name),
   openFile: (path: string) => ipcRenderer.invoke("open-file", path),
   getAppVersion: () => ipcRenderer.invoke("get-app-version"),

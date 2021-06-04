@@ -1,7 +1,7 @@
 {
   "name": "conun-drive",
-  "productName": "conun-drive",
-  "version": "0.1.2-beta",
+  "productName": "Conun Drive",
+  "version": "1.0.0-beta",
   "description": "Conun Drive App",
   "main": "dist/index.js",
   "scripts": {
