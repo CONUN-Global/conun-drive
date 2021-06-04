@@ -45,7 +45,11 @@ async function getFileIDfromPHash(argv: string) {
 
   const { data } = await res.json();
   if (data?.data && data.data[0]?.id) {
-    logger("get-file-id-from-hash", `Received this id: ${data.data}`, "info");
+    logger(
+      "get-file-id-from-hash",
+      `Received this id: ${data.data[0].id}`,
+      "info"
+    );
     return `file/${data.data[0]?.id}`;
   }
   logger("get-file-id-from-hash", `Received no id: ${data.data}`, "info");
@@ -57,7 +61,6 @@ export async function getURLFromArgv(argv) {
   try {
     const res = await getFileIDfromPHash(argv);
     logger("Push to file:", `Direct link to file - SUCCESS: ${argv}`, "error");
-    console.log("Log assembled URL before pushing: ", res);
     return res;
   } catch {
     logger("Push to file:", `Direct link to file - FAILED: ${argv}`, "error");
@@ -65,14 +68,13 @@ export async function getURLFromArgv(argv) {
   }
 }
 
-export async function createQrCode(fileURL: string) {
+export async function createQRCode(fileURL: string) {
   const fileQrCode = await qrcode.toDataURL(fileURL);
   return fileQrCode;
 }
 
-export async function readQrCode(qrCode) {
-  const base64Data = qrCode.replace(/^data:image\/png;base64,/, "");
-  const img = await jimp.read(Buffer.from(base64Data, "base64"));
+export async function readQRCode(qrCodePath: string) {
+  const img = await jimp.read(qrCodePath);
 
   const qr = new QRReader();
 
@@ -82,7 +84,9 @@ export async function readQrCode(qrCode) {
     qr.decode(img.bitmap);
   });
   if (value?.result) {
-    return { success: true, qrDecode: value.result };
+    const internalPath = await getFileIDfromPHash(value?.result);
+
+    return { success: true, qrDecode: internalPath };
   }
   return { success: false, qrDecode: null };
 }

@@ -3,8 +3,9 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router";
 
 import Button from "../../../Button";
-import Popper from "../../../Popper";
 import Checkbox from "../../../Form/Checkbox";
+import Dropzone from "../../../Dropzone";
+import Popper from "../../../Popper";
 import SaveSearchModal from "./SaveSearchModal";
 import SearchSelect from "../../../Select/SearchSelect";
 
@@ -16,6 +17,8 @@ import Settings from "../../../../assets/icons/settings.svg";
 import AllIcon from "../../../../assets/icons/all.svg";
 
 import styles from "./SearchBar.module.scss";
+import useReadQRCode from "../../../../hooks/useReadQRCode";
+import { toast } from "react-toastify";
 
 const filters = [
   { value: "", label: "All", icon: AllIcon },
@@ -38,6 +41,7 @@ function SearchBar() {
 
   const history = useHistory();
   const params = useParams<{ keyword: string }>();
+  const { readCode } = useReadQRCode();
 
   const { control, handleSubmit, getValues, watch } = useForm<SearchFormData>({
     defaultValues: { filterBy: params?.keyword ?? "" },
@@ -61,8 +65,18 @@ function SearchBar() {
 
   const watchedFilter = watch("filterBy", "all");
 
+  const handleQRLink = async (drop: File) => {
+    const result = await readCode(drop.path);
+    if (result.success) {
+      history.push(`/${result.qrDecode}`);
+    } else {
+      toast.warn("QR Code Link is invalid");
+    }
+  };
+
   return (
     <div className={styles.SearchBarContainer}>
+      <Dropzone onDrop={(a) => handleQRLink(a[0])} />
       <form onSubmit={handleSubmit(handleSearch)} className={styles.Form}>
         <Glass className={styles.Glass} />
         <Controller

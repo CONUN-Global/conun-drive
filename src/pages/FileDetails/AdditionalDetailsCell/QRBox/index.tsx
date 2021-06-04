@@ -1,15 +1,11 @@
 import React from "react";
 
-import useQrCode from "../../../../hooks/useQrCode";
+import useMakeQRCode from "../../../../hooks/useMakeQRCode";
 
 import styles from "./QRBox.module.scss";
 
 function QRBox({ publicHash }: { publicHash: string }) {
-  const { makeQRCode } = useQrCode();
-
-  const qrCodeSrc = makeQRCode(publicHash);
-
-  console.log(publicHash, qrCodeSrc);
+  const qrCodeSrc = useMakeQRCode(publicHash);
 
   return (
     <div className={styles.QRBox}>
