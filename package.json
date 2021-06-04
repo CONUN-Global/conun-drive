@@ -138,6 +138,7 @@
     "peer-id": "^0.14.8",
     "pouchdb": "^7.2.2",
     "qrcode": "^1.4.4",
+    "qrcode-reader": "^1.0.4",
     "react": "^17.0.1",
     "react-autosuggest": "^10.1.0",
     "react-avatar-editor": "^11.1.0",

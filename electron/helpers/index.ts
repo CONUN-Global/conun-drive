@@ -1,7 +1,9 @@
 import fetch from "electron-fetch";
 import isDev from "electron-is-dev";
 
+import jimp from "jimp";
 import qrcode from "qrcode";
+import QRReader from "qrcode-reader";
 
 import logger from "../logger";
 import db from "../store/db";
@@ -66,4 +68,21 @@ export async function getURLFromArgv(argv) {
 export async function createQrCode(fileURL: string) {
   const fileQrCode = await qrcode.toDataURL(fileURL);
   return fileQrCode;
+}
+
+export async function readQrCode(qrCode) {
+  const base64Data = qrCode.replace(/^data:image\/png;base64,/, "");
+  const img = await jimp.read(Buffer.from(base64Data, "base64"));
+
+  const qr = new QRReader();
+
+  const value: any = await new Promise((resolve, reject) => {
+    qr.callback = (err: any, v: any) =>
+      err != null ? reject(err) : resolve(v);
+    qr.decode(img.bitmap);
+  });
+  if (value?.result) {
+    return { success: true, qrDecode: value.result };
+  }
+  return { success: false, qrDecode: null };
 }

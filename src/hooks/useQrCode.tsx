@@ -13,7 +13,16 @@ function useQrCode() {
     return data;
   };
 
-  return { makeQRCode };
+  const readQRCode = (qrDataString) => {
+    const { data } = useQuery(
+      "read-qr-code",
+      () => api.readQRCode(qrDataString),
+      {}
+    );
+    return data;
+  };
+
+  return { makeQRCode, readQRCode };
 }
 
 export default useQrCode;

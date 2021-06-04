@@ -16,6 +16,7 @@ contextBridge.exposeInMainWorld("api", {
   },
   uploadAvatar: (path: string) => ipcRenderer.invoke("upload-avatar", path),
   createQrCode: (args: any) => ipcRenderer.invoke("create-qr-code", args),
+  readQrCode: (args: any) => ipcRenderer.invoke("read-qr-code", args),
   listenToIsManagerConnected: (fn: any) => {
     ipcRenderer.on("is-manager-connected", (e, ...args) => fn(...args));
   },
