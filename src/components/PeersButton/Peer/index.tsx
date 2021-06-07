@@ -24,7 +24,7 @@ function Peer({ peer }) {
   return (
     <div className={styles.Peer}>
       <div className={styles.FlagContainer}>
-        {data ? (
+        {data && data.trim() !== "nil" ? (
           <img
             className={styles.Flag}
             src={`https://www.countryflags.io/${data}/flat/64.png`}
@@ -33,7 +33,6 @@ function Peer({ peer }) {
           <Unknown className={styles.Flag} />
         )}
       </div>
-
       <p>{peer.peer}</p>
     </div>
   );
