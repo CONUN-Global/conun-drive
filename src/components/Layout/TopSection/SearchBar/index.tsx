@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router";
+import { toast } from "react-toastify";
 
 import Button from "../../../Button";
 import SaveSearchModal from "./SaveSearchModal";
 import SearchSelect from "../../../Select/SearchSelect";
 import Filters from "./Filters";
+
+import QRDropZone from "./QRDropZone";
+
+import useReadQRCode from "../../../../hooks/useReadQRCode";
 
 import Glass from "../../../../assets/icons/magnifying-glass.svg";
 import Tag from "../../../../assets/icons/tag.svg";
@@ -14,9 +19,6 @@ import Title from "../../../../assets/icons/title.svg";
 import AllIcon from "../../../../assets/icons/all.svg";
 
 import styles from "./SearchBar.module.scss";
-import useReadQRCode from "../../../../hooks/useReadQRCode";
-import { toast } from "react-toastify";
-import QRDropZone from "./QRDropZone";
 
 const filters = [
   { value: "", label: "All", icon: AllIcon },

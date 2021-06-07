@@ -6,9 +6,7 @@ import React, {
   useMemo,
   useState,
 } from "react";
-
 import { useHistory } from "react-router-dom";
-
 import { toast } from "react-toastify";
 
 import useCurrentUser from "../../hooks/useCurrentUser";

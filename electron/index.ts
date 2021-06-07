@@ -55,7 +55,6 @@ const createWindow = async (): Promise<void> => {
         process.argv.length > 1 &&
         process.argv[1].startsWith(PROTOCOL_PREFIX)
       ) {
-        console.log("second arg: ", process.argv[1]);
         // This line works for win and lin
         getURLFromArgv(process.argv[1]).then((url: string) => {
           logger("start-up-with-link", `Start up with link: ${url}`, "error");
@@ -80,7 +79,6 @@ const createWindow = async (): Promise<void> => {
 const singleInstanceLock = app.requestSingleInstanceLock();
 app.on("ready", () => {
   createWindow();
-  logger("ready", "ready", "error");
 });
 
 app.on("window-all-closed", () => {

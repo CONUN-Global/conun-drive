@@ -23,7 +23,6 @@ const localLogger = createLogger({
       level: "debug",
       silent: !isDev,
     }),
-    new transports.File({ filename: "combined.log" }),
   ],
 });
 

@@ -9,7 +9,9 @@ function QRBox({ publicHash }: { publicHash: string }) {
 
   return (
     <div className={styles.QRBox}>
-      {qrCodeSrc && <img src={qrCodeSrc} alt="qr code" />}
+      {qrCodeSrc && (
+        <img src={qrCodeSrc} className={styles.QRCodeImg} alt="qr code" />
+      )}
     </div>
   );
 }
