@@ -5,7 +5,7 @@
   margin-bottom: 21px;
   flex: 1 1 700px;
 
-  & .Form {
+  .Form {
     display: flex;
     align-items: center;
     position: relative;
@@ -72,7 +72,7 @@
     }
   }
 
-  & .SaveButton {
+  .SaveButton {
     background-color: #fff;
     border-radius: 10px;
     max-width: 150px;

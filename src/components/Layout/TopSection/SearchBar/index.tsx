@@ -19,6 +19,7 @@ import AllIcon from "../../../../assets/icons/all.svg";
 import styles from "./SearchBar.module.scss";
 import useReadQRCode from "../../../../hooks/useReadQRCode";
 import { toast } from "react-toastify";
+import QRDropZone from "./QRDropZone";
 
 const filters = [
   { value: "", label: "All", icon: AllIcon },
@@ -76,90 +77,91 @@ function SearchBar() {
 
   return (
     <div className={styles.SearchBarContainer}>
-      <Dropzone onDrop={(a) => handleQRLink(a[0])} />
-      <form onSubmit={handleSubmit(handleSearch)} className={styles.Form}>
-        <Glass className={styles.Glass} />
-        <Controller
-          name="searchString"
-          control={control}
-          render={({ field: { onChange, value } }) => (
-            <SearchSelect
-              className={styles.SearchBar}
-              onChange={(value, method) => {
-                onChange(value);
-                if (method === "click" || method === "enter") {
-                  handleSearch(getValues());
-                }
-              }}
-              value={value}
-              placeholder="Search..."
-              isTagSearch={watchedFilter === "tags"}
-            />
-          )}
-          rules={{
-            required: true,
-          }}
-        />
-        <Popper
-          manager={<Settings className={styles.SettingsIcon} />}
-          placement="bottom"
-          modifiers={[
-            {
-              name: "offset",
-              enabled: true,
-              options: {
-                offset: [0, 12],
-              },
-            },
-          ]}
-        >
-          <div className={styles.FiltersPopper}>
-            <p className={styles.Title}>Search by:</p>
-            <div className={styles.FiltersContainer}>
-              <Controller
-                name="filterBy"
-                control={control}
-                render={({ field: { value, onChange } }) => (
-                  <>
-                    {filters.map((filter) => {
-                      const Icon = filter.icon;
-                      return (
-                        <Checkbox
-                          key={filter.value}
-                          id={filter.value}
-                          className={styles.Checkbox}
-                          checked={value === filter.value}
-                          onChange={() => onChange(filter.value)}
-                          label={
-                            <div className={styles.Label}>
-                              {Icon && <Icon className={styles.Icon} />}{" "}
-                              {filter.label}
-                            </div>
-                          }
-                        />
-                      );
-                    })}
-                  </>
-                )}
+      <QRDropZone onDrop={(a) => handleQRLink(a[0])} noClick>
+        <form onSubmit={handleSubmit(handleSearch)} className={styles.Form}>
+          <Glass className={styles.Glass} />
+          <Controller
+            name="searchString"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <SearchSelect
+                className={styles.SearchBar}
+                onChange={(value, method) => {
+                  onChange(value);
+                  if (method === "click" || method === "enter") {
+                    handleSearch(getValues());
+                  }
+                }}
+                value={value}
+                placeholder="Search..."
+                isTagSearch={watchedFilter === "tags"}
               />
+            )}
+            rules={{
+              required: true,
+            }}
+          />
+          <Popper
+            manager={<Settings className={styles.SettingsIcon} />}
+            placement="bottom"
+            modifiers={[
+              {
+                name: "offset",
+                enabled: true,
+                options: {
+                  offset: [0, 12],
+                },
+              },
+            ]}
+          >
+            <div className={styles.FiltersPopper}>
+              <p className={styles.Title}>Search by:</p>
+              <div className={styles.FiltersContainer}>
+                <Controller
+                  name="filterBy"
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <>
+                      {filters.map((filter) => {
+                        const Icon = filter.icon;
+                        return (
+                          <Checkbox
+                            key={filter.value}
+                            id={filter.value}
+                            className={styles.Checkbox}
+                            checked={value === filter.value}
+                            onChange={() => onChange(filter.value)}
+                            label={
+                              <div className={styles.Label}>
+                                {Icon && <Icon className={styles.Icon} />}{" "}
+                                {filter.label}
+                              </div>
+                            }
+                          />
+                        );
+                      })}
+                    </>
+                  )}
+                />
+              </div>
             </div>
-          </div>
-        </Popper>
-      </form>
+          </Popper>
+        </form>
 
-      <Button
-        type="button"
-        onClick={handleModal}
-        noStyle
-        className={styles.SaveButton}
-      >
-        Save this search
-      </Button>
-      <SaveSearchModal
-        isOpen={!!searchToSave}
-        search={searchToSave}
-        onClose={() => setSearchToSave(null)}
-      />
+        <Button
+          type="button"
+          onClick={handleModal}
+          noStyle
+          className={styles.SaveButton}
+        >
+          Save this search
+        </Button>
+        <SaveSearchModal
+          isOpen={!!searchToSave}
+          search={searchToSave}
+          onClose={() => setSearchToSave(null)}
+        />
+      </QRDropZone>
     </div>
   );
 }
