@@ -48,7 +48,6 @@ const createWindow = async (): Promise<void> => {
       mainWindow.webContents.openDevTools({ mode: "detach" });
     } else {
       await loadURL(mainWindow);
-      mainWindow.webContents.openDevTools({ mode: "detach" }); // DEV
     }
 
     if (process.platform !== "darwin") {
