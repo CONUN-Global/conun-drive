@@ -3,8 +3,6 @@ import { toast } from "react-toastify";
 
 import Button from "../Button";
 
-import makeURLCool from "../../helpers/makeURLCool";
-
 import ShareIcon from "../../assets/icons/share.svg";
 
 import styles from "./ShareButton.module.scss";
@@ -15,7 +13,6 @@ function ShareButton({ fileID }: { fileID: string | number }) {
       autoClose: 1500,
       position: "bottom-center",
     });
-    // navigator.clipboard.writeText(`conun-drive://${makeURLCool(fileID)}`);
     navigator.clipboard.writeText(`conun-drive://${fileID}`);
   };
 
