@@ -3,7 +3,6 @@ import path from "path";
 import isDev from "electron-is-dev";
 import serve from "electron-serve";
 import Ctl from "ipfsd-ctl";
-import copyfiles from "copyfiles";
 import fs from "fs-extra";
 import Jimp from "jimp";
 import { globSource } from "ipfs-http-client";
@@ -14,10 +13,10 @@ import logger from "./logger";
 
 import getIpfsBinPath from "./helpers/getIpfsBinPath";
 import writeIpfsBinaryPath from "./helpers/writeIpfsBinaryPath";
-import swarmKeyExists from "./helpers/swarmKeyExists";
 import configExists from "./helpers/configExists";
 import rmApiFile from "./helpers/removeApiFile";
 import writeIpfsPath from "./helpers/writeIpfsPath";
+import { getURLFromArgv } from "./helpers";
 
 import "./ipcMain";
 import "./ipcMain/app";
@@ -25,6 +24,9 @@ import "./ipcMain/app";
 connectToWS();
 
 const loadURL = serve({ directory: "dist/parcel-build" });
+const PROTOCOL_PREFIX = "conun-drive://";
+
+const APP_HEIGHT = process.platform === "win32" ? 746 : 720;
 
 export let mainWindow: BrowserWindow | null = null;
 
@@ -108,7 +110,7 @@ const createWindow = async (): Promise<void> => {
     }
 
     mainWindow = new BrowserWindow({
-      height: 720,
+      height: APP_HEIGHT,
       width: 1280,
       title: "Conun Drive",
       webPreferences: {
@@ -133,23 +135,100 @@ const createWindow = async (): Promise<void> => {
     } else {
       await loadURL(mainWindow);
     }
+
+    if (process.platform !== "darwin") {
+      if (
+        process.argv.length > 1 &&
+        process.argv[1].startsWith(PROTOCOL_PREFIX)
+      ) {
+        // This line works for win and lin
+        getURLFromArgv(process.argv[1]).then((url: string) => {
+          logger("start-up-with-link", `Start up with link: ${url}`, "error");
+          if (url) {
+            mainWindow.webContents.send("send-share-link", {
+              targetLink: url,
+            });
+          }
+        });
+      }
+    }
   } catch (err) {
     logger("app-init", err, "error");
   }
 };
 
-app.on("ready", createWindow);
+const singleInstanceLock = app.requestSingleInstanceLock();
+app.on("ready", () => {
+  createWindow();
+});
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
   }
 });
-
 app.on("activate", () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
+});
+
+app.setAsDefaultProtocolClient("conun-drive");
+
+if (!singleInstanceLock) {
+  app.quit();
+} else {
+  app.on("second-instance", (_, argv) => {
+    logger("Push to file:", `Instance lock triggered`, "error");
+    if (argv.length > 1) {
+      // Only try this if there is an argv (might be redundant)
+
+      if (process.platform == "win32") {
+        getURLFromArgv(argv[argv.length - 1]).then((url: string) => {
+          if (url) {
+            mainWindow.webContents.send("send-share-link", {
+              targetLink: url,
+            });
+          }
+        });
+      } else if (process.platform == "linux") {
+        getURLFromArgv(argv[1]).then((url: string) => {
+          if (url) {
+            mainWindow.webContents.send("send-share-link", {
+              targetLink: url,
+            });
+          }
+        });
+      }
+    }
+  });
+}
+// For mac
+app.on("will-finish-launching", () => {
+  app.on("open-url", (event, url) => {
+    event.preventDefault();
+    logger("OPEN-URL:", url, "error");
+    getURLFromArgv(url).then((url: string) => {
+      if (url) {
+        mainWindow.webContents.send("send-share-link", {
+          targetLink: url,
+        });
+      }
+    });
+  });
+});
+
+// for mac, when open already
+app.on("open-url", (event, url) => {
+  event.preventDefault();
+  logger("OPEN-URL:", url, "error");
+  getURLFromArgv(url).then((url: string) => {
+    if (url) {
+      mainWindow.webContents.send("send-share-link", {
+        targetLink: url,
+      });
+    }
+  });
 });
 
 process.on("uncaughtException", (uncaughtException) => {

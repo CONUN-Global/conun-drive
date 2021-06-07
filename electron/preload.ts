@@ -15,6 +15,8 @@ contextBridge.exposeInMainWorld("api", {
     ipcRenderer.on("is-registering-file", (e, ...args) => fn(...args));
   },
   uploadAvatar: (path: string) => ipcRenderer.invoke("upload-avatar", path),
+  createQRCode: (args: any) => ipcRenderer.invoke("create-qr-code", args),
+  readQRCode: (args: any) => ipcRenderer.invoke("read-qr-code", args),
   listenToIsManagerConnected: (fn: any) => {
     ipcRenderer.on("is-manager-connected", (e, ...args) => fn(...args));
   },
@@ -40,6 +42,9 @@ contextBridge.exposeInMainWorld("api", {
   listenToAttemptBoostrapDownload: (fn: any) => {
     ipcRenderer.on("attemp-bootstrap-download", (e, ...args) => fn(...args));
   },
+  listenToDeepLink: (fn: any) => {
+    ipcRenderer.on("send-share-link", (e, ...args) => fn(...args));
+  },
   listenToUpdateManager: (fn: any) => {
     ipcRenderer.on("update-manager", (e, ...args) => fn(...args));
   },
@@ -47,4 +52,5 @@ contextBridge.exposeInMainWorld("api", {
   openFile: (path: string) => ipcRenderer.invoke("open-file", path),
   getAppVersion: () => ipcRenderer.invoke("get-app-version"),
   getPeers: () => ipcRenderer.invoke("get-peers"),
+  getShareLink: () => ipcRenderer.invoke("get-share-link"),
 });

@@ -1,6 +1,5 @@
 import React from "react";
 
-import Button from "../Button";
 import Popper from "../Popper";
 import Peer from "./Peer";
 
@@ -16,15 +15,12 @@ function PeersButton() {
   return (
     <Popper
       placement="bottom-start"
+      onClick={() => refetch()}
       manager={
-        <Button
-          className={styles.PeersButton}
-          variant="grey"
-          onClick={() => refetch()}
-        >
+        <div className={styles.PeersButton}>
           <DotIcon className={styles.DotIcon} />
           {peers?.length ?? 0} Peers Online
-        </Button>
+        </div>
       }
       modifiers={[
         {
@@ -37,13 +33,15 @@ function PeersButton() {
       ]}
     >
       <div className={styles.PeersPopper}>
-        <div className={styles.HeaderRow}>
-          <p className={styles.Header}>Location</p>
-          <p className={styles.Header}>Peer ID</p>
+        <div className={styles.PeersContainer}>
+          <div className={styles.HeaderRow}>
+            <p className={styles.Header}>Location</p>
+            <p className={styles.Header}>Peer ID</p>
+          </div>
+          {peers?.map((peer, index) => (
+            <Peer key={`${peer.addr}_${index}`} peer={peer} />
+          ))}
         </div>
-        {peers?.map((peer) => (
-          <Peer key={peer.addr} peer={peer} />
-        ))}
       </div>
     </Popper>
   );
