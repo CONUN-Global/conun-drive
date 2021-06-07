@@ -38,8 +38,8 @@ function PeersButton() {
             <p className={styles.Header}>Location</p>
             <p className={styles.Header}>Peer ID</p>
           </div>
-          {peers?.map((peer) => (
-            <Peer key={peer.addr} peer={peer} />
+          {peers?.map((peer, index) => (
+            <Peer key={`${peer.addr}_${index}`} peer={peer} />
           ))}
         </div>
       </div>
