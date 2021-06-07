@@ -48,7 +48,7 @@ function AppProvider({ children }: AppProviderProps) {
   useEffect(() => {
     api.listenToDeepLink((data) => {
       if (data.targetLink) {
-        history.push("/" + data.targetLink);
+        history.push(data.targetLink);
       }
     });
   }, []);
