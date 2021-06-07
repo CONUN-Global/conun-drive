@@ -50,11 +50,11 @@ async function getFileIDfromPHash(argv: string) {
       `Received this id: ${data.data[0].id}`,
       "info"
     );
-    return `file/${data.data[0]?.id}`;
+    return `/file/${data.data[0]?.id}`;
   }
   logger("get-file-id-from-hash", `Received no id: ${data.data}`, "info");
 
-  return "file/NO_BAD_FILE";
+  return "/file/NO_BAD_FILE";
 }
 
 export async function getURLFromArgv(argv) {
