@@ -21,8 +21,6 @@ function FileDetails() {
   const { id } = useParams();
   const history = useHistory();
 
-  console.log("id", id);
-
   if (id === NO_BAD_FILE) {
     return <ErrorFile reason={NO_BAD_FILE} />;
   }
