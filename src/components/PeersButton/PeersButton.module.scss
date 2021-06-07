@@ -28,21 +28,30 @@
   flex-direction: column;
   border-radius: 3px;
   box-shadow: var(--box-shadow-1);
-  max-height: 210px;
-  overflow-y: auto;
 
-  & .HeaderRow {
-    display: flex;
-    margin-bottom: 5px;
+  & .PeersContainer {
+    max-height: 190px;
+    overflow-y: auto;
 
-    & .Header {
-      min-width: 50px;
-      font-weight: bold;
-      text-align: center;
+    & > :nth-child(2) {
+      margin-top: 20px;
     }
 
-    & :last-child {
-      min-width: 315px;
+    & .HeaderRow {
+      display: flex;
+      background-color: white;
+      height: 20px;
+      position: fixed;
+
+      & .Header {
+        min-width: 50px;
+        font-weight: bold;
+        text-align: center;
+      }
+
+      & :last-child {
+        min-width: 315px;
+      }
     }
   }
 }

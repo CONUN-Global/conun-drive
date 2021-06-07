@@ -37,13 +37,15 @@ function PeersButton() {
       ]}
     >
       <div className={styles.PeersPopper}>
-        <div className={styles.HeaderRow}>
-          <p className={styles.Header}>Location</p>
-          <p className={styles.Header}>Peer ID</p>
+        <div className={styles.PeersContainer}>
+          <div className={styles.HeaderRow}>
+            <p className={styles.Header}>Location</p>
+            <p className={styles.Header}>Peer ID</p>
+          </div>
+          {peers?.map((peer) => (
+            <Peer key={peer.addr} peer={peer} />
+          ))}
         </div>
-        {peers?.map((peer) => (
-          <Peer key={peer.addr} peer={peer} />
-        ))}
       </div>
     </Popper>
   );
