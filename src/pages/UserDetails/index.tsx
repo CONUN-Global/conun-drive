@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
+import classnames from "classnames";
 
 import Button from "../../components/Button";
 import ProfileText from "./ProfileText";
@@ -54,7 +55,7 @@ function UserDetails() {
           <ProfilePicture avatar={avatar} isSelf={isSelf} />
           <ProfileText authorID={authorID} walletHash={walletHash} />
         </div>
-        <div className={styles.FileBox}>
+        <div className={classnames(styles.FileBox, { [styles.Solo]: !isSelf })}>
           <div className={styles.Header}>
             <span className={styles.Title}>
               {isSelf ? "My Uploads" : "This User's Uploads"}
