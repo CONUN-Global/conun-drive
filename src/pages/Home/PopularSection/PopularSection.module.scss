@@ -1,6 +1,7 @@
 .PopularSection {
+  background-color: aqua;
   overflow-y: auto;
-  height: 580px;
+  height: calc(100vh - 150px);
   -ms-overflow-style: none;
   scrollbar-width: none;
 
