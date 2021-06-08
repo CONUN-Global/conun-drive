@@ -11,6 +11,7 @@ import Filters from "./Filters";
 import QRDropZone from "./QRDropZone";
 
 import useReadQRCode from "../../../../hooks/useReadQRCode";
+import useUrlQuery from "../../../../hooks/useUrlQuery";
 
 import Glass from "../../../../assets/icons/magnifying-glass.svg";
 import Tag from "../../../../assets/icons/tag.svg";
@@ -19,7 +20,6 @@ import Title from "../../../../assets/icons/title.svg";
 import AllIcon from "../../../../assets/icons/all.svg";
 
 import styles from "./SearchBar.module.scss";
-import useUrlQuery from "../../../../hooks/useUrlQuery";
 
 const filters = [
   { value: "", label: "All", icon: AllIcon },

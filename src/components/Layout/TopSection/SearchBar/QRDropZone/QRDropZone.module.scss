@@ -4,8 +4,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-}
-
-.Container:focus {
-  outline: none;
+  & :focus {
+    outline: none;
+  }
 }
