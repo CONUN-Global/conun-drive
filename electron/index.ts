@@ -39,11 +39,9 @@ const createWindow = async (): Promise<void> => {
         preload: path.resolve(__dirname, "preload.js"),
         webSecurity: false,
       },
-      resizable: true,
     });
 
     mainWindow.removeMenu();
-    mainWindow.setResizable(true);
 
     if (isDev) {
       await mainWindow.loadURL("http://localhost:1235");
