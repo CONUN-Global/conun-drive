@@ -4,7 +4,7 @@
   border-radius: 5px;
   box-sizing: border-box;
   display: flex;
-  height: calc(596px - 40px);
+  height: calc(100vh - 150px);
   justify-content: center;
   padding: 40px;
   position: relative;
@@ -23,7 +23,7 @@
 }
 
 .Layout {
-  height: calc(596px - 40px);
+  height: calc(100vh - 150px);
   display: flex;
   gap: 0 30px;
   width: 100%;
