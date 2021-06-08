@@ -20,6 +20,19 @@ contextBridge.exposeInMainWorld("api", {
   listenToIsManagerConnected: (fn: any) => {
     ipcRenderer.on("is-manager-connected", (e, ...args) => fn(...args));
   },
+  getCategories: () => ipcRenderer.invoke("get-categories"),
+  getContentTypes: () => ipcRenderer.invoke("get-content-types"),
+  getContentBy: (form: any) => ipcRenderer.invoke("get-content-by", form),
+  getDownloads: (page: string) => ipcRenderer.invoke("get-downloads", page),
+  getFile: (id: string) => ipcRenderer.invoke("get-file", id),
+  getTagsAutocomplete: (value: string) =>
+    ipcRenderer.invoke("get-tags-autocomplete", value),
+  updateUser: (form: any) => ipcRenderer.invoke("update-user", form),
+  searchContent: (args: any) => ipcRenderer.invoke("search-content", args),
+  searchContentAutocomplete: (input: string) =>
+    ipcRenderer.invoke("search-content-autocomplete", input),
+  getSimilarContent: (id: string) =>
+    ipcRenderer.invoke("get-similar-content", id),
   connectToManager: () => ipcRenderer.invoke("connect-to-manager"),
   listenToDownloadSuccess: (fn: any) => {
     ipcRenderer.on("download-success", (e, ...args) => fn(...args));

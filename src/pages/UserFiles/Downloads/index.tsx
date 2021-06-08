@@ -1,19 +1,21 @@
 import React, { useRef } from "react";
 import { useInfiniteQuery } from "react-query";
-import { useHistory, useParams } from "react-router";
+import { useHistory } from "react-router";
 import { Waypoint } from "react-waypoint";
 
 import Button from "../../../components/Button";
 import Cell from "../Cell";
 import Spinner from "../../../components/Spinner";
 
-import instance from "../../../axios/instance";
+import useCurrentUser from "../../../hooks/useCurrentUser";
+
+import BackIcon from "../../../assets/icons/back.svg";
 
 import { FileProps } from "../../../types";
 
 import styles from "./Downloads.module.scss";
-import BackIcon from "../../../assets/icons/back.svg";
-import useCurrentUser from "../../../hooks/useCurrentUser";
+
+const { api } = window;
 
 const PAGE_LIMIT = 10;
 
@@ -41,9 +43,8 @@ function Downloads() {
   } = useInfiniteQuery(
     ["user_downloads", currentUser?.id],
     async ({ pageParam = page.current }) => {
-      const { data } = await instance.get(
-        `/content/downloaded-by?page=${pageParam}`
-      );
+      const { data } = await api.getDownloads({ page: pageParam });
+
       total.current = data?.data?.total;
       page.current = page?.current + 1;
       return data.data;
@@ -60,7 +61,6 @@ function Downloads() {
       refetchOnReconnect: "always",
     }
   );
-  //End of hook
 
   return (
     <div className={styles.Background}>
