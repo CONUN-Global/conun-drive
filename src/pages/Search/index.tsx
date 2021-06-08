@@ -14,7 +14,7 @@ import { FileProps } from "../../types";
 
 import styles from "./Search.module.scss";
 
-const PAGE_LIMIT = 10;
+const PAGE_LIMIT = 18;
 
 function Search() {
   const location = useLocation();
@@ -34,7 +34,7 @@ function Search() {
       const { data } = await instance.get(
         `/search/content?keyword=${query.get("keyword")}&filter=${query.get(
           "filter"
-        )}&page=${pageParam}`
+        )}&page=${pageParam}&limit=${PAGE_LIMIT}`
       );
 
       total.current = data?.data?.total;
@@ -66,7 +66,9 @@ function Search() {
         {(files?.pages || []).map((group, i) => (
           <React.Fragment key={i}>
             {group?.data?.map((file: FileProps) => (
-              <FileBox key={file.id} file={file} />
+              <div key={file.id} className={styles.Cell}>
+                <FileBox file={file} />
+              </div>
             ))}
           </React.Fragment>
         ))}
