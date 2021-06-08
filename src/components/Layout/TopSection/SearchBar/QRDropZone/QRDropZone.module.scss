@@ -3,6 +3,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
   width: 100%;
+}
+
+.Container:focus {
+  outline: none;
 }

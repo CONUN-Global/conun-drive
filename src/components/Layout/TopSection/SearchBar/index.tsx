@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { useHistory, useParams } from "react-router";
+import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import Button from "../../../Button";
@@ -19,6 +19,7 @@ import Title from "../../../../assets/icons/title.svg";
 import AllIcon from "../../../../assets/icons/all.svg";
 
 import styles from "./SearchBar.module.scss";
+import useUrlQuery from "../../../../hooks/useUrlQuery";
 
 const filters = [
   { value: "", label: "All", icon: AllIcon },
@@ -40,12 +41,26 @@ function SearchBar() {
   const [searchToSave, setSearchToSave] = useState(null);
 
   const history = useHistory();
-  const params = useParams<{ keyword: string }>();
   const { readCode } = useReadQRCode();
 
-  const { control, handleSubmit, getValues, watch } = useForm<SearchFormData>({
-    defaultValues: { filterBy: params?.keyword ?? "" },
-  });
+  const queryParams = useUrlQuery();
+  const keywordQuery = queryParams.get("keyword");
+  const tagQuery = queryParams.get("filter");
+
+  const { control, handleSubmit, getValues, watch, reset } =
+    useForm<SearchFormData>({
+      defaultValues: {
+        filterBy: tagQuery || "",
+        searchString: keywordQuery || "",
+      },
+    });
+
+  useEffect(() => {
+    reset({
+      filterBy: tagQuery || "",
+      searchString: keywordQuery || "",
+    });
+  }, [keywordQuery, tagQuery]);
 
   const handleSearch: SubmitHandler<SearchFormData> = async (values) => {
     history.push(
