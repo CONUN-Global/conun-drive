@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import React, { useEffect, useRef } from "react";
 import { useInfiniteQuery } from "react-query";
 import { useParams } from "react-router";
@@ -7,6 +8,8 @@ import FileBox from "../../components/FileBox";
 import Spinner from "../../components/Spinner";
 
 import useUrlQuery from "../../hooks/useUrlQuery";
+
+import { mainPageAnimation } from "../../anim";
 
 import { FileProps } from "../../types";
 
@@ -65,7 +68,13 @@ function Category() {
   const categoryName = query.get("name");
 
   return (
-    <div className={styles.Category}>
+    <motion.div
+      className={styles.Category}
+      variants={mainPageAnimation}
+      initial="exit"
+      animate="enter"
+      exit="exit"
+    >
       <p className={styles.Title}>{categoryName}</p>
       <div className={styles.ResultsContainer}>
         {(files?.pages || []).map((group, i) => (
@@ -86,7 +95,7 @@ function Category() {
       {!isLoading && (
         <Waypoint bottomOffset="-20%" onEnter={() => fetchNextPage()} />
       )}
-    </div>
+    </motion.div>
   );
 }
 

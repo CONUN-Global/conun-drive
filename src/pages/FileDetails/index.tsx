@@ -1,5 +1,6 @@
 import React from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { motion } from "framer-motion";
 
 import AdditionalDetailsCell from "./AdditionalDetailsCell";
 import Button from "../../components/Button";
@@ -16,6 +17,8 @@ import BackIcon from "../../assets/icons/left-arrow.svg";
 
 import styles from "./FileDetails.module.scss";
 
+import { filePageAnimation } from "../../anim/";
+
 function FileDetails() {
   const { id } = useParams();
   const history = useHistory();
@@ -30,7 +33,13 @@ function FileDetails() {
   }
 
   return (
-    <div className={styles.Background}>
+    <motion.div
+      className={styles.Background}
+      variants={filePageAnimation}
+      initial="exit"
+      animate="enter"
+      exit="exit"
+    >
       {isLoading ? (
         <Spinner />
       ) : (
@@ -49,7 +58,7 @@ function FileDetails() {
           </div>
         </>
       )}
-    </div>
+    </motion.div>
   );
 }
 

@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import React, { useEffect, useRef } from "react";
 import { useInfiniteQuery } from "react-query";
 import { useLocation } from "react-router";
@@ -8,6 +9,7 @@ import Spinner from "../../components/Spinner";
 
 import useUrlQuery from "../../hooks/useUrlQuery";
 
+import { mainPageAnimation } from "../../anim";
 import { FileProps } from "../../types";
 
 import styles from "./Search.module.scss";
@@ -61,7 +63,13 @@ function Search() {
   }, [location.search]);
 
   return (
-    <div className={styles.Search}>
+    <motion.div
+      className={styles.Search}
+      variants={mainPageAnimation}
+      initial="exit"
+      animate="enter"
+      exit="exit"
+    >
       <p className={styles.Title}>Results</p>
       <div className={styles.ResultsContainer}>
         {(files?.pages || []).map((group, i) => (
@@ -81,7 +89,7 @@ function Search() {
       {!isLoading && (
         <Waypoint bottomOffset="-20%" onEnter={() => fetchNextPage()} />
       )}
-    </div>
+    </motion.div>
   );
 }
 
