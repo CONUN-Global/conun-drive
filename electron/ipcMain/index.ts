@@ -4,7 +4,6 @@ import fetch from "electron-fetch";
 import all from "it-all";
 import { concat } from "uint8arrays";
 import Jimp from "jimp";
-import isDev from "electron-is-dev";
 
 import { mainWindow } from "../";
 import { getIpfs } from "../ipfs";
@@ -13,9 +12,7 @@ import connectToWS, { client } from "../socket";
 import logger from "../logger";
 import { createQRCode, readQRCode } from "../helpers";
 
-import { DEV_DRIVE_SERVER, PROD_DRIVE_SERVER } from "../const";
-
-const SERVER_URL = isDev ? DEV_DRIVE_SERVER : PROD_DRIVE_SERVER;
+const SERVER = process.env.SERVER;
 
 ipcMain.handle("get-file-preview", async (_, hash) => {
   try {
@@ -220,7 +217,7 @@ ipcMain.handle("get-current-user", async () => {
       "info"
     );
 
-    const res = await fetch(`${SERVER_URL}/user/auth`, {
+    const res = await fetch(`${SERVER}/user/auth`, {
       method: "POST",
       body: JSON.stringify({
         wallet_id: userDetails?.walletAddress,

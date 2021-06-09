@@ -1,18 +1,15 @@
 import { ipcMain } from "electron";
 import fetch from "electron-fetch";
-import isDev from "electron-is-dev";
 import FormData from "form-data";
 
 import logger from "../../logger";
 import db from "../../store/db";
 
-import { DEV_DRIVE_SERVER, PROD_DRIVE_SERVER } from "../../const";
-
-const SERVER_URL = isDev ? DEV_DRIVE_SERVER : PROD_DRIVE_SERVER;
+const SERVER = process.env.SERVER;
 
 ipcMain.handle("get-categories", async () => {
   try {
-    const res = await fetch(`${SERVER_URL}/cate/get_all`, {
+    const res = await fetch(`${SERVER}/cate/get_all`, {
       method: "GET",
     });
 
@@ -43,7 +40,7 @@ ipcMain.handle("get-content-by", async (_, formData) => {
       }),
     ]);
 
-    const res = await fetch(`${SERVER_URL}/content/get-contents-by`, {
+    const res = await fetch(`${SERVER}/content/get-contents-by`, {
       method: "POST",
       body: form,
       headers: {
@@ -71,7 +68,7 @@ ipcMain.handle("get-downloads", async (_, { page = 1, limit = 10 }) => {
     const userDetails = await db.get("userDetailsDrive");
 
     const res = await fetch(
-      `${SERVER_URL}/content/downloaded-by?page=${page}&limit=${limit}`,
+      `${SERVER}/content/downloaded-by?page=${page}&limit=${limit}`,
       {
         method: "GET",
         headers: {
@@ -107,7 +104,7 @@ ipcMain.handle("update-user", async (_, formData) => {
       }),
     ]);
 
-    const res = await fetch(`${SERVER_URL}/user/${userDetails?.userId}`, {
+    const res = await fetch(`${SERVER}/user/${userDetails?.userId}`, {
       method: "PUT",
       body: form,
     });
@@ -134,7 +131,7 @@ ipcMain.handle(
       const userDetails = await db.get("userDetailsDrive");
 
       const res = await fetch(
-        `${SERVER_URL}/search/content?keyword=${keyword}&filter=${filter}&page=${page}&limit${limit}`,
+        `${SERVER}/search/content?keyword=${keyword}&filter=${filter}&page=${page}&limit${limit}`,
         {
           headers: {
             "current-user": userDetails?.userId,
@@ -163,7 +160,7 @@ ipcMain.handle("search-content-autocomplete", async (_, value) => {
     const userDetails = await db.get("userDetailsDrive");
 
     const res = await fetch(
-      `${SERVER_URL}/search/content/autocomplete?keyword=${value}`,
+      `${SERVER}/search/content/autocomplete?keyword=${value}`,
       {
         headers: {
           "current-user": userDetails?.userId,
@@ -190,7 +187,7 @@ ipcMain.handle("get-similar-content", async (_, id) => {
   try {
     const userDetails = await db.get("userDetailsDrive");
 
-    const res = await fetch(`${SERVER_URL}/content/similar-contents/${id}`, {
+    const res = await fetch(`${SERVER}/content/similar-contents/${id}`, {
       method: "GET",
       headers: {
         "current-user": userDetails?.userId,
@@ -216,7 +213,7 @@ ipcMain.handle("get-file", async (_, id) => {
   try {
     const userDetails = await db.get("userDetailsDrive");
 
-    const res = await fetch(`${SERVER_URL}/content/${id}`, {
+    const res = await fetch(`${SERVER}/content/${id}`, {
       method: "GET",
       headers: {
         "current-user": userDetails?.userId,
@@ -242,7 +239,7 @@ ipcMain.handle("get-content-types", async () => {
   try {
     const userDetails = await db.get("userDetailsDrive");
 
-    const res = await fetch(`${SERVER_URL}/content_type/get_all`, {
+    const res = await fetch(`${SERVER}/content_type/get_all`, {
       method: "GET",
       headers: {
         "current-user": userDetails?.userId,
@@ -268,15 +265,12 @@ ipcMain.handle("get-tags-autocomplete", async (_, value) => {
   try {
     const userDetails = await db.get("userDetailsDrive");
 
-    const res = await fetch(
-      `${SERVER_URL}/search/tag/autocomplete?tag=${value}`,
-      {
-        method: "GET",
-        headers: {
-          "current-user": userDetails?.userId,
-        },
-      }
-    );
+    const res = await fetch(`${SERVER}/search/tag/autocomplete?tag=${value}`, {
+      method: "GET",
+      headers: {
+        "current-user": userDetails?.userId,
+      },
+    });
 
     const data = await res.json();
 

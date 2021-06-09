@@ -2,6 +2,7 @@ import { app, BrowserWindow, shell } from "electron";
 import path from "path";
 import isDev from "electron-is-dev";
 import serve from "electron-serve";
+import "dotenv/config";
 
 import { prepareDb } from "./store/db";
 import { createIpfs } from "./ipfs";

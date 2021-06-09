@@ -1,5 +1,4 @@
 import fetch from "electron-fetch";
-import isDev from "electron-is-dev";
 
 import jimp from "jimp";
 import qrcode from "qrcode";
@@ -8,9 +7,7 @@ import QRReader from "qrcode-reader";
 import logger from "../logger";
 import db from "../store/db";
 
-import { DEV_DRIVE_SERVER, PROD_DRIVE_SERVER } from "../const";
-
-const SERVER_URL = isDev ? DEV_DRIVE_SERVER : PROD_DRIVE_SERVER;
+const SERVER = process.env.SERVER;
 
 async function getFileIDfromPHash(argv: string) {
   const publicHash = argv.split("conun-drive://")[1];
@@ -34,7 +31,7 @@ async function getFileIDfromPHash(argv: string) {
   );
 
   const res = await fetch(
-    `${SERVER_URL}/search/content?keyword=${publicHash}&filter=cid`,
+    `${SERVER}/search/content?keyword=${publicHash}&filter=cid`,
     {
       method: "GET",
       headers: {
