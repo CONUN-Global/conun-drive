@@ -17,7 +17,7 @@ import styles from "./Downloads.module.scss";
 
 const { api } = window;
 
-const PAGE_LIMIT = 10;
+const PAGE_LIMIT = 18;
 
 function BackButton() {
   const history = useHistory();
@@ -43,7 +43,10 @@ function Downloads() {
   } = useInfiniteQuery(
     ["user_downloads", currentUser?.id],
     async ({ pageParam = page.current }) => {
-      const { data } = await api.getDownloads({ page: pageParam });
+      const { data } = await api.getDownloads({
+        page: pageParam,
+        limit: PAGE_LIMIT,
+      });
 
       total.current = data?.data?.total;
       page.current = page?.current + 1;

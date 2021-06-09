@@ -129,12 +129,12 @@ ipcMain.handle("update-user", async (_, formData) => {
 
 ipcMain.handle(
   "search-content",
-  async (_, { keyword, filter = "", page = 1 }) => {
+  async (_, { keyword, filter = "", page = 1, limit = 10 }) => {
     try {
       const userDetails = await db.get("userDetailsDrive");
 
       const res = await fetch(
-        `${SERVER_URL}/search/content?keyword=${keyword}&filter=${filter}&page=${page}`,
+        `${SERVER_URL}/search/content?keyword=${keyword}&filter=${filter}&page=${page}&limit${limit}`,
         {
           headers: {
             "current-user": userDetails?.userId,

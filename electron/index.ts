@@ -33,16 +33,16 @@ const createWindow = async (): Promise<void> => {
     mainWindow = new BrowserWindow({
       height: APP_HEIGHT,
       width: 1280,
+      minHeight: APP_HEIGHT,
+      minWidth: 1080,
       title: "Conun Drive",
       webPreferences: {
         nodeIntegration: false,
         preload: path.resolve(__dirname, "preload.js"),
       },
-      resizable: false,
     });
 
     mainWindow.removeMenu();
-    mainWindow.setResizable(false);
 
     if (isDev) {
       await mainWindow.loadURL("http://localhost:1235");
