@@ -8,7 +8,10 @@ import FootBar from "./FootBar";
 
 import { useAppContext } from "../AppContext";
 
+import useCurrentUser from "../../hooks/useCurrentUser";
+
 import styles from "./Layout.module.scss";
+import NoUserPage from "./NoUserPage";
 
 const variants = {
   contained: { marginLeft: 201 },
@@ -21,21 +24,28 @@ interface LayoutProps {
 
 function Layout({ children }: LayoutProps) {
   const { isDownloadsOpen } = useAppContext();
+  const { currentUser, isLoading } = useCurrentUser();
   return (
     <>
-      <DownloadSidebar />
-      <motion.div
-        className={styles.Layout}
-        initial="contained"
-        animate={isDownloadsOpen ? "contained" : "full"}
-        variants={variants}
-        transition={{ duration: 0.4, ease: "easeInOut" }}
-      >
-        <TopSection />
-        {children}
-        <SavedSearchSidebar />
-        <FootBar />
-      </motion.div>
+      {!isLoading && !currentUser?.id ? (
+        <NoUserPage />
+      ) : (
+        <>
+          <DownloadSidebar />
+          <motion.div
+            className={styles.Layout}
+            initial="contained"
+            animate={isDownloadsOpen ? "contained" : "full"}
+            variants={variants}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+          >
+            <TopSection />
+            {children}
+            <SavedSearchSidebar />
+            <FootBar />
+          </motion.div>
+        </>
+      )}
     </>
   );
 }
