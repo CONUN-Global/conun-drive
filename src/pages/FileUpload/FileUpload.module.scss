@@ -3,7 +3,7 @@
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   padding: 40px 40px 0 40px;
-  height: calc(596px - 40px);
+  height: calc(100vh - 200px);
   position: relative;
 
   & .BackButton {
@@ -23,6 +23,7 @@
 
   & .Form {
     display: flex;
+    height: calc(100vh - 250px);
     flex-direction: column;
 
     & .InputsBox {
