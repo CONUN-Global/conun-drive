@@ -129,6 +129,7 @@
     "electron-serve": "^1.1.0",
     "electron-updater": "^4.3.8",
     "file-saver": "^2.0.5",
+    "form-data": "^4.0.0",
     "framer-motion": "^4.1.8",
     "go-ipfs": "^0.8.0",
     "immer": "^9.0.2",

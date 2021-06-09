@@ -7,14 +7,15 @@ import Button from "../../../components/Button";
 import Cell from "../Cell";
 import Spinner from "../../../components/Spinner";
 
-import instance from "../../../axios/instance";
+import BackIcon from "../../../assets/icons/back.svg";
 
 import { FileProps } from "../../../types";
 
 import styles from "./Uploads.module.scss";
-import BackIcon from "../../../assets/icons/back.svg";
 
-const PAGE_LIMIT = 10;
+const { api } = window;
+
+const PAGE_LIMIT = 18;
 
 function BackButton() {
   const history = useHistory();
@@ -40,16 +41,12 @@ function Uploads() {
   } = useInfiniteQuery(
     ["user_uploads", authorID],
     async ({ pageParam = page.current }) => {
-      const formData = new FormData();
-      formData.append("user_id", authorID);
-      formData.append("order_by", "rate");
-      formData.append("limit", String(PAGE_LIMIT));
-      formData.append("page", pageParam);
-
-      const { data } = await instance.post(
-        "/content/get-contents-by",
-        formData
-      );
+      const { data } = await api.getContentBy([
+        { name: "user_id", value: authorID },
+        { name: "order_by", value: "rate" },
+        { name: "limit", value: String(PAGE_LIMIT) },
+        { name: "page", value: pageParam },
+      ]);
       total.current = data?.data?.total;
       page.current = page?.current + 1;
       return data.data;

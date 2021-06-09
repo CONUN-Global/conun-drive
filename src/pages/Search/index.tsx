@@ -8,13 +8,13 @@ import Spinner from "../../components/Spinner";
 
 import useUrlQuery from "../../hooks/useUrlQuery";
 
-import instance from "../../axios/instance";
-
 import { FileProps } from "../../types";
 
 import styles from "./Search.module.scss";
 
-const PAGE_LIMIT = 10;
+const { api } = window;
+
+const PAGE_LIMIT = 18;
 
 function Search() {
   const location = useLocation();
@@ -31,11 +31,12 @@ function Search() {
   } = useInfiniteQuery(
     ["search", query.get("keyword"), query.get("filter")],
     async ({ pageParam = page.current }) => {
-      const { data } = await instance.get(
-        `/search/content?keyword=${query.get("keyword")}&filter=${query.get(
-          "filter"
-        )}&page=${pageParam}`
-      );
+      const { data } = await api.searchContent({
+        keyword: query.get("keyword"),
+        filter: query.get("filter"),
+        limit: PAGE_LIMIT,
+        page: pageParam,
+      });
 
       total.current = data?.data?.total;
       page.current = page?.current + 1;
@@ -66,7 +67,9 @@ function Search() {
         {(files?.pages || []).map((group, i) => (
           <React.Fragment key={i}>
             {group?.data?.map((file: FileProps) => (
-              <FileBox key={file.id} file={file} />
+              <div key={file.id} className={styles.Cell}>
+                <FileBox file={file} />
+              </div>
             ))}
           </React.Fragment>
         ))}

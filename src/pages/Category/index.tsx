@@ -8,13 +8,13 @@ import Spinner from "../../components/Spinner";
 
 import useUrlQuery from "../../hooks/useUrlQuery";
 
-import instance from "../../axios/instance";
-
 import { FileProps } from "../../types";
 
 import styles from "./Category.module.scss";
 
-const PAGE_LIMIT = 10;
+const { api } = window;
+
+const PAGE_LIMIT = 18;
 
 function Category() {
   const { id } = useParams();
@@ -32,16 +32,12 @@ function Category() {
   } = useInfiniteQuery(
     ["category", id],
     async ({ pageParam = page.current }) => {
-      const formData = new FormData();
-      formData.append("category_id", id);
-      formData.append("order_by", "rate");
-      formData.append("limit", String(PAGE_LIMIT));
-      formData.append("page", pageParam);
-
-      const { data } = await instance.post(
-        "/content/get-contents-by",
-        formData
-      );
+      const { data } = await api.getContentBy([
+        { name: "category_id", value: id },
+        { name: "order_by", value: "rate" },
+        { name: "limit", value: String(PAGE_LIMIT) },
+        { name: "page", value: pageParam },
+      ]);
       total.current = data?.data?.total;
       page.current = page?.current + 1;
 
@@ -75,7 +71,9 @@ function Category() {
         {(files?.pages || []).map((group, i) => (
           <React.Fragment key={i}>
             {group?.data?.map((file: FileProps) => (
-              <FileBox key={file.id} file={file} />
+              <div key={file.id} className={styles.Cell}>
+                <FileBox file={file} />
+              </div>
             ))}
           </React.Fragment>
         ))}
