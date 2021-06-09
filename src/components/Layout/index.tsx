@@ -2,16 +2,16 @@ import React from "react";
 import { motion } from "framer-motion";
 
 import DownloadSidebar from "./DownloadSidebar";
-import TopSection from "./TopSection";
-import SavedSearchSidebar from "./SavedSearchesSidebar";
 import FootBar from "./FootBar";
+import NoUserPage from "./NoUserPage";
+import SavedSearchSidebar from "./SavedSearchesSidebar";
+import TopSection from "./TopSection";
 
 import { useAppContext } from "../AppContext";
 
 import useCurrentUser from "../../hooks/useCurrentUser";
 
 import styles from "./Layout.module.scss";
-import NoUserPage from "./NoUserPage";
 
 const variants = {
   contained: { marginLeft: 201 },
