@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { useInfiniteQuery } from "react-query";
-import { useHistory, useParams } from "react-router";
+import { useHistory } from "react-router";
 import { Waypoint } from "react-waypoint";
 
 import Button from "../../../components/Button";
@@ -15,7 +15,7 @@ import styles from "./Downloads.module.scss";
 import BackIcon from "../../../assets/icons/back.svg";
 import useCurrentUser from "../../../hooks/useCurrentUser";
 
-const PAGE_LIMIT = 10;
+const PAGE_LIMIT = 18;
 
 function BackButton() {
   const history = useHistory();
@@ -42,7 +42,7 @@ function Downloads() {
     ["user_downloads", currentUser?.id],
     async ({ pageParam = page.current }) => {
       const { data } = await instance.get(
-        `/content/downloaded-by?page=${pageParam}`
+        `/content/downloaded-by?page=${pageParam}&limit=${PAGE_LIMIT}`
       );
       total.current = data?.data?.total;
       page.current = page?.current + 1;

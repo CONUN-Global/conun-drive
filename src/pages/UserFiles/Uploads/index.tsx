@@ -14,7 +14,7 @@ import { FileProps } from "../../../types";
 import styles from "./Uploads.module.scss";
 import BackIcon from "../../../assets/icons/back.svg";
 
-const PAGE_LIMIT = 10;
+const PAGE_LIMIT = 18;
 
 function BackButton() {
   const history = useHistory();

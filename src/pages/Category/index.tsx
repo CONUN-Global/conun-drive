@@ -14,7 +14,7 @@ import { FileProps } from "../../types";
 
 import styles from "./Category.module.scss";
 
-const PAGE_LIMIT = 10;
+const PAGE_LIMIT = 18;
 
 function Category() {
   const { id } = useParams();
@@ -75,7 +75,9 @@ function Category() {
         {(files?.pages || []).map((group, i) => (
           <React.Fragment key={i}>
             {group?.data?.map((file: FileProps) => (
-              <FileBox key={file.id} file={file} />
+              <div key={file.id} className={styles.Cell}>
+                <FileBox file={file} />
+              </div>
             ))}
           </React.Fragment>
         ))}
