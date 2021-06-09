@@ -24,11 +24,17 @@
 }
 
 .NoImage {
-  align-items: center;
+  background-image: none !important;
+  background-color: #eee !important;
   border-radius: 3px 3px 0 0;
+}
+
+.Link {
+  height: 100%;
+  width: 100%;
+
+  align-items: center;
   box-sizing: border-box;
   display: flex;
   justify-content: center;
-  background-image: none !important;
-  background-color: #eee !important;
 }
