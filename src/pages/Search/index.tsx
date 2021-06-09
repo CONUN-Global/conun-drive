@@ -8,11 +8,11 @@ import Spinner from "../../components/Spinner";
 
 import useUrlQuery from "../../hooks/useUrlQuery";
 
-import instance from "../../axios/instance";
-
 import { FileProps } from "../../types";
 
 import styles from "./Search.module.scss";
+
+const { api } = window;
 
 const PAGE_LIMIT = 18;
 
@@ -31,11 +31,12 @@ function Search() {
   } = useInfiniteQuery(
     ["search", query.get("keyword"), query.get("filter")],
     async ({ pageParam = page.current }) => {
-      const { data } = await instance.get(
-        `/search/content?keyword=${query.get("keyword")}&filter=${query.get(
-          "filter"
-        )}&page=${pageParam}&limit=${PAGE_LIMIT}`
-      );
+      const { data } = await api.searchContent({
+        keyword: query.get("keyword"),
+        filter: query.get("filter"),
+        limit: PAGE_LIMIT,
+        page: pageParam,
+      });
 
       total.current = data?.data?.total;
       page.current = page?.current + 1;

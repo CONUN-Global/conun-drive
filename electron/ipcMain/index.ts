@@ -257,7 +257,7 @@ ipcMain.handle("upload-avatar", async (_, path) => {
   try {
     const node = getIpfs();
 
-    logger("upload-avatar", `uploading avatar with path ${path}`, "info");
+    logger("upload-avatar", `uploading avatar`, "info");
 
     const bufferizedPath = Buffer.from(path.split(",")[1], "base64");
     const preview = await Jimp.read(bufferizedPath);

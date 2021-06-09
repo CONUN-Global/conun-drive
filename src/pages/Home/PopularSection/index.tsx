@@ -4,13 +4,13 @@ import { useQuery } from "react-query";
 
 import Category from "./Category";
 
-import instance from "../../../axios/instance";
-
 import styles from "./PopularSection.module.scss";
+
+const { api } = window;
 
 function PopularSection() {
   const { data } = useQuery("get-all-categories", async () => {
-    const { data } = await instance.get("/cate/get_all");
+    const { data } = await api.getCategories();
 
     return data;
   });
@@ -23,7 +23,7 @@ function PopularSection() {
             Popular in{" "}
             <Link
               className={styles.CategoryLink}
-              to={`/category/${category.id}?name=${category.name}`}
+              to={`/category/${category?.id}?name=${category?.name}`}
             >
               {category?.name}
             </Link>

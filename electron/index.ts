@@ -12,8 +12,10 @@ import { getURLFromArgv } from "./helpers";
 
 import "./ipcMain";
 import "./ipcMain/app";
+import "./ipcMain/server";
 
 const loadURL = serve({ directory: "dist/parcel-build" });
+
 const PROTOCOL_PREFIX = "conun-drive://";
 
 const APP_HEIGHT = process.platform === "win32" ? 746 : 720;
@@ -37,7 +39,6 @@ const createWindow = async (): Promise<void> => {
       webPreferences: {
         nodeIntegration: false,
         preload: path.resolve(__dirname, "preload.js"),
-        webSecurity: false,
       },
     });
 
