@@ -26,6 +26,7 @@ jobs:
           yarn install
           yarn make
         env:
+          CI: true
           SERVER: ${{ secrets.SERVER }}
           LOG_SERVER: ${{ secrets.LOG_SERVER }}
           ORG_NAME: ${{ secrets.ORG_NAME }}
