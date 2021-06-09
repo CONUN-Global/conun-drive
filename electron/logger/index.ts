@@ -6,9 +6,7 @@ import fetch from "electron-fetch";
 
 import db from "../store/db";
 
-import { LOG_SERVER_DEV, LOG_SERVER_PROD } from "../const";
-
-const LOG_URL = isDev ? LOG_SERVER_DEV : LOG_SERVER_PROD;
+const LOG_URL = process.env.LOG_SERVER;
 
 const { combine, splat, timestamp, printf } = format;
 

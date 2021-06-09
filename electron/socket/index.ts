@@ -4,16 +4,13 @@ import fetch from "electron-fetch";
 import { join } from "path";
 import { appendFileSync } from "fs";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
-import isDev from "electron-is-dev";
 
 import { mainWindow } from "../";
 import db from "../store/db";
 import logger from "../logger";
 import { getIpfs } from "../ipfs";
 
-import { DEV_DRIVE_SERVER, PROD_DRIVE_SERVER } from "../const";
-
-const SERVER_URL = isDev ? DEV_DRIVE_SERVER : PROD_DRIVE_SERVER;
+const SERVER = process.env.SERVER;
 
 const MANAGER_PORT = 17401;
 
@@ -138,7 +135,7 @@ function connectToWS() {
           };
 
           // upload to server
-          const res = await fetch(`${SERVER_URL}/content/create`, {
+          const res = await fetch(`${SERVER}/content/create`, {
             method: "POST",
             body: JSON.stringify(body),
             headers: { "Content-Type": "application/json" },
