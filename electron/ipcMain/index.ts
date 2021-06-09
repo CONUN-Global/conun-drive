@@ -237,7 +237,7 @@ ipcMain.handle("get-current-user", async () => {
     await db.put({
       ...userDriveDetails,
       userId: data.id,
-      walletId: data?.wallet_id,
+      walletAddress: data?.wallet_id,
     });
 
     return {
