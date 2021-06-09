@@ -4,6 +4,9 @@ on: [push]
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  SERVER: ${{ secrets.SERVER }}
+  LOG_SERVER: ${{ secrets.LOG_SERVER }}
+  ORG_NAME: ${{ secrets.ORG_NAME }}
 
 jobs:
   linux:
