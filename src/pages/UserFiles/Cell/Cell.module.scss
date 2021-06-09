@@ -1,9 +1,8 @@
 .Cell {
   border-top: 1px solid #d8d8d8;
   box-sizing: border-box;
-  display: grid;
+  display: flex;
   gap: 31px;
-  grid-template-columns: 102px 356px 1fr;
   height: 76px;
   padding: 7px 14px;
   width: 100%;
@@ -11,8 +10,8 @@
   & .Thumb {
     border-radius: 5px;
     box-sizing: border-box;
-    height: 62px;
-    width: 102px;
+    height: 60px;
+    flex: 0 0 100px;
   }
 
   & .NoImage {
@@ -30,6 +29,7 @@
     display: flex;
     flex-direction: column;
     padding: 5px 0;
+    flex: 1 1 400px;
 
     & .Title {
       font-size: 16px;
@@ -48,6 +48,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex: 0 0 30px;
 }
 
 .ControlGrid {

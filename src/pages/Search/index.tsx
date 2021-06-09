@@ -14,7 +14,7 @@ import styles from "./Search.module.scss";
 
 const { api } = window;
 
-const PAGE_LIMIT = 10;
+const PAGE_LIMIT = 18;
 
 function Search() {
   const location = useLocation();
@@ -34,6 +34,7 @@ function Search() {
       const { data } = await api.searchContent({
         keyword: query.get("keyword"),
         filter: query.get("filter"),
+        limit: PAGE_LIMIT,
         page: pageParam,
       });
 
@@ -66,7 +67,9 @@ function Search() {
         {(files?.pages || []).map((group, i) => (
           <React.Fragment key={i}>
             {group?.data?.map((file: FileProps) => (
-              <FileBox key={file.id} file={file} />
+              <div key={file.id} className={styles.Cell}>
+                <FileBox file={file} />
+              </div>
             ))}
           </React.Fragment>
         ))}

@@ -3,7 +3,7 @@
   border-radius: 5px;
   box-sizing: border-box;
   display: flex;
-  height: calc(596px - 30px);
+  height: calc(100vh - 150px);
   justify-content: center;
   padding: 30px;
   position: relative;
@@ -22,19 +22,22 @@
 }
 
 .Layout {
-  height: calc(596px - 30px);
+  height: calc(100vh - 220px);
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-
-  width: 700px;
+  margin: 20px;
+  flex: 1 1 700px;
+  max-width: 1200px;
 
   & .Title {
     font-size: 20px;
+    align-self: flex-start;
   }
 
   & .ResultsTable {
     display: flex;
-    height: calc(76px * 6);
+    height: calc(100vh - 250px);
     overflow-y: auto;
     flex-direction: column;
     margin: 29px;
