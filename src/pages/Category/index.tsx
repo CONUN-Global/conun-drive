@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useRef } from "react";
 import { useInfiniteQuery } from "react-query";
 import { useParams } from "react-router";
@@ -9,7 +9,7 @@ import Spinner from "../../components/Spinner";
 
 import useUrlQuery from "../../hooks/useUrlQuery";
 
-import { mainPageAnimation } from "../../anim";
+import { cellEntryAnim, categoryAnimation } from "../../anim";
 
 import { FileProps } from "../../types";
 
@@ -17,7 +17,7 @@ import styles from "./Category.module.scss";
 
 const { api } = window;
 
-const PAGE_LIMIT = 18;
+const PAGE_LIMIT = 30;
 
 function Category() {
   const { id } = useParams();
@@ -67,35 +67,39 @@ function Category() {
 
   const categoryName = query.get("name");
 
+  if (isLoading) {
+    return <Spinner />;
+  }
+
   return (
-    <motion.div
-      className={styles.Category}
-      variants={mainPageAnimation}
-      initial="exit"
-      animate="enter"
-      exit="exit"
-    >
+    <div className={styles.Category}>
       <p className={styles.Title}>{categoryName}</p>
-      <div className={styles.ResultsContainer}>
+      <motion.div
+        className={styles.ResultsContainer}
+        variants={categoryAnimation}
+        initial="exit"
+        animate="enter"
+        exit="exit"
+      >
         {(files?.pages || []).map((group, i) => (
           <React.Fragment key={i}>
             {group?.data?.map((file: FileProps) => (
-              <div key={file.id} className={styles.Cell}>
+              <motion.div
+                key={file.id}
+                className={styles.Cell}
+                variants={cellEntryAnim}
+              >
                 <FileBox file={file} />
-              </div>
+              </motion.div>
             ))}
           </React.Fragment>
         ))}
-      </div>
-      {isLoading && <Spinner />}
+      </motion.div>
+      <Waypoint bottomOffset="-20%" onEnter={() => fetchNextPage()} />
       {!isLoading && !files?.pages?.[0]?.data && (
         <p className={styles.NoResults}>No results</p>
       )}
-
-      {!isLoading && (
-        <Waypoint bottomOffset="-20%" onEnter={() => fetchNextPage()} />
-      )}
-    </motion.div>
+    </div>
   );
 }
 

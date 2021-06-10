@@ -9,7 +9,7 @@ import Spinner from "../../components/Spinner";
 
 import useUrlQuery from "../../hooks/useUrlQuery";
 
-import { mainPageAnimation } from "../../anim";
+import { categoryAnimation, cellEntryAnim } from "../../anim";
 import { FileProps } from "../../types";
 
 import styles from "./Search.module.scss";
@@ -62,34 +62,40 @@ function Search() {
     }
   }, [location.search]);
 
+  if (isLoading) {
+    return <Spinner />;
+  }
   return (
-    <motion.div
-      className={styles.Search}
-      variants={mainPageAnimation}
-      initial="exit"
-      animate="enter"
-      exit="exit"
-    >
+    <div className={styles.Search}>
       <p className={styles.Title}>Results</p>
-      <div className={styles.ResultsContainer}>
+      <motion.div
+        className={styles.ResultsContainer}
+        variants={categoryAnimation}
+        initial="exit"
+        animate="enter"
+      >
         {(files?.pages || []).map((group, i) => (
           <React.Fragment key={i}>
             {group?.data?.map((file: FileProps) => (
-              <div key={file.id} className={styles.Cell}>
+              <motion.div
+                key={file.id}
+                className={styles.Cell}
+                variants={cellEntryAnim}
+              >
                 <FileBox file={file} />
-              </div>
+              </motion.div>
             ))}
           </React.Fragment>
         ))}
-      </div>
-      {isLoading && <Spinner />}
+      </motion.div>
+
       {!isLoading && !files?.pages?.[0]?.data && (
         <p className={styles.NoResults}>No results</p>
       )}
       {!isLoading && (
         <Waypoint bottomOffset="-20%" onEnter={() => fetchNextPage()} />
       )}
-    </motion.div>
+    </div>
   );
 }
 
