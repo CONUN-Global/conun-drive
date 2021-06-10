@@ -13,7 +13,8 @@
     "make": "yarn build && tsc && yarn copy-assets && electron-builder",
     "release": "yarn build && electron-builder --publish=always",
     "lint": "eslint --ext .ts .",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "pre-commit": "lint-staged"
   },
   "keywords": [
     "conun",
@@ -171,6 +172,7 @@
   },
   "lint-staged": {
     "*.ts": "eslint --cache --fix",
+    "*.tsx": "eslint --cache --fix",
     "*.css": "stylelint --fix",
     "*.{js,css,md}": "prettier --write"
   }
