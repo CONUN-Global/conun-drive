@@ -4,17 +4,17 @@
   overflow-y: auto;
 
   & .Title {
-    margin-bottom: 10px;
     font-size: 18px;
     font-weight: bold;
+    margin-bottom: 10px;
     text-transform: capitalize;
   }
 
   & .ResultsContainer {
-    display: grid;
-    gap: 20px;
     grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
     justify-items: center;
+    display: grid;
+    gap: 20px;
 
     & .Cell {
       align-items: center;
