@@ -11,20 +11,20 @@
 }
 
 .BackButton {
+  left: 21px;
   position: absolute;
   top: 21px;
-  left: 21px;
 }
 
 .Icon {
-  width: 13px;
-  height: 11px;
   fill: var(--grey-button-color);
+  height: 11px;
+  width: 13px;
 }
 
 .Layout {
-  height: calc(100vh - 200px);
   display: flex;
   gap: 0 30px;
+  height: calc(100vh - 200px);
   width: 100%;
 }
