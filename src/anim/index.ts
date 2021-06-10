@@ -63,6 +63,25 @@ export const filePageAnimation = {
   },
 };
 
+export const sidebarItemAnimation = {
+  out: {
+    transition: exitTransition,
+  },
+  in: {
+    transition: {
+      delay: 0.2,
+      when: "beforeChildren",
+      staggerChildren: 0.04,
+      ease: [0.43, 0.13, 0.23, 0.96],
+    },
+  },
+};
+
+export const sidebarItemAnim = {
+  out: { x: "-50%" },
+  in: { x: "0" },
+};
+
 export const cellEntryAnim = {
   exit: { y: 20, opacity: 0 },
   enter: {
