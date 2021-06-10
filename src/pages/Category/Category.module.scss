@@ -4,10 +4,10 @@
   overflow-y: auto;
 
   & .Title {
-    text-transform: capitalize;
+    margin-bottom: 10px;
     font-size: 18px;
     font-weight: bold;
-    margin-bottom: 10px;
+    text-transform: capitalize;
   }
 
   & .ResultsContainer {
