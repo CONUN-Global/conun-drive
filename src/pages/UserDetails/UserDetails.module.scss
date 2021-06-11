@@ -10,15 +10,15 @@
 }
 
 .BackButton {
+  left: 21px;
   position: absolute;
   top: 21px;
-  left: 21px;
 }
 
 .FileBox {
+  flex: 1 1 400px;
   height: 210px;
   margin-top: 20px;
-  flex: 1 1 400px;
 
   & .Header {
     display: flex;
@@ -33,22 +33,22 @@
       font-size: 12px;
     }
   }
+
   &.Solo {
     margin-top: 5%;
   }
 }
 
 .Icon {
-  width: 13px;
-  height: 11px;
   fill: var(--grey-button-color);
+  height: 11px;
+  width: 13px;
 }
 
 .Layout {
-  height: calc(100vh - 200px);
-
   display: flex;
   flex-direction: column;
+  height: calc(100vh - 200px);
   width: 100%;
 }
 
