@@ -40,7 +40,7 @@ parcel-dist/
 
 env-variables.json
 
-electron/const/index.ts
+const/
 
 #db
 /conun-db
