@@ -24,7 +24,7 @@ function Category() {
 
   const query = useUrlQuery();
 
-  const dfsdf = "sdfsdfsdfsfdddd";
+  const dfsdf = sdfsdf;
 
   const {
     data: files,
