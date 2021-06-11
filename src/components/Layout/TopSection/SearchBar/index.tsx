@@ -68,8 +68,6 @@ function SearchBar() {
     );
   };
 
-  const drep = pleg;
-  
   const handleModal = () => {
     const values = getValues();
     if (values.searchString) {
