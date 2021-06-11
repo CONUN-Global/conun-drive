@@ -12,6 +12,8 @@ import BackIcon from "../../../assets/icons/back.svg";
 import { FileProps } from "../../../types";
 
 import styles from "./Uploads.module.scss";
+import { motion } from "framer-motion";
+import { mainPageAnimation } from "../../../anim";
 
 const { api } = window;
 
@@ -65,7 +67,13 @@ function Uploads() {
   );
 
   return (
-    <div className={styles.Background}>
+    <motion.div
+      className={styles.Background}
+      variants={mainPageAnimation}
+      initial="exit"
+      animate="enter"
+      exit="exit"
+    >
       <BackButton />
       <div className={styles.Layout}>
         <div className={styles.Title}>Uploads</div>
@@ -90,7 +98,7 @@ function Uploads() {
           <Spinner />
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }
 
