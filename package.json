@@ -171,9 +171,12 @@
     "winston": "^3.3.3"
   },
   "lint-staged": {
+    "*.{json,md}": [
+      "prettier --write"
+    ],
     "*.{js,jsx,ts,tsx,json,md}": [
       "prettier --write",
-      "eslint"
+      "./node_modules/.bin/eslint --fix"
     ],
     "*.{css,scss}": [
       "stylelint --fix"

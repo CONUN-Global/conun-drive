@@ -24,8 +24,6 @@ function Category() {
 
   const query = useUrlQuery();
 
-  const dfsdf = sdfsdf;
-
   const {
     data: files,
     fetchNextPage,
