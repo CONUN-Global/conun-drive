@@ -96,7 +96,7 @@ function Category() {
         ))}
       </motion.div>
       <Waypoint bottomOffset="-20%" onEnter={() => fetchNextPage()} />
-      {files?.pages?.[0]?.data && (
+      {!files?.pages?.[0]?.data && (
         <p className={styles.NoResults}>No results</p>
       )}
     </div>

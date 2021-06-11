@@ -123,20 +123,20 @@ function SearchBar() {
             currentFilter={currentFilter}
           />
         </form>
-        <Button
-          type="button"
-          onClick={handleModal}
-          noStyle
-          className={styles.SaveButton}
-        >
-          Save this search
-        </Button>
-        <SaveSearchModal
-          isOpen={!!searchToSave}
-          search={searchToSave}
-          onClose={() => setSearchToSave(null)}
-        />
       </QRDropZone>
+      <Button
+        type="button"
+        onClick={handleModal}
+        noStyle
+        className={styles.SaveButton}
+      >
+        Save this search
+      </Button>
+      <SaveSearchModal
+        isOpen={!!searchToSave}
+        search={searchToSave}
+        onClose={() => setSearchToSave(null)}
+      />
     </div>
   );
 }

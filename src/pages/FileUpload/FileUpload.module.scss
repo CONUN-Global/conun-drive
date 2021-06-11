@@ -1,7 +1,6 @@
 .FileUpload {
   background-color: #fff;
   border-radius: 5px;
-
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   height: calc(596px - 40px);
   padding: 40px 40px 0 40px;
@@ -24,8 +23,8 @@
 
   & .Form {
     display: flex;
-    height: calc(100vh - 250px);
     flex-direction: column;
+    height: calc(100vh - 250px);
 
     & .InputsBox {
       display: flex;
