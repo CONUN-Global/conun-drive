@@ -17,8 +17,6 @@ function CategorySelect({ ...props }: CategorySelectProps) {
     return data;
   });
 
-  const sdfsdf;
-
   return (
     <Select
       menuPlacement="top"
