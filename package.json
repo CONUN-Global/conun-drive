@@ -12,7 +12,9 @@
     "electron": "wait-on tcp:1235 && tsc && yarn copy-assets && electron .",
     "make": "yarn build && tsc && yarn copy-assets && electron-builder",
     "release": "yarn build && electron-builder --publish=always",
-    "lint": "eslint --ext .ts ."
+    "lint": "eslint --ext .ts .",
+    "prepare": "husky install",
+    "pre-commit": "lint-staged"
   },
   "keywords": [
     "conun",
@@ -112,9 +114,17 @@
     "eslint": "^7.6.0",
     "eslint-plugin-import": "^2.20.0",
     "eslint-plugin-react": "^7.22.0",
+    "husky": "^6.0.0",
+    "lint-staged": ">=10",
     "parcel-bundler": "1.12.3",
     "postcss-modules": "3.2.2",
+    "prettier": "2.3.1",
     "sass": "^1.32.8",
+    "stylelint": "^13.13.1",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-config-standard": "^22.0.0",
+    "stylelint-order": "^4.1.0",
+    "stylelint-prettier": "^1.2.0",
     "typescript": "^4.2.3",
     "wait-on": "^5.2.1"
   },
@@ -162,5 +172,17 @@
     "uint8arrays": "^2.1.4",
     "websocket": "^1.0.34",
     "winston": "^3.3.3"
+  },
+  "lint-staged": {
+    "*.{json,md}": [
+      "prettier --write"
+    ],
+    "*.{js,jsx,ts,tsx,json,md}": [
+      "prettier --write",
+      "./node_modules/.bin/eslint --fix"
+    ],
+    "*.{css,scss}": [
+      "stylelint --fix"
+    ]
   }
 }

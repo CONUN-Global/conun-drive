@@ -130,16 +130,16 @@ ipcMain.handle("get-current-user", async () => {
 
     logger("get-current-user", `current user has id ${data?.id}`, "info");
 
-    if (userDriveDetails.userId !== data?.id) {
+    if (userDriveDetails?.userId !== data?.id) {
       logger(
-        "update-current-user",
-        `removing id ${userDriveDetails.userId} for id: ${data?.id}`,
+        "get-current-user",
+        `updating current user id ${data?.id}`,
         "info"
       );
       await db.put({
         ...userDriveDetails,
         userId: data.id,
-        walletId: data?.wallet_id,
+        walletAddress: data?.wallet_id,
       });
     }
 
