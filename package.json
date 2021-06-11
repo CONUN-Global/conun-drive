@@ -172,11 +172,9 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,json,md}": [
-      "prettier --write",
-      "stylelint --fix"
+      "prettier --write"
     ],
     "*.{css,scss}": [
-      "prettier --write",
       "stylelint --fix"
     ]
   }
