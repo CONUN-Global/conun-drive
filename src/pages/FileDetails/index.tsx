@@ -13,11 +13,11 @@ import useGetFile from "../../hooks/useGetFile";
 
 import { NO_USER, NO_BAD_FILE } from "../../const";
 
+import { filePageAnimation } from "../../anim/";
+
 import BackIcon from "../../assets/icons/left-arrow.svg";
 
 import styles from "./FileDetails.module.scss";
-
-import { filePageAnimation } from "../../anim/";
 
 function FileDetails() {
   const { id } = useParams();

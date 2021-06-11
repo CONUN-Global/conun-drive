@@ -10,6 +10,7 @@ import Spinner from "../../components/Spinner";
 import useUrlQuery from "../../hooks/useUrlQuery";
 
 import { categoryAnimation, cellEntryAnim } from "../../anim";
+
 import { FileProps } from "../../types";
 
 import styles from "./Search.module.scss";
@@ -89,12 +90,10 @@ function Search() {
         ))}
       </motion.div>
 
-      {!isLoading && !files?.pages?.[0]?.data && (
+      {!files?.pages?.[0]?.data && (
         <p className={styles.NoResults}>No results</p>
       )}
-      {!isLoading && (
-        <Waypoint bottomOffset="-20%" onEnter={() => fetchNextPage()} />
-      )}
+      <Waypoint bottomOffset="-20%" onEnter={() => fetchNextPage()} />
     </div>
   );
 }

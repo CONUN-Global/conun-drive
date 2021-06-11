@@ -14,8 +14,9 @@ import BackIcon from "../../../assets/icons/back.svg";
 
 import { FileProps } from "../../../types";
 
-import styles from "./Downloads.module.scss";
 import { mainPageAnimation } from "../../../anim";
+
+import styles from "./Downloads.module.scss";
 
 const { api } = window;
 

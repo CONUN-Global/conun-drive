@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import React, { useEffect, useRef } from "react";
 import { useInfiniteQuery } from "react-query";
 import { useParams } from "react-router";
@@ -96,7 +96,7 @@ function Category() {
         ))}
       </motion.div>
       <Waypoint bottomOffset="-20%" onEnter={() => fetchNextPage()} />
-      {!isLoading && !files?.pages?.[0]?.data && (
+      {files?.pages?.[0]?.data && (
         <p className={styles.NoResults}>No results</p>
       )}
     </div>
