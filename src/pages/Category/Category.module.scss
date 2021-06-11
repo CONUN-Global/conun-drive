@@ -11,10 +11,10 @@
   }
 
   & .ResultsContainer {
-    grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
-    justify-items: center;
     display: grid;
     gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
+    justify-items: center;
 
     & .Cell {
       align-items: center;
