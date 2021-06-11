@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 
 import Button from "../../../../Button";
@@ -53,7 +54,12 @@ function ListItem({ file, handleDelete }: Props) {
   };
 
   return (
-    <div className={styles.ListItemContainer}>
+    <motion.div
+      className={styles.ListItemContainer}
+      initial={{ x: "-100%" }}
+      animate={{ x: "0" }}
+      transition={{ ease: "easeIn" }}
+    >
       <div className={styles.ListItem}>
         <div className={styles.Item}>
           <Link to={`/file/${file.id}`}>
@@ -92,7 +98,7 @@ function ListItem({ file, handleDelete }: Props) {
       <Button className={styles.DeleteButton} noStyle onClick={handleDelete}>
         <CloseIcon className={styles.DeleteIcon} />
       </Button>
-    </div>
+    </motion.div>
   );
 }
 

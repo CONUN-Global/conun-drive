@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { useInfiniteQuery } from "react-query";
 import { useHistory } from "react-router";
 import { Waypoint } from "react-waypoint";
+import { motion } from "framer-motion";
 
 import Button from "../../../components/Button";
 import Cell from "../Cell";
@@ -12,6 +13,8 @@ import useCurrentUser from "../../../hooks/useCurrentUser";
 import BackIcon from "../../../assets/icons/back.svg";
 
 import { FileProps } from "../../../types";
+
+import { mainPageAnimation } from "../../../anim";
 
 import styles from "./Downloads.module.scss";
 
@@ -66,7 +69,13 @@ function Downloads() {
   );
 
   return (
-    <div className={styles.Background}>
+    <motion.div
+      className={styles.Background}
+      variants={mainPageAnimation}
+      initial="exit"
+      animate="enter"
+      exit="exit"
+    >
       <BackButton />
       <div className={styles.Layout}>
         <div className={styles.Title}>Downloads</div>
@@ -91,7 +100,7 @@ function Downloads() {
           <Spinner />
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }
 

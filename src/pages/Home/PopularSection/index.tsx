@@ -1,8 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
+import { motion } from "framer-motion";
 
 import Category from "./Category";
+
+import { catAnimation } from "../../../anim";
 
 import styles from "./PopularSection.module.scss";
 
@@ -18,7 +21,11 @@ function PopularSection() {
   return (
     <div className={styles.PopularSection}>
       {data?.data?.map((category) => (
-        <div key={category.id} className={styles.Section}>
+        <motion.div
+          key={category.id}
+          className={styles.Section}
+          variants={catAnimation}
+        >
           <p className={styles.Title}>
             Popular in{" "}
             <Link
@@ -29,7 +36,7 @@ function PopularSection() {
             </Link>
           </p>
           <Category categoryId={category.id} />
-        </div>
+        </motion.div>
       ))}
     </div>
   );
