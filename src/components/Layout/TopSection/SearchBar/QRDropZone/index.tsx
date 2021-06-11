@@ -1,5 +1,9 @@
 import React from "react";
+
 import { DropzoneOptions, useDropzone } from "react-dropzone";
+
+import QRIcon from "../../../../../assets/icons/qrcode.svg";
+import ArrowIcon from "../../../../../assets/icons/dropleftarrow.svg";
 
 import styles from "./QRDropZone.module.scss";
 
@@ -23,14 +27,21 @@ function QRDropZone({
     noClick,
   });
 
-  console.log("Dragging? : ", isDragActive);
-
   return (
     <div className={styles.Container} {...getRootProps()}>
       <input {...getInputProps()} />
-      {children}
+      {isDragActive ? (
+        <div className={styles.Form}>
+          <QRIcon className={styles.QRIcon} />
+          <div className={styles.DropHere}>Drop your QR code file here</div>
+        </div>
+      ) : (
+        children
+      )}
     </div>
   );
 }
 
 export default QRDropZone;
+
+// children
