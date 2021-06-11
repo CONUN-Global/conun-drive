@@ -15,13 +15,15 @@ function QRDropZone({
   children,
   noClick = false,
 }: DropzoneProps) {
-  const { getRootProps, getInputProps } = useDropzone({
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     multiple: false,
     accept,
     maxSize,
     noClick,
   });
+
+  console.log("Dragging? : ", isDragActive);
 
   return (
     <div className={styles.Container} {...getRootProps()}>
