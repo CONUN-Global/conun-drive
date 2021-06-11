@@ -3,7 +3,6 @@ import React from "react";
 import { DropzoneOptions, useDropzone } from "react-dropzone";
 
 import QRIcon from "../../../../../assets/icons/qrcode.svg";
-import ArrowIcon from "../../../../../assets/icons/dropleftarrow.svg";
 
 import styles from "./QRDropZone.module.scss";
 
