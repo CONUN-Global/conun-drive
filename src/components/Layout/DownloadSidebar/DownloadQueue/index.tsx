@@ -48,7 +48,7 @@ function DownloadQueue() {
     const listener = (data) => {
       dispatch({
         type: "SET_DOWNLOAD_PERCENTAGE",
-        payload: { id: data?.file?.content_id, percentage: +data.percentage },
+        payload: { id: data?.file?.content_id, percentage: +data?.percentage },
       });
     };
     api.listenToDownloadProgress(listener);
