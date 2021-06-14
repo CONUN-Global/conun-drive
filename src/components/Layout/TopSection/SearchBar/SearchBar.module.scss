@@ -5,6 +5,18 @@
   flex-direction: column;
   margin-bottom: 21px;
 
+  & .QRZone {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 50px;
+    justify-content: center;
+    width: 100%;
+    &:focus {
+      outline: none;
+    }
+  }
+
   & > div {
     & .Form {
       align-items: center;
