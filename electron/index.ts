@@ -2,6 +2,9 @@ import { app, BrowserWindow, shell } from "electron";
 import path from "path";
 import isDev from "electron-is-dev";
 import serve from "electron-serve";
+import installExtension, {
+  REACT_DEVELOPER_TOOLS,
+} from "electron-devtools-installer";
 
 import { prepareDb } from "./store/db";
 import { createIpfs } from "./ipfs";
@@ -45,6 +48,7 @@ const createWindow = async (): Promise<void> => {
     mainWindow.removeMenu();
 
     if (isDev) {
+      await installExtension(REACT_DEVELOPER_TOOLS);
       await mainWindow.loadURL("http://localhost:1235");
       mainWindow.webContents.openDevTools({ mode: "detach" });
     } else {
