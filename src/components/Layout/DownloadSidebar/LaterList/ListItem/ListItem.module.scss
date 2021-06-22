@@ -38,6 +38,10 @@
         fill: var(--emerald);
         height: 13px;
         width: 13px;
+
+        &.noManager {
+          fill: var(--grey-button-color);
+        }
       }
     }
 

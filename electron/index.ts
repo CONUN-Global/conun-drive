@@ -6,6 +6,9 @@ import Ctl from "ipfsd-ctl";
 import fs from "fs-extra";
 import Jimp from "jimp";
 import { globSource } from "ipfs-http-client";
+import installExtension, {
+  REACT_DEVELOPER_TOOLS,
+} from "electron-devtools-installer";
 
 import db, { prepareDb } from "./store/db";
 import connectToWS, { client } from "./socket";
@@ -131,6 +134,7 @@ const createWindow = async (): Promise<void> => {
     });
 
     if (isDev) {
+      await installExtension(REACT_DEVELOPER_TOOLS);
       await mainWindow.loadURL("http://localhost:1235");
       mainWindow.webContents.openDevTools({ mode: "detach" });
     } else {
