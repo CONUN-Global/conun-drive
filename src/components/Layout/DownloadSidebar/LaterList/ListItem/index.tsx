@@ -92,7 +92,7 @@ function ListItem({ file, handleDelete }: Props) {
               }
             >
               <DownloadIcon
-                className={classNames(styles.DownloadIcon, styles.no)}
+                className={classNames(styles.DownloadIcon, styles.noManager)}
               />
             </Button>
           )}
