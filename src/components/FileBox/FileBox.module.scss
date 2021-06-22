@@ -21,7 +21,7 @@
 
     & .NoImage {
       align-items: center;
-      background-color: #ddd;
+      background-color: var(--dull-grey);
       border-radius: 3px 3px 0 0;
       box-sizing: border-box;
       display: flex;
