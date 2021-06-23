@@ -28,7 +28,7 @@
     "email": "ivanms1@conun.co.kr"
   },
   "license": "MIT",
-  "copyright": "Copyright 2020 by CONUN GROUP",
+  "copyright": "Copyright 2021 by CONUN GROUP",
   "build": {
     "files": [
       "dist/**/*",
