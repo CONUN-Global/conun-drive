@@ -23,7 +23,7 @@ function Category({ categoryId }: CategoryProps) {
     return <Spinner />;
   }
 
-  if (files && files.length <= 0) {
+  if (!files?.length) {
     return <EmptyCategory />;
   }
 
