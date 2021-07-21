@@ -132,7 +132,7 @@
   "dependencies": {
     "@popperjs/core": "^2.9.2",
     "@svgr/parcel-plugin-svgr": "^5.5.0",
-    "@types/qrcode": "^1.4.0",
+    "@types/qrcode": "^1.4.1",
     "@types/react-router-dom": "^5.1.7",
     "classnames": "^2.3.1",
     "electron-fetch": "^1.7.3",
