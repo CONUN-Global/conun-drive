@@ -2157,10 +2157,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/react-autosuggest@^10.1.4":
-  version "10.1.4"
-  resolved "https://registry.yarnpkg.com/@types/react-autosuggest/-/react-autosuggest-10.1.4.tgz#9e16bf03f68d4fcf98f506e84acb9f200cd3022b"
-  integrity sha512-NdSUpRX6u1VsLpF63ss3yBGGcTFDJZg35D9XPTOgXPaUXZTJcfglcjyYgQwiMYRsbnz438dWt2gff/qIb7sWcw==
+"@types/react-autosuggest@^10.1.5":
+  version "10.1.5"
+  resolved "https://registry.yarnpkg.com/@types/react-autosuggest/-/react-autosuggest-10.1.5.tgz#8698576c186d3dd964df90451228d2cf787d0e0f"
+  integrity sha512-qfMzrp6Is0VYRF5a97Bv/+P2F9ZtFY4YE2825yyWV4VxCpvcfvQHEqGNkDFIPme7t3B2BpQ784QBllYAxemERQ==
   dependencies:
     "@types/react" "*"
 
