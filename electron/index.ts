@@ -22,7 +22,7 @@ const APP_HEIGHT = process.platform === "win32" ? 746 : 720;
 
 export let mainWindow: BrowserWindow | null = null;
 
-let tray = null;
+let tray: Tray | null = null;
 
 connectToWS();
 
@@ -49,6 +49,15 @@ function createTray() {
       },
     },
   ]);
+
+  tray.on("click", () => {
+    /* eslint-disable */
+    if (!mainWindow) {
+      createWindow();
+    } else {
+      mainWindow.restore();
+    }
+  });
 
   tray.setContextMenu(contextMenu);
 }
@@ -147,7 +156,7 @@ if (!singleInstanceLock) {
       mainWindow.restore();
     }
     logger("Push to file:", `Instance lock triggered`, "info");
-    if (argv.length > 1) {
+    if (argv.length > 1 && process.argv[1].startsWith(PROTOCOL_PREFIX)) {
       // Only try this if there is an argv (might be redundant)
 
       if (process.platform == "win32") {
