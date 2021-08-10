@@ -1,12 +1,12 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { HTMLMotionProps, motion } from "framer-motion";
 import classNames from "classnames";
 
 import SmallSpinner from "../Spinner/SmallSpinner";
 
 import styles from "./Button.module.scss";
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends HTMLMotionProps<"button"> {
   children: React.ReactNode;
   ref?: any;
   round?: boolean;
