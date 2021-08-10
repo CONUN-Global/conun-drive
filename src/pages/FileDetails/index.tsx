@@ -20,7 +20,7 @@ import BackIcon from "../../assets/icons/left-arrow.svg";
 import styles from "./FileDetails.module.scss";
 
 function FileDetails() {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const history = useHistory();
   const { data, isLoading } = useGetFile(id);
 

@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import CopyButton from "../../../../components/CopyButton";
+
 import useGetImage from "../../../../hooks/useGetImage";
 
 import NoAvatar from "../../../../assets/icons/no-avatar.svg";
 
 import styles from "./UserDetails.module.scss";
-import CopyButton from "../../../../components/CopyButton";
 
 function Avatar({ avatar }: { avatar: string }) {
   const { data: avatarImgSrc } = useGetImage(avatar);
