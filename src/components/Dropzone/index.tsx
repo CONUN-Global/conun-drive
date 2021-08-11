@@ -7,11 +7,9 @@ import styles from "./Dropzone.module.scss";
 
 interface DropzoneProps extends DropzoneOptions {
   currentFile?: any;
-  onDrop: (file: any) => void;
   className?: string;
   label?: string;
   withPreview?: boolean;
-  maxSize?: number;
   rejectMessage?: string;
 }
 

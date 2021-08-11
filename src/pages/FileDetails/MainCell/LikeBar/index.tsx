@@ -1,5 +1,7 @@
 import React from "react";
 
+import LikeButton from "../../../../components/LikeButton";
+
 import isHot from "../../../../helpers/isHot";
 
 import Hot from "../../../../assets/icons/flame.svg";
@@ -7,7 +9,6 @@ import Hot from "../../../../assets/icons/flame.svg";
 import { FileProps } from "../../../../types";
 
 import styles from "./LikeBar.module.scss";
-import LikeButton from "../../../../components/LikeButton";
 
 interface LikeProps {
   file: FileProps;
