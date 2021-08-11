@@ -34,7 +34,7 @@ function Uploads() {
   const page = useRef(1);
   const total = useRef(0);
 
-  const { id: authorID } = useParams();
+  const { id: authorID } = useParams<{ id: string }>();
 
   const {
     data: files,

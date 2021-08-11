@@ -26,7 +26,7 @@ const localLogger = createLogger({
   ],
 });
 
-async function logger(name: string, message: any, type: "info" | "error") {
+async function logger(name: string, message: unknown, type: "info" | "error") {
   let formattedMessage;
   if (typeof message === "object") {
     formattedMessage = JSON.stringify(message);

@@ -20,7 +20,7 @@ const { api } = window;
 const PAGE_LIMIT = 30;
 
 function Category() {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
 
   const page = useRef(1);
   const total = useRef(0);
