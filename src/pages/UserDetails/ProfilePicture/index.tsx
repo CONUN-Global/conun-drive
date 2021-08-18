@@ -23,6 +23,7 @@ function ProfilePicture({
   isSelf: boolean;
 }) {
   const { currentUser, refetch } = useCurrentUser();
+
   const { data: avatarImgSrc } = useGetImage(
     isSelf ? currentUser?.avatar : avatar
   );

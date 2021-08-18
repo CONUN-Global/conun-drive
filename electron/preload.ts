@@ -29,6 +29,9 @@ contextBridge.exposeInMainWorld("api", {
   listenToUploadProgress: (fn: any) => {
     ipcRenderer.on("upload-percentage", (e, ...args) => fn(...args));
   },
+  listenToAttemptBoostrapDownload: (fn: any) => {
+    ipcRenderer.on("attemp-bootstrap-download", (e, ...args) => fn(...args));
+  },
   listenToUpdateManager: (fn: any) => {
     ipcRenderer.on("update-manager", (e, ...args) => fn(...args));
   },

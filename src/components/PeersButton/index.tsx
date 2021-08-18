@@ -27,7 +27,7 @@ function PeersButton() {
           name: "offset",
           enabled: true,
           options: {
-            offset: [-150, 12],
+            offset: [-200, 12],
           },
         },
       ]}

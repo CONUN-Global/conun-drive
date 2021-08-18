@@ -1,8 +1,11 @@
 import React, { useEffect, useReducer } from "react";
+import { saveAs } from "file-saver";
 
 import DownloadItem from "./DownloadItem";
 
 import reducer from "./DownloadQueueReducer";
+
+import { BOOTSTRAP } from "../../../../const";
 
 import styles from "./DownloadQueue.module.scss";
 import { AnimatePresence } from "framer-motion";
@@ -45,10 +48,17 @@ function DownloadQueue() {
     const listener = (data) => {
       dispatch({
         type: "SET_DOWNLOAD_PERCENTAGE",
-        payload: { id: data?.file?.content_id, percentage: +data.percentage },
+        payload: { id: data?.file?.content_id, percentage: +data?.percentage },
       });
     };
     api.listenToDownloadProgress(listener);
+  }, []);
+
+  useEffect(() => {
+    const listener = ({ data }) => {
+      saveAs(`${BOOTSTRAP}/ipfs/${data.hash}`, data.name);
+    };
+    api.listenToAttemptBoostrapDownload(listener);
   }, []);
 
   const downloads = Object.keys(state?.downloads);
