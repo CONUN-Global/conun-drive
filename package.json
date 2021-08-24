@@ -146,7 +146,6 @@
     "ipfs-core": "^0.9.1",
     "it-all": "^1.0.5",
     "jimp": "^0.16.1",
-    "libp2p": "^0.30.12",
     "pouchdb": "^7.2.2",
     "qrcode": "^1.4.4",
     "qrcode-reader": "^1.0.4",
