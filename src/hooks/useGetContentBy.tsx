@@ -17,6 +17,7 @@ function useGetContentBy({ formData, id }: UseGetContentByProps) {
     },
     { refetchOnMount: "always" }
   );
+
   return { files: data?.data?.data, isLoading, total: data?.data?.total };
 }
 

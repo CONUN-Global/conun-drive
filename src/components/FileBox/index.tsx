@@ -1,18 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
-import Thumbnail from "../Thumbnail";
-import LikeButton from "../LikeButton";
-
-import useGetImage from "../../hooks/useGetImage";
-
-import isHot from "../../helpers/isHot";
-
 import DownloadIcon from "../../assets/icons/download.svg";
 import Flame from "../../assets/icons/flame.svg";
-
+import isHot from "../../helpers/isHot";
+import useGetImage from "../../hooks/useGetImage";
 import { FileProps } from "../../types";
-
+import LikeButton from "../LikeButton";
+import Thumbnail from "../Thumbnail";
 import styles from "./FileBox.module.scss";
 
 export interface FileBoxProps {
