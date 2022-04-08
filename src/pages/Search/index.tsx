@@ -3,16 +3,11 @@ import React, { useEffect, useRef } from "react";
 import { useInfiniteQuery } from "react-query";
 import { useLocation } from "react-router";
 import { Waypoint } from "react-waypoint";
-
+import { categoryAnimation, cellEntryAnim } from "../../anim";
 import FileBox from "../../components/FileBox";
 import Spinner from "../../components/Spinner";
-
 import useUrlQuery from "../../hooks/useUrlQuery";
-
-import { categoryAnimation, cellEntryAnim } from "../../anim";
-
 import { FileProps } from "../../types";
-
 import styles from "./Search.module.scss";
 
 const { api } = window;
@@ -66,6 +61,7 @@ function Search() {
   if (isLoading) {
     return <Spinner />;
   }
+
   return (
     <div className={styles.Search}>
       <p className={styles.Title}>Results</p>

@@ -1,19 +1,18 @@
 import { ipcMain, shell } from "electron";
-import fs from "fs";
 import fetch from "electron-fetch";
-import all from "it-all";
-import { concat } from "uint8arrays";
-import Jimp from "jimp";
 import isDev from "electron-is-dev";
-
+import fs from "fs";
+import all from "it-all";
+import Jimp from "jimp";
+import { concat } from "uint8arrays";
 import { mainWindow } from "../";
-import { getIpfs } from "../ipfs";
-import db from "../store/db";
-import connectToWS, { client } from "../socket";
-import logger from "../logger";
-import { createQRCode, readQRCode } from "../helpers";
-
 import { DEV_DRIVE_SERVER, PROD_DRIVE_SERVER } from "../const";
+import { createQRCode, readQRCode } from "../helpers";
+import { getIpfs } from "../ipfs";
+import logger from "../logger";
+import connectToWS, { client } from "../socket";
+import db from "../store/db";
+import { fakeCurrentUser } from "./faker";
 
 const SERVER_URL = isDev ? DEV_DRIVE_SERVER : PROD_DRIVE_SERVER;
 
@@ -211,6 +210,10 @@ ipcMain.handle("update-later-list", async (_, newList: any) => {
 });
 
 ipcMain.handle("get-current-user", async () => {
+  return {
+    success: true,
+    data: fakeCurrentUser,
+  };
   try {
     const userDetails = await db.get("userDetailsDrive");
 

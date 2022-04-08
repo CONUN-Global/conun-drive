@@ -1,12 +1,9 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { useQuery } from "react-query";
 import { motion } from "framer-motion";
-
-import Category from "./Category";
-
+import React from "react";
+import { useQuery } from "react-query";
+import { Link } from "react-router-dom";
 import { catAnimation } from "../../../anim";
-
+import Category from "./Category";
 import styles from "./PopularSection.module.scss";
 
 const { api } = window;

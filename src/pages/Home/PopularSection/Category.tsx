@@ -1,10 +1,8 @@
 import React from "react";
-
 import FilesHorizontalViewer from "../../../components/FilesHorizontalViewer";
 import Spinner from "../../../components/Spinner";
-import EmptyCategory from "./EmptyCategory";
-
 import useGetContentBy from "../../../hooks/useGetContentBy";
+import EmptyCategory from "./EmptyCategory";
 
 interface CategoryProps {
   categoryId: string;

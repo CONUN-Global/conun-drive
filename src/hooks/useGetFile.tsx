@@ -1,5 +1,4 @@
 import { useQuery } from "react-query";
-
 import { NO_BAD_FILE, NO_USER } from "../const";
 
 const { api } = window;

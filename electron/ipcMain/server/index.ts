@@ -2,15 +2,24 @@ import { ipcMain } from "electron";
 import fetch from "electron-fetch";
 import isDev from "electron-is-dev";
 import FormData from "form-data";
-
+import { DEV_DRIVE_SERVER, PROD_DRIVE_SERVER } from "../../const";
 import logger from "../../logger";
 import db from "../../store/db";
-
-import { DEV_DRIVE_SERVER, PROD_DRIVE_SERVER } from "../../const";
+import {
+  fakeCategories,
+  fakeContentBy,
+  fakeGetFile,
+  fakeSearchContent,
+  fakeSimilarContent,
+} from "../faker";
 
 const SERVER_URL = isDev ? DEV_DRIVE_SERVER : PROD_DRIVE_SERVER;
 
 ipcMain.handle("get-categories", async () => {
+  return {
+    success: true,
+    data: fakeCategories,
+  };
   try {
     const res = await fetch(`${SERVER_URL}/cate/get_all`, {
       method: "GET",
@@ -32,6 +41,10 @@ ipcMain.handle("get-categories", async () => {
 });
 
 ipcMain.handle("get-content-by", async (_, formData) => {
+  return {
+    success: true,
+    data: fakeContentBy,
+  };
   try {
     const userDetails = await db.get("userDetailsDrive");
 
@@ -130,6 +143,10 @@ ipcMain.handle("update-user", async (_, formData) => {
 ipcMain.handle(
   "search-content",
   async (_, { keyword, filter = "", page = 1, limit = 10 }) => {
+    return {
+      success: true,
+      data: fakeSearchContent,
+    };
     try {
       const userDetails = await db.get("userDetailsDrive");
 
@@ -187,6 +204,10 @@ ipcMain.handle("search-content-autocomplete", async (_, value) => {
 });
 
 ipcMain.handle("get-similar-content", async (_, id) => {
+  return {
+    success: true,
+    data: fakeSimilarContent,
+  };
   try {
     const userDetails = await db.get("userDetailsDrive");
 
@@ -213,6 +234,10 @@ ipcMain.handle("get-similar-content", async (_, id) => {
 });
 
 ipcMain.handle("get-file", async (_, id) => {
+  return {
+    success: true,
+    data: fakeGetFile,
+  };
   try {
     const userDetails = await db.get("userDetailsDrive");
 
