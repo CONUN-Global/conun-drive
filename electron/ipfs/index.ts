@@ -1,8 +1,7 @@
 import { app } from "electron";
-import IPFS from "ipfs-core";
 import fs from "fs-extra";
+import IPFS from "ipfs-core";
 import { join } from "path";
-
 import logger from "../logger";
 import db from "../store/db";
 
@@ -43,6 +42,46 @@ export async function createIpfs() {
 
     return false;
   }
+}
+
+export async function getPeerData(cid: string) {
+  const result = [];
+  if (node) {
+    try {
+      const stream = node.cat(cid);
+      for await (const chunk of stream) {
+        // chunks of data are returned as a Buffer, convert it back to a string
+        result.push(chunk.toString());
+      }
+    } catch (error) {
+      logger("ipfs-get-data", error?.message, "error");
+      return [];
+    }
+  }
+  return result;
+}
+
+export async function setPeerData(data: any) {
+  const result = [];
+  if (node) {
+    try {
+      // add your data to to IPFS - this can be a string, a Buffer,
+      // a stream of Buffers, etc
+      const cids = node.add(data);
+
+      // we loop over the results because 'add' supports multiple
+      // additions, but we only added one entry here so we only see
+      // one log line in the output
+      for await (const { cid } of cids) {
+        // CID (Content IDentifier) uniquely addresses the data
+        // and can be used to get it again.
+        result.push(cid);
+      }
+    } catch (error) {
+      logger("ipfs-get-data", error?.message, "error");
+    }
+  }
+  return result;
 }
 
 export default node;
